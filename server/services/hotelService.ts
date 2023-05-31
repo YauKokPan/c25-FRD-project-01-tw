@@ -6,15 +6,21 @@ export class HotelService {
   constructor(private knex: Knex) {}
 
   getAllHotels = async () => {
-    const queryResult = await this.knex<Hotels>("hotels")
-      .select("id", "name", "address", "district","phone","profile_pic","description")
-
+    const queryResult = await this.knex<Hotels>("hotels").select(
+      "id",
+      "name",
+      "address",
+      "district",
+      "phone",
+      "profile_pic",
+      "description"
+    );
 
     return queryResult;
   };
 
   getHotelsById = async (id: number) => {
-    const result = await this.knex<Hotels>("javidols")
+    const result = await this.knex<Hotels>("hotels")
       .select("*")
       .where("hotels.id", id);
     return result;
