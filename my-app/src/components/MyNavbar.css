@@ -1,0 +1,14 @@
+.my-navbar .nav-link:hover {
+    background: #353535;
+    color: #fff;
+    box-shadow: inset 0 0 15px #000;
+  }
+  
+  .my-navbar {
+    background-color: rgb(246, 246, 246);
+    z-index: 1000;
+  }
+  
+  .my-navbar .nav-link {
+    font-size: 24px;
+  }

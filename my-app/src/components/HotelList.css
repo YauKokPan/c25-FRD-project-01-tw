@@ -1,0 +1,9 @@
+.hotel-img{
+    width: 100%;
+    height: 380px;
+    object-fit: cover;
+  }
+  
+  .hotel-card{
+    margin-bottom: 10px;
+  }
