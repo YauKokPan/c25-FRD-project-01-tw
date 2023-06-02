@@ -1,5 +1,4 @@
-
-.login-form {
+.register-form {
   width: 50%;
   height: 80vh; /* set the height of the form to 80% of the viewport height */
   margin: auto; /* center the form horizontally and vertically */
@@ -9,12 +8,11 @@
 }
 
 .wrapper {
-  background-image: linear-gradient(rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.5)),url("../../public/img/backgound-img.jpg");
+  background-image: linear-gradient(
+      rgba(255, 255, 255, 0.5),
+      rgba(255, 255, 255, 0.5)
+    ),
+    url("../../../public/img/background-img.jpg");
   background-repeat: no-repeat;
   background-size: cover;
 }
-
-.mb-3{
-  font-size: 24px;
-}
-

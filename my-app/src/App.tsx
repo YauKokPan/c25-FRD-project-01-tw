@@ -1,29 +1,29 @@
-import React from 'react';
-import './index.css';
+import React from "react";
+import "./index.css";
 import "bootstrap/dist/css/bootstrap.min.css";
-import {BrowserRouter,Routes,Route,Link} from 'react-router-dom'
-import MyNavbar from './components/MyNavbar';
-import HotelList from './components/HotelList';
-import Login from './components/Login';
-import Register from './components/Register';
-import ContactUs from './components/ContactUs';
-import HotelDetail from './components/HotelDetail';
+import { Routes, Route } from "react-router-dom";
+import MyNavbar from "./features/navbar/MyNavbar";
+import HotelList from "./features/hotel/HotelList";
+import Login from "./features/auth/Login";
+import Register from "./features/register/Register";
+import ContactUs from "./features/contact/ContactUs";
+import HotelDetail from "./features/hotel/HotelDetail";
 
 export default function App() {
   return (
-    <BrowserRouter>
+    <>
       <MyNavbar />
       <Routes>
-        <Route path="/" element={<HotelList/>}/>
-        <Route path="/login" element={<Login/>}/>
-        <Route path="/register" element={<Register/>}/>
-        <Route path="/contact-us" element={<ContactUs/>}/>
+        <Route path="/" element={<HotelList />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+        <Route path="/contact-us" element={<ContactUs />} />
 
-        <Route path="/hotel-detail" element={<HotelDetail/>}>
-          <Route path=":id" element={<HotelDetail/>}/>
-        </Route>
-        <Route path="*" element={<h1>404 NOT FOUND!!!!</h1>}/>
+        <Route path="/hotel-detail/:hotelId" element={<HotelDetail />} />
+        {/* <Route path=":id" element={<HotelDetail />} /> */}
+
+        <Route path="*" element={<h1>404 NOT FOUND!!!!</h1>} />
       </Routes>
-    </BrowserRouter>
-  )
+    </>
+  );
 }
