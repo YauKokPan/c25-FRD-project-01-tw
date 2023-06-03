@@ -8,6 +8,7 @@ interface Hotel {
   phone: string;
   description: string;
   profile_pic: string;
+  user_id: number;
 }
 
 export function UseHotelInfo() {
@@ -15,7 +16,9 @@ export function UseHotelInfo() {
     queryKey: ["hotelInfo"],
     queryFn: async () => {
       try {
-        const res = await fetch(`${process.env.REACT_APP_API_SERVER}/hotels`);
+        const res = await fetch(
+          `${process.env.REACT_APP_API_SERVER}/hotel/allHotels`
+        );
         console.log("API response:", res);
 
         if (!res.ok) {

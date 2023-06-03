@@ -5,7 +5,7 @@
       "server": "localhost",
       "port": 5432,
       "driver": "PostgreSQL",
-      "name": "frd-project",
+      "name": "c25-frd-proj",
       "database": "sweethour",
       "username": "postgres",
       "password": "postgres"
