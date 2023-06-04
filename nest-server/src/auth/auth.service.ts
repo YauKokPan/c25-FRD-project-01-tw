@@ -1,7 +1,7 @@
 import { PrismaService } from '../prisma/prisma.service';
 import { Injectable, UnauthorizedException } from '@nestjs/common';
-import { LoginDto } from './dto';
-import { checkPassword } from './hash';
+import { LoginDto, CreateUserDto } from './dto';
+import { checkPassword, hashPassword } from './hash';
 import { JwtService } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
 
@@ -14,8 +14,10 @@ export class AuthService {
   ) {}
 
   async login(loginDto: LoginDto) {
-    const user = await this.prisma.user.findUnique({
-      where: { name: loginDto.name },
+    const user = await this.prisma.user.findFirst({
+      where: {
+        OR: [{ name: loginDto.name }, { email: loginDto.email }],
+      },
       select: { id: true, password: true },
     });
 
@@ -35,5 +37,20 @@ export class AuthService {
         secret: this.config.get('JWT_SECRET'),
       }),
     };
+  }
+
+  async register(createUserDto: CreateUserDto) {
+    const hashedPassword = await hashPassword(createUserDto.password);
+
+    // Create the user with the hashed password
+    const user = await this.prisma.user.create({
+      data: {
+        ...createUserDto,
+        password: hashedPassword,
+        is_admin: false,
+      },
+    });
+
+    return user;
   }
 }

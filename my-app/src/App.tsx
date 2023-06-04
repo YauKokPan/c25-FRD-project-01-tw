@@ -14,15 +14,15 @@ export default function App() {
     <>
       <MyNavbar />
       <Routes>
-        <Route path="/" element={<HotelList />} />
         <Route path="/login" element={<Login />} />
+
+        <Route path="/" element={<HotelList />} />
         <Route path="/register" element={<Register />} />
         <Route path="/contact-us" element={<ContactUs />} />
-
         <Route path="/hotel-detail/:hotelId" element={<HotelDetail />} />
-        {/* <Route path=":id" element={<HotelDetail />} /> */}
-
         <Route path="*" element={<h1>404 NOT FOUND!!!!</h1>} />
+
+        {/* <Route path=":id" element={<HotelDetail />} /> */}
       </Routes>
     </>
   );

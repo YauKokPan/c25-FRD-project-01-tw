@@ -17,7 +17,14 @@ export function UseHotelInfo() {
     queryFn: async () => {
       try {
         const res = await fetch(
-          `${process.env.REACT_APP_API_SERVER}/hotel/allHotels`
+          `${process.env.REACT_APP_API_SERVER}/hotel/allHotels`,
+          {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${localStorage.getItem("token")}`,
+            },
+          }
         );
         console.log("API response:", res);
 

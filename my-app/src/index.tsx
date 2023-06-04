@@ -7,6 +7,8 @@ import App from "./App";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter } from "react-router-dom";
 import { queryClient } from "./query/client";
+import { Provider } from "react-redux";
+import { store } from "./app/store";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
@@ -16,7 +18,9 @@ root.render(
     <BrowserRouter>
       <QueryClientProvider client={queryClient}>
         <Container fluid className="home">
-          <App />
+          <Provider store={store}>
+            <App />
+          </Provider>
         </Container>
       </QueryClientProvider>
     </BrowserRouter>

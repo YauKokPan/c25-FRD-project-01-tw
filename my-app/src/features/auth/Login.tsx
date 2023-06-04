@@ -1,22 +1,44 @@
 import React from "react";
-import { useState } from "react";
+import { useState, FormEvent } from "react";
 import "./Login.css";
 import Title from "../title/Title";
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "../../app/store";
+import { localLogin } from "./authAPI";
+import { login } from "./authSlice";
+import { useNavigate } from "react-router-dom";
 
 export default function Login() {
   const [email, setEmail] = useState("");
+  const [name, setName] = useState("");
   const [password, setPassword] = useState("");
+  const dispatch = useDispatch<AppDispatch>();
+  const navigate = useNavigate();
 
-  const handleEmailChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setEmail(event.target.value);
+  const handleSubmit = async (e: FormEvent) => {
+    e.preventDefault();
+    const result = await localLogin(name, email, password);
+    if (result) {
+      dispatch(login(email || name));
+      navigate("/");
+    }
+  };
+
+  const handleEmailOrNameChange = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    const inputValue = event.target.value;
+    if (inputValue.includes("@")) {
+      setEmail(inputValue);
+      setName("");
+    } else {
+      setName(inputValue);
+      setEmail("");
+    }
   };
 
   const handlePasswordChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setPassword(event.target.value);
-  };
-
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
   };
 
   return (
@@ -25,13 +47,13 @@ export default function Login() {
         <form onSubmit={handleSubmit}>
           <Title mainTitle="登入" />
           <div className="mb-3">
-            <label>電郵地址</label>
+            <label>電郵地址或用戶名稱</label>
             <input
-              type="email"
+              type="text"
               className="form-control"
-              placeholder="請輸入電郵"
-              value={email}
-              onChange={handleEmailChange}
+              placeholder="請輸入電郵或用戶名稱"
+              value={email || name}
+              onChange={handleEmailOrNameChange}
             />
           </div>
           <div className="mb-3">
