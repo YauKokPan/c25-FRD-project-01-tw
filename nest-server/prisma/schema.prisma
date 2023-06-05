@@ -31,8 +31,22 @@ model Hotel {
   description String
   user_prisma        User     @relation(fields: [user_id], references: [id])
   user_id     Int
+  gallery_key Gallery[]
   createdAt   DateTime @default(now()) @map("created_at")
   updatedAt   DateTime @updatedAt @map("updated_at")
 
   @@map("hotels")
 }
+
+  model Gallery {
+    id          Int      @id @default(autoincrement())
+     
+    hotel_name  String
+    hotel_img   String
+    hotel_key  Hotel @relation(fields:[hotel_id],references: [id])
+    hotel_id Int
+    createdAt   DateTime @default(now())
+    updatedAt   DateTime @updatedAt
+
+    @@map("gallery")
+  }

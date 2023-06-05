@@ -3,6 +3,7 @@ import * as bcrypt from 'bcryptjs';
 import { join } from 'path';
 import * as fs from 'fs';
 import * as Papa from 'papaparse';
+import * as csv from "csv-parser";
 
 const SALT_ROUNDS = 10;
 
@@ -57,9 +58,23 @@ const main = async () => {
       );
     }
   }
+  const galleryResults = [];
+  fs.createReadStream(__dirname + "/../data/gallery.csv")
+    .pipe(csv())
+    .on("data", (data) => galleryResults.push(data))
+    .on("end", async () => {
+      for (const row of galleryResults) {
+        row['hotel_id'] = +row['hotel_id']
+        await prisma.gallery.create({ data: row });
+      }
+    });
 };
 
 main()
   .then(() => console.log('seed done'))
   .catch((err) => console.error(err))
   .finally(() => prisma.$disconnect());
+// function csv(): any {
+//   throw new Error('Function not implemented.');
+// }
+
