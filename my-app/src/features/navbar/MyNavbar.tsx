@@ -5,18 +5,20 @@ import { Link } from "react-router-dom";
 import "./MyNavbar.css";
 import { useAppDispatch } from "../../app/hook";
 import { Button } from "react-bootstrap";
-import { login, logout } from "../auth/authSlice";
+import { logout } from "../auth/authSlice";
 import { AuthGuard } from "../auth/AuthGuard";
 import { useAppSelector } from "../../app/hook";
 import { IRootState } from "../../app/store";
+import { useNavigate } from "react-router-dom";
 
 export default function MyNavbar() {
+  const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const username = useAppSelector((state: IRootState) => state.auth.username);
   const guardPage = AuthGuard();
   return (
     <Navbar bg="bg" variant="light" className="my-navbar" sticky="top">
-      <img src={process.env.PUBLIC_URL + "/img/" + "/logo.png"} />
+      <img src={process.env.PUBLIC_URL + "/img/logo.png"} alt="Company Logo" />
       <Nav className="me-auto">
         <Nav.Link as={Link} to="/">
           主頁
@@ -30,10 +32,10 @@ export default function MyNavbar() {
       </Nav>
       <Nav>
         {guardPage || [
-          <Nav.Link as={Link} to="/login">
+          <Nav.Link key="login" as={Link} to="/login">
             登入
           </Nav.Link>,
-          <Nav.Link as={Link} to="/register">
+          <Nav.Link key="register" as={Link} to="/register">
             註冊
           </Nav.Link>,
         ]}
@@ -48,7 +50,13 @@ export default function MyNavbar() {
 
       {guardPage && (
         <Nav.Item>
-          <Button variant="warning" onClick={() => dispatch(logout())}>
+          <Button
+            variant="warning"
+            onClick={() => {
+              dispatch(logout());
+              navigate("/");
+            }}
+          >
             登出
           </Button>
         </Nav.Item>

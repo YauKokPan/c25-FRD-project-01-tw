@@ -17,7 +17,7 @@ export async function localLogin(
 
   const result = await res.json();
   if (res.status === 200) {
-    localStorage.setItem("token", result.token);
+    localStorage.setItem("token", result.access_token);
     return true;
   } else {
     return false;

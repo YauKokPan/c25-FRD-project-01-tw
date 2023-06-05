@@ -1,12 +1,16 @@
 import React from "react";
 import "./Register.css";
-import { useState } from "react";
+import { useState, FormEvent } from "react";
 import Title from "../title/Title";
+import { useNavigate } from "react-router-dom";
+import { registerAPI } from "./registerAPI";
 
 export default function Register() {
+  const navigate = useNavigate();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [phone, setPhone] = useState("");
 
   const handleNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setName(event.target.value);
@@ -20,8 +24,16 @@ export default function Register() {
     setPassword(event.target.value);
   };
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
+  const handlePhoneChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setPhone(event.target.value);
+  };
+
+  const handleSubmit = async (e: FormEvent) => {
+    e.preventDefault();
+    const result = await registerAPI(name, email, password, phone);
+    if (result) {
+      navigate("/");
+    }
   };
 
   return (
@@ -51,6 +63,18 @@ export default function Register() {
             />
           </div>
           <div className="mb-3">
+            <label>電話號碼</label>
+            <input
+              type="tel"
+              pattern="[0-9]{8}"
+              required
+              className="form-control"
+              placeholder="請輸入電話號碼"
+              value={phone}
+              onChange={handlePhoneChange}
+            />
+          </div>
+          <div className="mb-3">
             <label>密碼</label>
             <input
               type="password"
@@ -65,6 +89,7 @@ export default function Register() {
               註冊
             </button>
           </div>
+
           <p className="forgot-password text-right">
             Already registered <a href="/sign-in">sign in?</a>
           </p>
