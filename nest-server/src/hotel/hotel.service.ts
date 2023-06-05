@@ -5,9 +5,7 @@ import { PrismaService } from 'src/prisma/prisma.service';
 export class HotelService {
   constructor(private readonly prismaService: PrismaService) {}
   async getAllHotelInfo() {
-    const allHotels = await this.prismaService.hotel.findMany({
-      take: 200,
-    });
+    const allHotels = await this.prismaService.hotel.findMany();
     return allHotels;
   }
 }
