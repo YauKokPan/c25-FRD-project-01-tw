@@ -1,9 +1,9 @@
-import { PrismaClient } from '@prisma/client';
+import { PrismaClient, Prisma } from '@prisma/client';
 import * as bcrypt from 'bcryptjs';
 import { join } from 'path';
 import * as fs from 'fs';
 import * as Papa from 'papaparse';
-import * as csv from "csv-parser";
+import * as csv from 'csv-parser';
 
 const SALT_ROUNDS = 10;
 
@@ -12,9 +12,32 @@ async function hashPassword(plainPassword: string) {
   return hash;
 }
 
+// reset  postgres id sequences
+async function resetPostgresSequences() {
+  await prisma.$executeRaw(
+    Prisma.sql`ALTER SEQUENCE "equipments_id_seq" RESTART WITH 1;`,
+  );
+  await prisma.$executeRaw(
+    Prisma.sql`ALTER SEQUENCE "rooms_id_seq" RESTART WITH 1;`,
+  );
+  await prisma.$executeRaw(
+    Prisma.sql`ALTER SEQUENCE "gallery_id_seq" RESTART WITH 1;`,
+  );
+  await prisma.$executeRaw(
+    Prisma.sql`ALTER SEQUENCE "hotels_id_seq" RESTART WITH 1;`,
+  );
+}
+
 const hotelSeedFile = join(process.cwd(), './data/hotels_updated.csv');
 const prisma = new PrismaClient();
 const main = async () => {
+  // delete table data first before seeding
+  await resetPostgresSequences();
+  await prisma.equipment.deleteMany();
+  await prisma.room.deleteMany();
+  await prisma.gallery.deleteMany();
+  await prisma.hotel.deleteMany();
+
   const insertUser = {
     name: 'admin',
     email: 'admin@sweethour.io',
@@ -40,32 +63,51 @@ const main = async () => {
   for (const hotelRecord of hotels) {
     const userId = parseInt(hotelRecord.user_id);
 
-    if (!isNaN(userId)) {
-      await prisma.hotel.create({
-        data: {
-          name: hotelRecord.name,
-          address: hotelRecord.address,
-          district: hotelRecord.district,
-          phone: hotelRecord.phone,
-          profile_pic: hotelRecord.profile_pic,
-          description: hotelRecord.description,
-          user_id: userId,
-        },
-      });
-    } else {
-      console.warn(
-        `Warning: Invalid user_id for hotel "${hotelRecord.name}". Skipping this record.`,
-      );
-    }
+    await prisma.hotel.create({
+      data: {
+        name: hotelRecord.name,
+        address: hotelRecord.address,
+        district: hotelRecord.district,
+        phone: hotelRecord.phone,
+        profile_pic: hotelRecord.profile_pic,
+        description: hotelRecord.description,
+        user_id: userId,
+      },
+    });
   }
+
   const galleryResults = [];
-  fs.createReadStream(__dirname + "/../data/gallery.csv")
+  fs.createReadStream(__dirname + '/../data/gallery.csv')
     .pipe(csv())
-    .on("data", (data) => galleryResults.push(data))
-    .on("end", async () => {
+    .on('data', (data) => galleryResults.push(data))
+    .on('end', async () => {
       for (const row of galleryResults) {
-        row['hotel_id'] = +row['hotel_id']
+        row['hotel_id'] = +row['hotel_id'];
         await prisma.gallery.create({ data: row });
+      }
+    });
+
+  const roomResults = [];
+  fs.createReadStream(__dirname + '/../data/rooms.csv')
+    .pipe(csv())
+    .on('data', (data) => roomResults.push(data))
+    .on('end', async () => {
+      for (const row of roomResults) {
+        row['hotel_id'] = +row['hotel_id'];
+        row['number'] = +row['number'];
+        row['hourly_rate'] = +row['hourly_rate'];
+        row['available'] = Boolean(row['available']);
+        await prisma.room.create({ data: row });
+      }
+    });
+
+  const equipmentResults = [];
+  fs.createReadStream(__dirname + '/../data/equipments.csv')
+    .pipe(csv())
+    .on('data', (data) => equipmentResults.push(data))
+    .on('end', async () => {
+      for (const row of equipmentResults) {
+        await prisma.equipment.create({ data: row });
       }
     });
 };
@@ -74,7 +116,3 @@ main()
   .then(() => console.log('seed done'))
   .catch((err) => console.error(err))
   .finally(() => prisma.$disconnect());
-// function csv(): any {
-//   throw new Error('Function not implemented.');
-// }
-
