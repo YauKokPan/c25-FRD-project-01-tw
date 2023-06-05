@@ -1,12 +1,12 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 
-interface AuthState {
+interface IAuthState {
   isAuth: boolean;
   username: string;
 }
 
-const initialState: AuthState = {
+const initialState: IAuthState = {
   isAuth: localStorage.getItem("token") !== null,
   username: "",
 };

@@ -5,11 +5,14 @@ import { Link } from "react-router-dom";
 import "./MyNavbar.css";
 import { useAppDispatch } from "../../app/hook";
 import { Button } from "react-bootstrap";
-import { logout } from "../auth/authSlice";
+import { login, logout } from "../auth/authSlice";
 import { AuthGuard } from "../auth/AuthGuard";
+import { useAppSelector } from "../../app/hook";
+import { IRootState } from "../../app/store";
 
 export default function MyNavbar() {
   const dispatch = useAppDispatch();
+  const username = useAppSelector((state: IRootState) => state.auth.username);
   const guardPage = AuthGuard();
   return (
     <Navbar bg="bg" variant="light" className="my-navbar" sticky="top">
@@ -35,6 +38,12 @@ export default function MyNavbar() {
           </Nav.Link>,
         ]}
       </Nav>
+      {guardPage && (
+        <Nav.Item>
+          <div>{username}</div>
+        </Nav.Item>
+      )}
+
       {guardPage && (
         <Nav.Item>
           <Button variant="warning" onClick={() => dispatch(logout())}>
