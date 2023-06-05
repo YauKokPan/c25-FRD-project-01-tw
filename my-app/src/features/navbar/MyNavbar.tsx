@@ -40,7 +40,9 @@ export default function MyNavbar() {
       </Nav>
       {guardPage && (
         <Nav.Item>
-          <div>{username}</div>
+          <Nav.Link as={Link} to="/user-profile">
+            {username}
+          </Nav.Link>
         </Nav.Item>
       )}
 
