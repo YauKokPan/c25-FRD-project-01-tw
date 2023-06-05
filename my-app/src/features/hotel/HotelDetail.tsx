@@ -2,6 +2,7 @@ import React from "react";
 import { useParams } from "react-router-dom";
 import Title from "../title/Title";
 import { UseHotelInfo } from "./hotelAPI";
+import Equipment from "../equipment/Equipment";
 
 export default function HotelDetail() {
   let { hotelId } = useParams();
@@ -23,6 +24,7 @@ export default function HotelDetail() {
       <p>地區: {hotel.district}</p>
       <p>電話: {hotel.phone}</p>
       <p>描述: {hotel.description}</p>
+      <Equipment/>
     </div>
   );
 }
