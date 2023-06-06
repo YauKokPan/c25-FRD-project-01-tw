@@ -17,6 +17,7 @@ model User {
   hotel_prisma    Hotel[]
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
+  booking_key Booking[]
 
   @@map("users")
 }
@@ -25,6 +26,7 @@ model Hotel {
   id          Int      @id @default(autoincrement())
   name        String
   address     String
+  google_map_address String
   district    String
   phone       String
   profile_pic String
@@ -45,12 +47,39 @@ model Room{
   hotel_id Int
   number Int
   hourly_rate Int
-  type String
   available Boolean
   updatedAt   DateTime @updatedAt @map("updated_at")
   equipment_key Equipment[] @relation("equipments_rooms_relation")
+ room_type_key RoomType @relation(fields: [room_type_id], references: [id])
+  room_type_id Int
+  booking_key Booking[]
 
   @@map("rooms")
+}
+
+model Booking{
+id        Int      @id @default(autoincrement())
+user_booking_key User @relation(fields:[user_id], references: [id])
+user_id Int
+room_booking_key Room @relation(fields:[room_id],references: [id])
+room_id Int
+start_time DateTime
+end_time DateTime
+total_hours Int
+total_price Int
+is_shown_up Boolean
+createdAt DateTime @default(now()) @map("created_at")
+updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("bookings")
+}
+
+model RoomType{
+  id Int @id @default(autoincrement())
+  name String
+  room_key Room[]
+
+   @@map("room_types")
 }
 
 model Equipment{
@@ -69,4 +98,6 @@ model Equipment{
 
     @@map("gallery")
   }
+
+
 

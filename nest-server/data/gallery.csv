@@ -20,17 +20,6 @@ hotel_id,hotel_name,hotel_img
 4,亞洲賓館,https://iopenroom.com//web/upload/1633423002_e96c52b2d1fb673336eead5e6aae83d0.jpg
 4,亞洲賓館,https://iopenroom.com//web/upload/253_1633423011_6c3c1e71de2b89dc24737ea54c3a9429.jpg
 4,亞洲賓館,https://iopenroom.com//web/upload/253_1633423018_82f85d4d0321c2091464d8eaba2460d8.jpg
-5,中港酒店,https://iopenroom.com//web/upload/1633423512_53293415bfb444892d3d08fc39282859.jpg
-5,中港酒店,https://iopenroom.com//web/upload/254_1633423523_e46d4ab601c5b14a10b91a806c9ec106.jpg
-5,中港酒店,https://iopenroom.com//web/upload/254_1633423531_2c9d33627676f4f5622640119915cfca.jpg
-5,中港酒店,https://iopenroom.com//web/upload/254_1633423537_444dca8cd8a64c1b68d94bf55ac83b0c.jpg
-5,中港酒店,https://iopenroom.com//web/upload/254_1633423546_34e9da0b8075254d701710174300cf15.jpg
-5,中港酒店,https://iopenroom.com//web/upload/254_1633423555_8ba0e0fbd85ff9ba46e8fb22f22e6b56.jpg
-5,中港酒店,https://iopenroom.com//web/upload/254_1633423562_9ee71625417a608eec27644d33a7cd67.jpg
-5,中港酒店,https://iopenroom.com//web/upload/254_1633423570_ebd9a5b9d46565dab0efb9fd1b488187.jpg
-5,中港酒店,https://iopenroom.com//web/upload/254_1633423579_1c0396692a5df32015638e36b3c5012a.jpg
-5,中港酒店,https://iopenroom.com//web/upload/254_1633423586_0fd675f83efea7147d1a3457a9f23867.jpg
-5,中港酒店,https://iopenroom.com//web/upload/254_1633423593_61cba13c02a7c4fb3a9cde6a82c845a8.jpg
 5,中港酒店,https://iopenroom.com//web/upload/1634372539_7a7dc1cda8a5f2b4be2dcb815907d56e.jpg
 5,中港酒店,https://iopenroom.com//web/upload/301_1634372887_61cba13c02a7c4fb3a9cde6a82c845a8.jpg
 5,中港酒店,https://iopenroom.com//web/upload/301_1634373098_387795c86765346eca0c041bac00348b.jpg
@@ -56,14 +45,14 @@ hotel_id,hotel_name,hotel_img
 8,百佳酒店,https://iopenroom.com//web/upload/1632734487_30977d181521b1660a8ad17127009d59.jpg
 8,百佳酒店,https://iopenroom.com//web/upload/1632731734_c6d181ed8093fda89bf47d19f9485db5.jpg
 8,百佳酒店,https://iopenroom.com//web/upload/1632731734_34a149bccce4abf2fe834cb1fe707d01.jpg
-8,百佳酒店,https://iopenroom.com//web/upload/1632731734_90f0c4e67805f0c9a7ac71f2442c85eb.jpg
-8,百佳酒店,https://iopenroom.com//web/upload/1632731734_30977d181521b1660a8ad17127009d59.jpg
-8,百佳酒店,https://iopenroom.com//web/upload/1632805616_5d81b7984e2f2b251e3b122f5ef712db.jpg
-8,百佳酒店,https://iopenroom.com//web/upload/236_1632805632_34a149bccce4abf2fe834cb1fe707d01.jpg
-8,百佳酒店,https://iopenroom.com//web/upload/236_1632805642_1944cf3f9b9750cc9ec5d76ab5de876e.jpg
-8,百佳酒店,https://iopenroom.com//web/upload/236_1632805652_4044f857c139af17d7d6cfd9d4c3035e.jpg
-8,百佳酒店,https://iopenroom.com//web/upload/236_1632805663_30977d181521b1660a8ad17127009d59.jpg
-8,百佳酒店,https://iopenroom.com//web/upload/236_1632805669_90f0c4e67805f0c9a7ac71f2442c85eb.jpg
+9,百佳酒店,https://iopenroom.com//web/upload/1632731734_90f0c4e67805f0c9a7ac71f2442c85eb.jpg
+9,百佳酒店,https://iopenroom.com//web/upload/1632731734_30977d181521b1660a8ad17127009d59.jpg
+9,百佳酒店,https://iopenroom.com//web/upload/1632805616_5d81b7984e2f2b251e3b122f5ef712db.jpg
+9,百佳酒店,https://iopenroom.com//web/upload/236_1632805632_34a149bccce4abf2fe834cb1fe707d01.jpg
+10,百佳酒店,https://iopenroom.com//web/upload/236_1632805642_1944cf3f9b9750cc9ec5d76ab5de876e.jpg
+10,百佳酒店,https://iopenroom.com//web/upload/236_1632805652_4044f857c139af17d7d6cfd9d4c3035e.jpg
+10,百佳酒店,https://iopenroom.com//web/upload/236_1632805663_30977d181521b1660a8ad17127009d59.jpg
+10,百佳酒店,https://iopenroom.com//web/upload/236_1632805669_90f0c4e67805f0c9a7ac71f2442c85eb.jpg
 11,豪景賓館,https://iopenroom.com//web/upload/1633337323_6ee44b90fc4adbcf5a766996c818f7bb.jpg
 11,豪景賓館,https://iopenroom.com//web/upload/241_1633337335_85252a861b755f96a090a189f30b15c1.jpg
 11,豪景賓館,https://iopenroom.com//web/upload/241_1633337347_a34916a84022c7af49b4902f46cb8676.png
@@ -420,19 +409,6 @@ hotel_id,hotel_name,hotel_img
 83,富麗宮賓館,https://iopenroom.com//web/upload/277_1633666505_fd933a346982a758aeb58890923a174b.jpg
 84,美麗宮賓館,https://iopenroom.com//web/upload/1633667142_5809d5ceed49f19f8f16333c0bf4ed97.jpg
 84,美麗宮賓館,https://iopenroom.com//web/upload/278_1633667155_c96ef2cf497e2c07acb0b709c26fcb71.jpg
-85,雅仕賓館,https://iopenroom.com//web/upload/1633670796_387795c86765346eca0c041bac00348b.jpg
-85,雅仕賓館,https://iopenroom.com//web/upload/279_1633670879_9d444dbb17f1794c3b3dd4d0aecd72f0.jpg
-85,雅仕賓館,https://iopenroom.com//web/upload/279_1633670887_03e623ff352cc4bfd55938cfe2ccc105.jpg
-85,雅仕賓館,https://iopenroom.com//web/upload/279_1633670896_3e5cc5310615a1c7af265c3c5e0cda90.jpg
-85,雅仕賓館,https://iopenroom.com//web/upload/279_1633670904_902b4e449e49188bd883034379fc9c74.jpg
-85,雅仕賓館,https://iopenroom.com//web/upload/279_1633670913_170f83e145d7e9512cd710d12c376412.jpg
-85,雅仕賓館,https://iopenroom.com//web/upload/279_1633670921_d30ff99725a0756346116413e89fd365.jpg
-85,雅仕賓館,https://iopenroom.com//web/upload/279_1633670930_bf100bb761b0326d17a39bbde6d5aca2.jpg
-85,雅仕賓館,https://iopenroom.com//web/upload/279_1633670938_19eb2ab836442761c30db43599c4cb83.jpg
-85,雅仕賓館,https://iopenroom.com//web/upload/279_1633670950_ebe3b1ffa6170ff4f9e3a5fddcc7ce2e.jpg
-85,雅仕賓館,https://iopenroom.com//web/upload/279_1633670956_03aea38ec113d2f399d4570c577af5d3.jpg
-85,雅仕賓館,https://iopenroom.com//web/upload/279_1633670965_c8066d5b4136ee8636a36dfc05819dd7.jpg
-85,雅仕賓館,https://iopenroom.com//web/upload/279_1633670971_9a64ae1c14dbc05827a361a6ebb07a44.jpg
 85,雅仕賓館,https://iopenroom.com//web/upload/1633328772_8d798375ad4d0499afae9d6e3fdfeb44.jpeg
 85,雅仕賓館,https://iopenroom.com//web/upload/200_1633359566_db3fd576cb5cfdb1db78d37f6350f63c.jpeg
 85,雅仕賓館,https://iopenroom.com//web/upload/200_1633359586_e0f47a5c960042cb4162ad3ff920db53.jpeg
@@ -534,6 +510,19 @@ hotel_id,hotel_name,hotel_img
 101,京華賓館(佐敦),https://iopenroom.com//web/upload/314_1634958053_d559f4842485adeb8241e75007ac80c8.jpg
 101,京華賓館(佐敦),https://iopenroom.com//web/upload/314_1634958059_51753f027c03b28dc372efa2bfec9471.jpg
 101,京華賓館(佐敦),https://iopenroom.com//web/upload/314_1634958063_d1f336e9c382a29e6ab7855693492b4e.jpg
+102,雅仕賓館,https://iopenroom.com//web/upload/1633670796_387795c86765346eca0c041bac00348b.jpg
+102,雅仕賓館,https://iopenroom.com//web/upload/279_1633670879_9d444dbb17f1794c3b3dd4d0aecd72f0.jpg
+102,雅仕賓館,https://iopenroom.com//web/upload/279_1633670887_03e623ff352cc4bfd55938cfe2ccc105.jpg
+102,雅仕賓館,https://iopenroom.com//web/upload/279_1633670896_3e5cc5310615a1c7af265c3c5e0cda90.jpg
+102,雅仕賓館,https://iopenroom.com//web/upload/279_1633670904_902b4e449e49188bd883034379fc9c74.jpg
+102,雅仕賓館,https://iopenroom.com//web/upload/279_1633670913_170f83e145d7e9512cd710d12c376412.jpg
+102,雅仕賓館,https://iopenroom.com//web/upload/279_1633670921_d30ff99725a0756346116413e89fd365.jpg
+102,雅仕賓館,https://iopenroom.com//web/upload/279_1633670930_bf100bb761b0326d17a39bbde6d5aca2.jpg
+102,雅仕賓館,https://iopenroom.com//web/upload/279_1633670938_19eb2ab836442761c30db43599c4cb83.jpg
+102,雅仕賓館,https://iopenroom.com//web/upload/279_1633670950_ebe3b1ffa6170ff4f9e3a5fddcc7ce2e.jpg
+102,雅仕賓館,https://iopenroom.com//web/upload/279_1633670956_03aea38ec113d2f399d4570c577af5d3.jpg
+102,雅仕賓館,https://iopenroom.com//web/upload/279_1633670965_c8066d5b4136ee8636a36dfc05819dd7.jpg
+102,雅仕賓館,https://iopenroom.com//web/upload/279_1633670971_9a64ae1c14dbc05827a361a6ebb07a44.jpg
 103,海景小築,https://iopenroom.com//web/upload/1632969858_1a6f8e62a0e7d0e6d6c41e2f8890f325.jpg
 103,海景小築,https://iopenroom.com//web/upload/192_1632969872_fdb18fb6da1f9d2df64252b2fdad9c77.jpg
 104,新時代時鐘酒店,https://iopenroom.com//web/upload/1633503049_8c1b2e7a306cc330ed2e0b64409f5354.jpg
@@ -648,6 +637,17 @@ hotel_id,hotel_name,hotel_img
 122,甜心時鐘酒店,https://iopenroom.com//web/upload/268_1668651669_9da6f999c9b95b3759cd2f1ebdc63980.jpg
 122,甜心時鐘酒店,https://iopenroom.com//web/upload/268_1633581532_2c7b9df1b25ddc80fd0d4bbe9d203cfa.jpeg
 122,甜心時鐘酒店,https://iopenroom.com//web/upload/268_1633581512_68e0eed18f39d09b8e21057a73563021.jpeg
+123,中港酒店,https://iopenroom.com//web/upload/1633423512_53293415bfb444892d3d08fc39282859.jpg
+123,中港酒店,https://iopenroom.com//web/upload/254_1633423523_e46d4ab601c5b14a10b91a806c9ec106.jpg
+123,中港酒店,https://iopenroom.com//web/upload/254_1633423531_2c9d33627676f4f5622640119915cfca.jpg
+123,中港酒店,https://iopenroom.com//web/upload/254_1633423537_444dca8cd8a64c1b68d94bf55ac83b0c.jpg
+123,中港酒店,https://iopenroom.com//web/upload/254_1633423546_34e9da0b8075254d701710174300cf15.jpg
+123,中港酒店,https://iopenroom.com//web/upload/254_1633423555_8ba0e0fbd85ff9ba46e8fb22f22e6b56.jpg
+123,中港酒店,https://iopenroom.com//web/upload/254_1633423562_9ee71625417a608eec27644d33a7cd67.jpg
+123,中港酒店,https://iopenroom.com//web/upload/254_1633423570_ebd9a5b9d46565dab0efb9fd1b488187.jpg
+123,中港酒店,https://iopenroom.com//web/upload/254_1633423579_1c0396692a5df32015638e36b3c5012a.jpg
+123,中港酒店,https://iopenroom.com//web/upload/254_1633423586_0fd675f83efea7147d1a3457a9f23867.jpg
+123,中港酒店,https://iopenroom.com//web/upload/254_1633423593_61cba13c02a7c4fb3a9cde6a82c845a8.jpg
 124,百合酒店,https://iopenroom.com//web/upload/1634885378_60444c7d224f174c3a749496b5f6a6d6.jfif
 124,百合酒店,https://iopenroom.com//web/upload/308_1634885399_23db35fafeb019b714cdce0a5f047726.jfif
 124,百合酒店,https://iopenroom.com//web/upload/308_1634885408_2451d9f161bf39c22141e91008edb9d8.jfif
@@ -812,6 +812,15 @@ hotel_id,hotel_name,hotel_img
 145,彩城賓館,https://iopenroom.com//web/upload/1657897850_dca1590aae3eb5e0fe8ba145f81c21a8.jpg
 145,彩城賓館,https://iopenroom.com//web/upload/1657897850_2b5baab1e221872257350624e749efd3.jpg
 145,彩城賓館,https://iopenroom.com//web/upload/1657897851_c4745822addcd092777a2e2502af8ee2.jpg
+146,182 彌敦道,https://iopenroom.com/web/upload/1668148109_5958d67326cac4ea67179ea27a478b55.jpeg
+146,182 彌敦道,https://iopenroom.com/web/upload/346_1668156316_4fa391491c27d4637e5d31148573f5c5.jpg
+146,182 彌敦道,https://iopenroom.com/web/upload/346_1668156323_6f0e8aab33e8fff87f6446cb1b9caf82.jpg
+146,182 彌敦道,https://iopenroom.com/web/upload/346_1668156334_0ceaf47a6ad644b9cdee6af2bf99e371.jpg
+146,182 彌敦道,https://iopenroom.com/web/upload/346_1668156340_3c6ddaf70bb592e3132f6c2408d0b1f3.jpg
+146,182 彌敦道,https://iopenroom.com/web/upload/346_1668156347_e9a4ca544b3e00c8dbfcc796bb464408.jpg
+146,182 彌敦道,https://iopenroom.com/web/upload/346_1668156352_2c4c81877e8383275536ff080060c6d8.jpg
+146,182 彌敦道,https://iopenroom.com/web/upload/346_1668156358_d7ca0284578db4af9d23ed2721006c53.jpg
+146,182 彌敦道,https://iopenroom.com/web/upload/346_1668156310_87542a56ed9006b261d9774c7bb3202e.jpg
 147,漢宮別墅,https://iopenroom.com//web/upload/1632900006_08d2dd28477628db40cec385682c13a2.jpg
 147,漢宮別墅,https://iopenroom.com//web/upload/188_1632898526_fb718a0417ed3df7db948e50a4c95fcf.jpg
 147,漢宮別墅,https://iopenroom.com//web/upload/188_1632898532_dac30b5b5527a7bb5ed524fc0bc2419f.jpg

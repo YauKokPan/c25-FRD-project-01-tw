@@ -1,6 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 
 interface Hotel {
+  gallery_key: any;
   id: number;
   name: string;
   address: string;

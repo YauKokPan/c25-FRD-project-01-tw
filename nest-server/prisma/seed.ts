@@ -68,6 +68,7 @@ const main = async () => {
         name: hotelRecord.name,
         address: hotelRecord.address,
         district: hotelRecord.district,
+        google_map_address: hotelRecord.google_map_address,
         phone: hotelRecord.phone,
         profile_pic: hotelRecord.profile_pic,
         description: hotelRecord.description,
@@ -87,6 +88,16 @@ const main = async () => {
       }
     });
 
+  const roomTypesResults = [];
+  fs.createReadStream(__dirname + '/../data/room_types.csv')
+    .pipe(csv())
+    .on('data', (data) => roomTypesResults.push(data))
+    .on('end', async () => {
+      for (const row of roomTypesResults) {
+        await prisma.roomType.create({ data: row });
+      }
+    });
+
   const roomResults = [];
   fs.createReadStream(__dirname + '/../data/rooms.csv')
     .pipe(csv())
@@ -97,6 +108,7 @@ const main = async () => {
         row['number'] = +row['number'];
         row['hourly_rate'] = +row['hourly_rate'];
         row['available'] = Boolean(row['available']);
+        row['room_type_id'] = +row['room_type_id'];
         await prisma.room.create({ data: row });
       }
     });

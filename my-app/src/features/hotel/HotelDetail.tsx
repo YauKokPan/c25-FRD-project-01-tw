@@ -24,7 +24,24 @@ export default function HotelDetail() {
       <p>地區: {hotel.district}</p>
       <p>電話: {hotel.phone}</p>
       <p>描述: {hotel.description}</p>
-      <Equipment/>
+      <Equipment />
+      <div>
+        {hotel.gallery_key.map(
+          (
+            galleryItem: {
+              hotel_img: string | undefined;
+              hotel_name: string | undefined;
+            },
+            index: React.Key | null | undefined
+          ) => (
+            <img
+              key={index}
+              src={galleryItem.hotel_img}
+              alt={galleryItem.hotel_name}
+            />
+          )
+        )}
+      </div>
     </div>
   );
 }

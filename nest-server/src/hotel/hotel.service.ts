@@ -5,7 +5,15 @@ import { PrismaService } from 'src/prisma/prisma.service';
 export class HotelService {
   constructor(private readonly prismaService: PrismaService) {}
   async getAllHotelInfo() {
-    const allHotels = await this.prismaService.hotel.findMany();
+    const allHotels = await this.prismaService.hotel.findMany({
+      include: {
+        gallery_key: {
+          select: {
+            hotel_img: true,
+          },
+        },
+      },
+    });
     return allHotels;
   }
 }
