@@ -7,7 +7,8 @@ import "./HotelList.css";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/pagination";
-import { Pagination } from "swiper";
+import { FreeMode, Pagination } from "swiper";
+import "swiper/css/free-mode";
 
 export default function HotelDetail() {
   let { hotelId } = useParams();
@@ -33,13 +34,13 @@ export default function HotelDetail() {
       <Equipment />
       <div className="hotel-gallery">
       <Swiper
-        slidesPerView={4}
+        slidesPerView={3}
         spaceBetween={30}
-        centeredSlides={true}
+        freeMode={true}
         pagination={{
           clickable: true,
         }}
-        modules={[Pagination]}
+        modules={[FreeMode, Pagination]}
         className="mySwiper"
       >
           {hotel.gallery_key.map(
