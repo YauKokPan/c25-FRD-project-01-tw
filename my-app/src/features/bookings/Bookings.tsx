@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "./Booking.css";
+import "./Bookings.css";
 import { useParams } from "react-router-dom";
 import { UseHotelInfo } from "../hotel/hotelAPI";
 import { Button, Form } from "react-bootstrap";
@@ -28,41 +28,42 @@ function Bookings() {
   const currentDate = new Date();
   currentDate.setMinutes(0);
 
+  const minTime = new Date(currentDate.getTime());
+  minTime.setHours(8, 0, 0); // set minimum time to 8:00am
+
   return (
     <>
       <h2>Hotel Bookings</h2>
       <Form>
-        <p>預約酒店為：{hotel?.name}</p>
-        <p>
+        <div>預約酒店為：{hotel?.name}</div>
+        <div>
           選擇開始時間* :
-          <div>
-            <DateTimePickerComponent
-              placeholder="Choose date and time"
-              value={startTime}
-              step={60}
-              format="dd-MMM-yy HH:mm"
-              min={currentDate}
-              max={new Date(currentDate.getTime() + 3 * 24 * 60 * 60 * 1000)}
-              onChange={(args: ChangeEventArgs) => {
-                const newStartTime = args.value;
-                setStartTime(newStartTime);
-                console.log("Start Time Changed: ", newStartTime);
-                if (
-                  endTime &&
-                  newStartTime &&
-                  newStartTime.getTime() + 3600 * 1000 > endTime.getTime()
-                ) {
-                  setEndTime(new Date(newStartTime.getTime() + 3600 * 1000));
-                  console.log(
-                    "End Time Changed: ",
-                    new Date(newStartTime.getTime() + 3600 * 1000)
-                  );
-                }
-              }}
-            ></DateTimePickerComponent>
-          </div>
-        </p>
-        <p>
+          <DateTimePickerComponent
+            placeholder="Choose date and time"
+            value={startTime}
+            step={60}
+            format="dd-MMM-yy HH:mm"
+            min={minTime}
+            max={new Date(currentDate.getTime() + 3 * 24 * 60 * 60 * 1000)}
+            onChange={(args: ChangeEventArgs) => {
+              const newStartTime = args.value;
+              setStartTime(newStartTime);
+              console.log("Start Time Changed: ", newStartTime);
+              if (
+                endTime &&
+                newStartTime &&
+                newStartTime.getTime() + 3600 * 1000 > endTime.getTime()
+              ) {
+                setEndTime(new Date(newStartTime.getTime() + 3600 * 1000));
+                console.log(
+                  "End Time Changed: ",
+                  new Date(newStartTime.getTime() + 3600 * 1000)
+                );
+              }
+            }}
+          ></DateTimePickerComponent>
+        </div>
+        <div>
           選擇完結時間* :
           <div>
             <DateTimePickerComponent
@@ -73,26 +74,35 @@ function Bookings() {
               min={
                 startTime
                   ? new Date(startTime.getTime() + 60 * 60 * 1000)
-                  : undefined
+                  : minTime
               }
-              max={new Date(currentDate.getTime() + 3 * 24 * 60 * 60 * 1000)}
+              max={
+                startTime
+                  ? new Date(
+                      Math.max(
+                        currentDate.getTime() + 3 * 24 * 60 * 60 * 1000,
+                        startTime.getTime() + 24 * 60 * 60 * 1000
+                      )
+                    )
+                  : new Date(currentDate.getTime() + 3 * 24 * 60 * 60 * 1000)
+              }
               onChange={(args: ChangeEventArgs) => {
                 setEndTime(args.value);
                 console.log("End Time Changed: ", args.value);
               }}
             ></DateTimePickerComponent>
           </div>
-        </p>
+        </div>
 
-        <p>
+        <div>
           Email* : <input type="email"></input>
-        </p>
-        <p>
+        </div>
+        <div>
           WhatsApp聯絡電話* : <input type="text"></input>
-        </p>
-        <p>
+        </div>
+        <div>
           備註 : <input type="text"></input>
-        </p>
+        </div>
         <Button onClick={(e) => handleSubmit(e)}>預約 及 付款</Button>
       </Form>
     </>

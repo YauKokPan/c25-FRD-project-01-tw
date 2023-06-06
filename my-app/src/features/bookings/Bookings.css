@@ -1,1 +1,5 @@
 @import url("http://cdn.syncfusion.com/ej2/material.css");
+
+div {
+  margin: 10px 0;
+}
