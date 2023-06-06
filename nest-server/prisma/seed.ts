@@ -52,6 +52,8 @@ const main = async () => {
     create: { ...insertUser },
   });
 
+  //dummy data for hotelBooking
+
   const fileContent = fs.readFileSync(hotelSeedFile, 'utf8');
   const parsedData = Papa.parse(fileContent, {
     header: true,
