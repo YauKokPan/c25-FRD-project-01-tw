@@ -6,5 +6,6 @@ div {
 
 .total-hour {
   margin: 20px 0;
-  font-style: bold;
+  font-weight: 600;
+  font-size: 2rem;
 }

@@ -112,7 +112,11 @@ function Bookings() {
             />
           </div>
         </div>
-
+        {startTime && endTime && totalHours !== undefined && (
+          <div className="total-hour">
+            你預約酒店的總時數為: {totalHours.toFixed(0)} 小時
+          </div>
+        )}
         <div>
           Email* : <input type="email" />
         </div>
@@ -124,9 +128,6 @@ function Bookings() {
         </div>
         <Button onClick={handleSubmit}>預約 及 付款</Button>
       </Form>
-      {startTime && endTime && totalHours !== undefined && (
-        <div>你預約酒店的總時數為: {totalHours.toFixed(0)} 小時</div>
-      )}
     </>
   );
 }
