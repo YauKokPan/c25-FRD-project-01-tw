@@ -3,6 +3,11 @@ import { useParams } from "react-router-dom";
 import Title from "../title/Title";
 import { UseHotelInfo } from "./hotelAPI";
 import Equipment from "../equipment/Equipment";
+import "./HotelList.css";
+import { Swiper, SwiperSlide } from "swiper/react";
+import "swiper/css";
+import "swiper/css/pagination";
+import { Pagination } from "swiper";
 
 export default function HotelDetail() {
   let { hotelId } = useParams();
@@ -17,7 +22,7 @@ export default function HotelDetail() {
   }
 
   return (
-    <div>
+    <div className="content-container">
       <Title mainTitle="酒店資料" />
       <h2>{hotel.name}</h2>
       <p>地址: {hotel.address}</p>
@@ -26,22 +31,35 @@ export default function HotelDetail() {
       <p>描述: {hotel.description}</p>
       <div dangerouslySetInnerHTML={{ __html: hotel.google_map_address }} />
       <Equipment />
-      <div>
-        {hotel.gallery_key.map(
-          (
-            galleryItem: {
-              hotel_img: string | undefined;
-              hotel_name: string | undefined;
-            },
-            index: React.Key | null | undefined
-          ) => (
-            <img
-              key={index}
-              src={galleryItem.hotel_img}
-              alt={galleryItem.hotel_name}
-            />
-          )
-        )}
+      <div className="hotel-gallery">
+      <Swiper
+        slidesPerView={4}
+        spaceBetween={30}
+        centeredSlides={true}
+        pagination={{
+          clickable: true,
+        }}
+        modules={[Pagination]}
+        className="mySwiper"
+      >
+          {hotel.gallery_key.map(
+            (
+              galleryItem: {
+                hotel_img: string | undefined;
+                hotel_name: string | undefined;
+              },
+              index: React.Key | null | undefined
+            ) => (
+              <SwiperSlide key={index}>
+                <img
+                  src={galleryItem.hotel_img}
+                  alt={galleryItem.hotel_name}
+                  className="img-fluid"
+                />
+              </SwiperSlide>
+            )
+          )}
+        </Swiper>
       </div>
     </div>
   );
