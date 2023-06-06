@@ -24,6 +24,7 @@ export default function HotelDetail() {
       <p>地區: {hotel.district}</p>
       <p>電話: {hotel.phone}</p>
       <p>描述: {hotel.description}</p>
+      <div dangerouslySetInnerHTML={{ __html: hotel.google_map_address }} />
       <Equipment />
       <div>
         {hotel.gallery_key.map(
