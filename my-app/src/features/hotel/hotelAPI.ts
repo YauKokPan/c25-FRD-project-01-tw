@@ -10,6 +10,7 @@ interface Hotel {
   description: string;
   profile_pic: string;
   user_id: number;
+  google_map_address:string;
 }
 
 export function UseHotelInfo() {
