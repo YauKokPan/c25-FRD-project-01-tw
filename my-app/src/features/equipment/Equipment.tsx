@@ -3,11 +3,13 @@ import { TbWifi } from "react-icons/tb";
 import { GiWaterBottle ,GiSlippers ,GiTowel} from "react-icons/gi"
 import { TbAirConditioning } from "react-icons/tb";
 import "./Equipment.css";
-
+import Title from "../title/Title";
 
 export default function Equipment() {
-    return (
-      <div className='equipment'>
+  return (
+    <div className='equipment'>
+      <div className='equipment-title'>酒店設備</div>
+      <div className='equipment-icons'>
         <div className='equipment-item'>
           <TbWifi />
           <p>Wifi</p>
@@ -25,5 +27,6 @@ export default function Equipment() {
           <p>冷氣</p>
         </div>
       </div>
-    );
-  }
+    </div>
+  );
+}

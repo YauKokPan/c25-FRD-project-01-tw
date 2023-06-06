@@ -1,19 +1,29 @@
 .equipment {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    height: 100%;
-  }
-  
-  .equipment-item {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    margin: 0 20px;
-    text-align: center;
-    font-size: 36px;
-  }
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
+}
+
+.equipment-title {
+  font-size: 48px;
+  margin-bottom: 20px;
+}
+
+.equipment-icons {
+  display: flex;
+  flex-direction: row;
+}
+
+.equipment-item {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 0 20px;
+  text-align: center;
+  font-size: 36px;
+}
 
 p{
     margin-right: 20px;
