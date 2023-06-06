@@ -15,7 +15,7 @@ model User {
   phone     String
   is_admin  Boolean
   hotel_prisma    Hotel[]
-  booking_prisma  Bookings[]
+  // booking_prisma  Bookings[]
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
 
@@ -40,7 +40,6 @@ model Hotel {
   @@map("hotels")
 }
 
-<<<<<<< Updated upstream
 model Room{
   id Int @id @default(autoincrement())
   hotel_room_key  Hotel @relation(fields:[hotel_id],references: [id])
@@ -72,17 +71,15 @@ model Equipment{
     @@map("gallery")
   }
 
-=======
-model Bookings{
-  id          Int       @id @default(autoincrement())
-  user_prisma  User     @relation(fields: [user_id], references: [id])  
-  user_id     Int
-  start_time   DateTime @default(now()) @map("start_time")
-  end_time     DateTime @default(now()) @map("end_time")
-  total_price  Int
-  status String
+// model Bookings{
+//   id          Int       @id @default(autoincrement())
+//   user_prisma  User     @relation(fields: [user_id], references: [id])  
+//   user_id     Int
+//   start_time   DateTime @default(now()) @map("start_time")
+//   end_time     DateTime @default(now()) @map("end_time")
+//   total_price  Int
+//   status String
 
 
-  @@map("bookings")
-}
->>>>>>> Stashed changes
+//   @@map("bookings")
+// }
