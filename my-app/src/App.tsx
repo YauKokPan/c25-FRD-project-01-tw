@@ -9,6 +9,7 @@ import Register from "./features/register/Register";
 import ContactUs from "./features/contact/ContactUs";
 import HotelDetail from "./features/hotel/HotelDetail";
 import UserProfile from "./features/userProfile/UserProfile";
+import Bookings from "./features/bookings/Bookings";
 
 export default function App() {
   return (
@@ -22,6 +23,7 @@ export default function App() {
         <Route path="/contact-us" element={<ContactUs />} />
         <Route path="/hotel-detail/:hotelId" element={<HotelDetail />} />
         <Route path="/user-profile" element={<UserProfile />} />
+        <Route path="/bookings" element={<Bookings />} />
 
         <Route path="*" element={<h1>404 NOT FOUND!!!!</h1>} />
 
