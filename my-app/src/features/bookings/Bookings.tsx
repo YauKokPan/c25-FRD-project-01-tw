@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./Bookings.css";
 import { useParams } from "react-router-dom";
 import { UseHotelInfo } from "../hotel/hotelAPI";
@@ -11,6 +11,7 @@ import {
 function Bookings() {
   const [startTime, setStartTime] = useState<Date | undefined>(undefined);
   const [endTime, setEndTime] = useState<Date | undefined>(undefined);
+  const [totalHours, setTotalHours] = useState<number | undefined>(undefined);
 
   let { hotelId } = useParams();
   const hotelIdNum = Number(hotelId);
@@ -22,14 +23,50 @@ function Bookings() {
     e.preventDefault();
     console.log("Start Time: ", startTime);
     console.log("End Time: ", endTime);
-    return [];
   };
 
   const currentDate = new Date();
   currentDate.setMinutes(0);
 
   const minTime = new Date(currentDate.getTime());
-  minTime.setHours(8, 0, 0); // set minimum time to 8:00am
+
+  const calculateTotalHours = () => {
+    if (startTime && endTime) {
+      const diffInMs = endTime.getTime() - startTime.getTime();
+      const diffInHrs = diffInMs / (1000 * 60 * 60);
+      setTotalHours(diffInHrs);
+    } else {
+      setTotalHours(undefined);
+    }
+  };
+
+  const handleStartTimeChange = (args: ChangeEventArgs) => {
+    const newStartTime = args.value;
+    setStartTime(newStartTime);
+    console.log("Start Time Changed: ", newStartTime);
+    if (
+      endTime &&
+      newStartTime &&
+      newStartTime.getTime() + 3600 * 1000 > endTime.getTime()
+    ) {
+      setEndTime(new Date(newStartTime.getTime() + 3600 * 1000));
+      console.log(
+        "End Time Changed: ",
+        new Date(newStartTime.getTime() + 3600 * 1000)
+      );
+    }
+    calculateTotalHours();
+  };
+
+  const handleEndTimeChange = (args: ChangeEventArgs) => {
+    setEndTime(args.value);
+    console.log("End Time Changed: ", args.value);
+    calculateTotalHours();
+  };
+
+  useEffect(() => {
+    calculateTotalHours();
+  }, [startTime, endTime, calculateTotalHours]);
 
   return (
     <>
@@ -45,23 +82,8 @@ function Bookings() {
             format="dd-MMM-yy HH:mm"
             min={minTime}
             max={new Date(currentDate.getTime() + 3 * 24 * 60 * 60 * 1000)}
-            onChange={(args: ChangeEventArgs) => {
-              const newStartTime = args.value;
-              setStartTime(newStartTime);
-              console.log("Start Time Changed: ", newStartTime);
-              if (
-                endTime &&
-                newStartTime &&
-                newStartTime.getTime() + 3600 * 1000 > endTime.getTime()
-              ) {
-                setEndTime(new Date(newStartTime.getTime() + 3600 * 1000));
-                console.log(
-                  "End Time Changed: ",
-                  new Date(newStartTime.getTime() + 3600 * 1000)
-                );
-              }
-            }}
-          ></DateTimePickerComponent>
+            onChange={handleStartTimeChange}
+          />
         </div>
         <div>
           選擇完結時間* :
@@ -86,25 +108,25 @@ function Bookings() {
                     )
                   : new Date(currentDate.getTime() + 3 * 24 * 60 * 60 * 1000)
               }
-              onChange={(args: ChangeEventArgs) => {
-                setEndTime(args.value);
-                console.log("End Time Changed: ", args.value);
-              }}
-            ></DateTimePickerComponent>
+              onChange={handleEndTimeChange}
+            />
           </div>
         </div>
 
         <div>
-          Email* : <input type="email"></input>
+          Email* : <input type="email" />
         </div>
         <div>
-          WhatsApp聯絡電話* : <input type="text"></input>
+          WhatsApp聯絡電話* : <input type="text" />
         </div>
         <div>
-          備註 : <input type="text"></input>
+          備註 : <input type="text" />
         </div>
-        <Button onClick={(e) => handleSubmit(e)}>預約 及 付款</Button>
+        <Button onClick={handleSubmit}>預約 及 付款</Button>
       </Form>
+      {startTime && endTime && totalHours !== undefined && (
+        <div>你預約酒店的總時數為: {totalHours.toFixed(0)} 小時</div>
+      )}
     </>
   );
 }

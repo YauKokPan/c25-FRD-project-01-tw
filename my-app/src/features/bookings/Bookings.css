@@ -3,3 +3,8 @@
 div {
   margin: 10px 0;
 }
+
+.total-hour {
+  margin: 20px 0;
+  font-style: bold;
+}
