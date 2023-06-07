@@ -18,7 +18,7 @@ export default function HotelList() {
           {hotelInfo.map((hotel) => {
             return (
               // Add the key prop to the Col component
-              <Col sm={4} className="hotel-card" key={hotel.id}>
+              <Col md={4} className="hotel-card" key={hotel.id}>
                 <Card>
                   <Link to={"/hotel-detail/" + hotel.id}>
                     <Card.Img
