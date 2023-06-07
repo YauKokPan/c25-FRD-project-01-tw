@@ -46,7 +46,7 @@ export default function HotelList() {
 
   return (
     <div>
-      <Title mainTitle="酒店一覽" />
+      <Title mainTitle="酒店一覽🏩" />
       <div>
         <Row>
           {currentHotels.map((hotel) => {

@@ -32,13 +32,13 @@ export default function MyNavbar() {
       <img src={process.env.PUBLIC_URL + "/img/logo.png"} alt="Company Logo" />
       <Nav className="me-auto">
         <Nav.Link as={Link} to="/">
-          主頁
+          💋主頁
         </Nav.Link>
         <Nav.Link as={Link} to="/hotels">
-          酒店一覽
+          🏩酒店一覽
         </Nav.Link>
         <Nav.Link as={Link} to="/contact-us">
-          聯絡我們
+          💌聯絡我們
         </Nav.Link>
         <Form className="d-flex" onSubmit={handleSearchSubmit}>
           <Form.Control
@@ -57,10 +57,10 @@ export default function MyNavbar() {
       <Nav>
         {guardPage || [
           <Nav.Link key="login" as={Link} to="/login">
-            登入
+            💁‍♀️登入
           </Nav.Link>,
           <Nav.Link key="register" as={Link} to="/register">
-            註冊
+            💁‍♂️註冊
           </Nav.Link>,
         ]}
       </Nav>

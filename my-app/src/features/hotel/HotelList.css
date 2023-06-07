@@ -38,3 +38,11 @@
   .pagination{
     justify-content: center;
   }
+
+  h2{
+    text-align: center;
+  }
+
+  .map{
+    width: 600px;
+  }
