@@ -12,7 +12,7 @@ export default function HotelList() {
 
   return (
     <div>
-      <Title mainTitle="熱門酒店" />
+      <Title mainTitle="酒店一覽" />
       <div>
         <Row>
           {hotelInfo.map((hotel) => {
@@ -31,6 +31,7 @@ export default function HotelList() {
                   <Card.Body>
                     <Card.Title>{hotel.name}</Card.Title>
                     <Card.Text>地址 : {hotel.address}</Card.Text>
+                    <Card.Text>電話 : {hotel.phone}</Card.Text>
                   </Card.Body>
                 </Card>
               </Col>

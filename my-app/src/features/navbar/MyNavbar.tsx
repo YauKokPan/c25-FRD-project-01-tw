@@ -43,7 +43,7 @@ export default function MyNavbar() {
         <Form className="d-flex" onSubmit={handleSearchSubmit}>
           <Form.Control
             type="search"
-            placeholder="Search"
+            placeholder="輸入地區或酒店名"
             className="me-2"
             aria-label="Search"
             value={searchQuery}
