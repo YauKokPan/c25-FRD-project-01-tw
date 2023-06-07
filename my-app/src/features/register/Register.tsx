@@ -46,7 +46,7 @@ export default function Register() {
             <input
               type="text"
               className="form-control"
-              placeholder="請輸入名字"
+              placeholder="請輸入姓名"
               value={name}
               onChange={handleNameChange}
             />

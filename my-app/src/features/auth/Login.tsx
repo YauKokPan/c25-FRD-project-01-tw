@@ -10,7 +10,7 @@ import { useNavigate } from "react-router-dom";
 
 export default function Login() {
   const [email, setEmail] = useState("");
-  const [name, setName] = useState("");
+  const [name] = useState("");
   const [password, setPassword] = useState("");
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
@@ -24,17 +24,8 @@ export default function Login() {
     }
   };
 
-  const handleEmailOrNameChange = (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    const inputValue = event.target.value;
-    if (inputValue.includes("@")) {
-      setEmail(inputValue);
-      setName("");
-    } else {
-      setName(inputValue);
-      setEmail("");
-    }
+  const handleEmailChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setEmail(event.target.value);
   };
 
   const handlePasswordChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -47,13 +38,13 @@ export default function Login() {
         <form onSubmit={handleSubmit}>
           <Title mainTitle="💁‍♀️登入" />
           <div className="mb-3">
-            <label>電郵地址或用戶名稱</label>
+            <label>電郵</label>
             <input
-              type="text"
+              type="email"
               className="form-control"
-              placeholder="請輸入電郵或用戶名稱"
-              value={email || name}
-              onChange={handleEmailOrNameChange}
+              placeholder="請輸入電郵"
+              value={email}
+              onChange={handleEmailChange}
             />
           </div>
           <div className="mb-3">
@@ -83,9 +74,9 @@ export default function Login() {
               登入
             </button>
           </div>
-          <p className="forgot-password text-right">
+          {/* <p className="forgot-password text-right">
             Forgot <a href="#">password?</a>
-          </p>
+          </p> */}
         </form>
       </div>
     </div>

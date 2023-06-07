@@ -9,8 +9,16 @@ export class BookingsService {
   constructor(private readonly prisma: PrismaService) {}
 
   async createBooking(data: CreateBookingDto): Promise<Booking> {
-    const { user_id, room_id, start_time, end_time, total_hours, total_price } =
-      data;
+    const {
+      user_id,
+      room_id,
+      start_time,
+      end_time,
+      total_hours,
+      total_price,
+      booking_phone,
+      booking_email,
+    } = data;
 
     const booking = await this.prisma.booking.create({
       data: {
@@ -20,6 +28,8 @@ export class BookingsService {
         end_time,
         total_hours,
         total_price,
+        booking_phone,
+        booking_email,
         is_shown_up: true,
       },
     });
@@ -35,7 +45,7 @@ export class BookingsService {
     return `This action returns a #${id} booking`;
   }
 
-  updateBooking(id: number, updateBookingDto: UpdateBookingDto) {
+  updateBooking(id: number, _updateBookingDto: UpdateBookingDto) {
     return `This action updates a #${id} booking`;
   }
 

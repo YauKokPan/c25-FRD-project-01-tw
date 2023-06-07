@@ -40,11 +40,14 @@ export default function HotelDetail() {
         </Col>
         <Col md={6}>
           <h2>酒店地圖🗺️</h2>
-          <div className="map" dangerouslySetInnerHTML={{ __html: hotel.google_map_address }} />
+          <div
+            className="map"
+            dangerouslySetInnerHTML={{ __html: hotel.google_map_address }}
+          />
         </Col>
         <Col md={6}>
           <h2>酒店預約😉</h2>
-          <Bookings hotel={hotel}/>
+          <Bookings hotel={hotel} />
         </Col>
       </Row>
     </div>

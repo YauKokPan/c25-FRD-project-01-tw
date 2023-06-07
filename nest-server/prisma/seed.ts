@@ -23,10 +23,10 @@ async function resetPostgresSequences() {
   );
 
   await prisma.$executeRaw(
-    Prisma.sql`ALTER SEQUENCE "rooms_id_seq" RESTART WITH 1;`,
+    Prisma.sql`ALTER SEQUENCE "room_types_id_seq" RESTART WITH 1;`,
   );
   await prisma.$executeRaw(
-    Prisma.sql`ALTER SEQUENCE "room_types_id_seq" RESTART WITH 1;`,
+    Prisma.sql`ALTER SEQUENCE "rooms_id_seq" RESTART WITH 1;`,
   );
 
   await prisma.$executeRaw(
@@ -49,20 +49,30 @@ const main = async () => {
   await prisma.gallery.deleteMany();
   await prisma.hotel.deleteMany();
 
-  const insertUser = {
-    name: 'admin',
-    email: 'admin@sweethour.io',
-    password: await hashPassword('1234'),
-    phone: '12345678',
-    is_admin: true,
-  };
+  const insertUsers = [
+    {
+      name: 'admin',
+      email: 'admin@sweethour.io',
+      password: await hashPassword('1234'),
+      phone: '12345678',
+      is_admin: true,
+    },
+    {
+      name: 'Jason',
+      email: 'jason@sweethour.io',
+      password: await hashPassword('5678'),
+      phone: '87456789',
+      is_admin: false,
+    },
+  ];
 
-  await prisma.user.upsert({
-    where: { name: insertUser.name },
-    update: {},
-    create: { ...insertUser },
-  });
-
+  for (const user of insertUsers) {
+    await prisma.user.upsert({
+      where: { name: user.name },
+      update: {},
+      create: { ...user },
+    });
+  }
   //dummy data for hotelBooking
 
   const fileContent = fs.readFileSync(hotelSeedFile, 'utf8');

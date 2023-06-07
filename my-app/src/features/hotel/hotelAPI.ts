@@ -1,7 +1,12 @@
 import { useQuery } from "@tanstack/react-query";
 
+export interface GalleryKey {
+  hotel_img: string | undefined;
+  hotel_name: string | undefined;
+}
+
 export interface Hotel {
-  gallery_key: any;
+  gallery_key: GalleryKey[];
   id: number;
   name: string;
   address: string;
@@ -10,7 +15,7 @@ export interface Hotel {
   description: string;
   profile_pic: string;
   user_id: number;
-  google_map_address:string;
+  google_map_address: string;
 }
 
 export function UseHotelInfo() {
@@ -28,18 +33,18 @@ export function UseHotelInfo() {
             },
           }
         );
-        console.log("API response:", res);
+        // console.log("API response:", res);
 
         if (!res.ok) {
           throw new Error("Error fetching hotel data");
         }
 
         const result = await res.json();
-        console.log("Parsed JSON:", result);
+        // console.log("Parsed JSON:", result);
 
         return result || [];
       } catch (error) {
-        console.error("Error fetching hotel data:", error);
+        // console.error("Error fetching hotel data:", error);
         return [];
       }
     },

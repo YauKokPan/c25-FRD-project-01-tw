@@ -21,5 +21,9 @@ export class CreateBookingDto {
   //   @IsNotEmpty()
   total_price: number;
 
+  booking_phone: string;
+
+  booking_email: string;
+
   is_shown_up: boolean;
 }

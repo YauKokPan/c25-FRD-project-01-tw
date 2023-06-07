@@ -4,13 +4,12 @@ import "swiper/css";
 import "swiper/css/pagination";
 import { FreeMode, Pagination } from "swiper";
 import "swiper/css/free-mode";
+import { GalleryKey, Hotel } from "../hotel/hotelAPI";
 
 type GalleryProps = {
   hotel: {
-    gallery_key: {
-      hotel_img: string | undefined;
-      hotel_name: string | undefined;
-    }[];
+    id: Hotel["id"];
+    gallery_key: GalleryKey[];
   };
 };
 
@@ -28,13 +27,7 @@ const Gallery: React.FC<GalleryProps> = ({ hotel }) => {
         className="mySwiper"
       >
         {hotel.gallery_key.map(
-          (
-            galleryItem: {
-              hotel_img: string | undefined;
-              hotel_name: string | undefined;
-            },
-            index: React.Key | null | undefined
-          ) => (
+          (galleryItem: GalleryKey, index: Hotel["id"]) => (
             <SwiperSlide key={index}>
               <img
                 src={galleryItem.hotel_img}
