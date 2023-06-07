@@ -25,7 +25,7 @@ export default function App() {
         <Route path="/contact-us" element={<ContactUs />} />
         <Route path="/hotel-detail/:hotelId" element={<HotelDetail />} />
         <Route path="/user-profile" element={<UserProfile />} />
-        <Route path="/bookings" element={<Bookings />} />
+        {/* <Route path="/bookings" element={<Bookings />} /> */}
         <Route path="/search" element={<SearchPage />} />
 
         <Route path="*" element={<h1>404 NOT FOUND!!!!</h1>} />

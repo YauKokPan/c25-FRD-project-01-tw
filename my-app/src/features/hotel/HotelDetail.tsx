@@ -11,6 +11,7 @@ import { FreeMode, Pagination } from "swiper";
 import "swiper/css/free-mode";
 import Gallery from "../gallery/Gallery";
 import { Col, Row } from "react-bootstrap";
+import Bookings from "../bookings/Bookings";
 
 export default function HotelDetail() {
   let { hotelId } = useParams();
@@ -45,6 +46,7 @@ export default function HotelDetail() {
         </Col>
         <Col md={6}>
           <h2>酒店預約😉</h2>
+          <Bookings hotel={hotel}/>
         </Col>
       </Row>
     </div>
