@@ -24,7 +24,7 @@ export default function MyNavbar() {
           主頁
         </Nav.Link>
         <Nav.Link as={Link} to="/hotels">
-          搜尋酒店
+          酒店一覽
         </Nav.Link>
         <Nav.Link as={Link} to="/contact-us">
           聯絡我們
