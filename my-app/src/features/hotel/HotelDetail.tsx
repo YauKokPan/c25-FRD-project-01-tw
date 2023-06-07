@@ -4,10 +4,8 @@ import Title from "../title/Title";
 import { UseHotelInfo } from "./hotelAPI";
 import Equipment from "../equipment/Equipment";
 import "./HotelList.css";
-import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/pagination";
-import { FreeMode, Pagination } from "swiper";
 import "swiper/css/free-mode";
 import Gallery from "../gallery/Gallery";
 

@@ -10,6 +10,7 @@ import ContactUs from "./features/contact/ContactUs";
 import HotelDetail from "./features/hotel/HotelDetail";
 import UserProfile from "./features/userProfile/UserProfile";
 import Bookings from "./features/bookings/Bookings";
+import HomePage from "./features/home/HomePage";
 
 export default function App() {
   return (
@@ -18,7 +19,7 @@ export default function App() {
       <Routes>
         <Route path="/login" element={<Login />} />
 
-        <Route path="/" />
+        <Route path="/" element={<HomePage />} />
         <Route path="/hotels" element={<HotelList />} />
         <Route path="/register" element={<Register />} />
         <Route path="/contact-us" element={<ContactUs />} />
