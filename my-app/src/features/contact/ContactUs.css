@@ -1,0 +1,18 @@
+.contact-us {
+  color: #b85e6c;
+  text-align: center;
+}
+
+.contactus-background {
+  background-image: linear-gradient(
+      rgba(255, 255, 255, 0.5),
+      rgba(255, 255, 255, 0.5)
+    ),
+    url("../../../public/img/contactus-background.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.contactus-button {
+  width: 10vw;
+}

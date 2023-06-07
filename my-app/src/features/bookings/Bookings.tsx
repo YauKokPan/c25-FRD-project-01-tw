@@ -30,6 +30,7 @@ function Bookings() {
 
   const minTime = new Date(currentDate.getTime());
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   const calculateTotalHours = () => {
     if (startTime && endTime) {
       const diffInMs = endTime.getTime() - startTime.getTime();
@@ -117,6 +118,7 @@ function Bookings() {
             你預約酒店的總時數為: {totalHours.toFixed(0)} 小時
           </div>
         )}
+        <div className="">共需費用為: {} 元</div>
         <div>
           Email* : <input type="email" />
         </div>

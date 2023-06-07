@@ -29,6 +29,7 @@ model Hotel {
   address     String
   google_map_address String
   district    String
+  // tag String
   phone       String
   profile_pic String
   description String
@@ -48,6 +49,7 @@ model Room{
   hotel_id Int
   number Int
   hourly_rate Int
+  // available_time DateTime
   available Boolean
   updatedAt   DateTime @updatedAt @map("updated_at")
   equipment_key Equipment[] @relation("equipments_rooms_relation")
@@ -101,4 +103,12 @@ model Equipment{
   }
 
 
+model ContactUs{
+    id          Int      @id @default(autoincrement()) 
+    contact_name String
+    contact_email String
+    contact_phone String
+    contact_message String
 
+    @@map("contactus")
+}
