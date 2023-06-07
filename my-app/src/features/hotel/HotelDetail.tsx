@@ -9,6 +9,7 @@ import "swiper/css";
 import "swiper/css/pagination";
 import { FreeMode, Pagination } from "swiper";
 import "swiper/css/free-mode";
+import Gallery from "../gallery/Gallery";
 
 export default function HotelDetail() {
   let { hotelId } = useParams();
@@ -25,6 +26,7 @@ export default function HotelDetail() {
   return (
     <div className="content-container">
       <Title mainTitle="酒店資料" />
+      <Gallery hotel={hotel} />
       <h2>{hotel.name}</h2>
       <p>地址: {hotel.address}</p>
       <p>地區: {hotel.district}</p>
@@ -32,36 +34,6 @@ export default function HotelDetail() {
       <p>描述: {hotel.description}</p>
       <div dangerouslySetInnerHTML={{ __html: hotel.google_map_address }} />
       <Equipment />
-      <div className="hotel-gallery">
-      <Swiper
-        slidesPerView={3}
-        spaceBetween={30}
-        freeMode={true}
-        pagination={{
-          clickable: true,
-        }}
-        modules={[FreeMode, Pagination]}
-        className="mySwiper"
-      >
-          {hotel.gallery_key.map(
-            (
-              galleryItem: {
-                hotel_img: string | undefined;
-                hotel_name: string | undefined;
-              },
-              index: React.Key | null | undefined
-            ) => (
-              <SwiperSlide key={index}>
-                <img
-                  src={galleryItem.hotel_img}
-                  alt={galleryItem.hotel_name}
-                  className="img-fluid"
-                />
-              </SwiperSlide>
-            )
-          )}
-        </Swiper>
-      </div>
     </div>
   );
 }
