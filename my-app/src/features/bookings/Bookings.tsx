@@ -1,23 +1,24 @@
 import React, { useState, useEffect } from "react";
 import "./Bookings.css";
 import { useParams } from "react-router-dom";
-import { UseHotelInfo } from "../hotel/hotelAPI";
+import { Hotel, UseHotelInfo } from "../hotel/hotelAPI";
 import { Button, Form } from "react-bootstrap";
 import {
   DateTimePickerComponent,
   ChangeEventArgs,
 } from "@syncfusion/ej2-react-calendars";
 
-function Bookings() {
+function Bookings(props: {hotel: Hotel}) {
   const [startTime, setStartTime] = useState<Date | undefined>(undefined);
   const [endTime, setEndTime] = useState<Date | undefined>(undefined);
   const [totalHours, setTotalHours] = useState<number | undefined>(undefined);
 
   let { hotelId } = useParams();
   const hotelIdNum = Number(hotelId);
-  const hotelInfo = UseHotelInfo();
-
-  const hotel = hotelInfo.find((hotel) => hotel.id === hotelIdNum);
+  
+  // const hotelInfo = UseHotelInfo();
+  // const hotel = hotelInfo.find((hotel) => hotel.id === hotelIdNum);
+  const hotel = props.hotel
 
   const handleSubmit = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.preventDefault();
@@ -30,6 +31,7 @@ function Bookings() {
 
   const minTime = new Date(currentDate.getTime());
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   const calculateTotalHours = () => {
     if (startTime && endTime) {
       const diffInMs = endTime.getTime() - startTime.getTime();
@@ -117,6 +119,7 @@ function Bookings() {
             你預約酒店的總時數為: {totalHours.toFixed(0)} 小時
           </div>
         )}
+        <div className="">共需費用為: {} 元</div>
         <div>
           Email* : <input type="email" />
         </div>

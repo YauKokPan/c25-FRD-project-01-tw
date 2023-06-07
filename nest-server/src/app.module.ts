@@ -6,6 +6,7 @@ import { ConfigModule } from '@nestjs/config';
 import { HotelModule } from './hotel/hotel.module';
 import { BookingsModule } from './bookings/bookings.module';
 import { GalleryModule } from './gallery/gallery.module';
+import { ContactUsModule } from './contactUs/contactUs.module';
 
 @Module({
   imports: [
@@ -16,6 +17,7 @@ import { GalleryModule } from './gallery/gallery.module';
     HotelModule,
     BookingsModule,
     GalleryModule,
+    ContactUsModule,
   ],
   controllers: [],
   providers: [],

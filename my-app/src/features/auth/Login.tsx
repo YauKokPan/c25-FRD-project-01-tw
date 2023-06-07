@@ -45,7 +45,7 @@ export default function Login() {
     <div className="wrapper">
       <div className="login-form">
         <form onSubmit={handleSubmit}>
-          <Title mainTitle="登入" />
+          <Title mainTitle="💁‍♀️登入" />
           <div className="mb-3">
             <label>電郵地址或用戶名稱</label>
             <input

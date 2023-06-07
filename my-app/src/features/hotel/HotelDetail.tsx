@@ -8,6 +8,8 @@ import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/free-mode";
 import Gallery from "../gallery/Gallery";
+import { Col, Row } from "react-bootstrap";
+import Bookings from "../bookings/Bookings";
 
 export default function HotelDetail() {
   let { hotelId } = useParams();
@@ -23,15 +25,28 @@ export default function HotelDetail() {
 
   return (
     <div className="content-container">
-      <Title mainTitle="酒店資料" />
+      <Title mainTitle="酒店資料🏨" />
       <Gallery hotel={hotel} />
-      <h2>{hotel.name}</h2>
-      <p>地址: {hotel.address}</p>
-      <p>地區: {hotel.district}</p>
-      <p>電話: {hotel.phone}</p>
-      <p>描述: {hotel.description}</p>
-      <div dangerouslySetInnerHTML={{ __html: hotel.google_map_address }} />
-      <Equipment />
+      <Row>
+        <Col md={6}>
+          <h2>{hotel.name}💖</h2>
+          <p>地址: {hotel.address}</p>
+          <p>地區: {hotel.district}</p>
+          <p>電話: {hotel.phone}</p>
+          <p>描述: {hotel.description}</p>
+        </Col>
+        <Col md={6}>
+          <Equipment />
+        </Col>
+        <Col md={6}>
+          <h2>酒店地圖🗺️</h2>
+          <div className="map" dangerouslySetInnerHTML={{ __html: hotel.google_map_address }} />
+        </Col>
+        <Col md={6}>
+          <h2>酒店預約😉</h2>
+          <Bookings hotel={hotel}/>
+        </Col>
+      </Row>
     </div>
   );
 }

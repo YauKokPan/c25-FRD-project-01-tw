@@ -8,7 +8,7 @@ import Title from "../title/Title";
 export default function Equipment() {
   return (
     <div className='equipment'>
-      <div className='equipment-title'>酒店設備</div>
+      <h2>酒店提供👇</h2>
       <div className='equipment-icons'>
         <div className='equipment-item'>
           <TbWifi />

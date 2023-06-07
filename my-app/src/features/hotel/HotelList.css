@@ -1,24 +1,11 @@
 .hotel-img{
     width: 100%;
-    height: 380px;
+    height: 500px;
     object-fit: cover;
   }
   
   .hotel-card{
     margin-bottom: 10px;
-  }
-
-  .hotel-gallery {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    overflow: hidden;
-  }
-  
-  .hotel-gallery img {
-    width: 100%;
-    height: 450px;
-    object-fit: cover;
   }
 
   .content-container{
@@ -46,4 +33,16 @@
     width: 500px;
     height: 100%;
     object-fit: cover;
+  }
+
+  .pagination{
+    justify-content: center;
+  }
+
+  h2{
+    text-align: center;
+  }
+
+  .map{
+    width: 600px;
   }

@@ -40,7 +40,7 @@ export default function Register() {
     <div className="wrapper">
       <div className="register-form">
         <form onSubmit={handleSubmit}>
-          <Title mainTitle="註冊" />
+          <Title mainTitle="💁‍♂️註冊" />
           <div className="mb-3">
             <label>姓名</label>
             <input

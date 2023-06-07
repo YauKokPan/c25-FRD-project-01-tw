@@ -1,18 +1,21 @@
 .equipment {
-  display: flex;
+
   flex-direction: column;
   align-items: center;
   height: 100%;
 }
 
 .equipment-title {
-  font-size: 48px;
-  margin-bottom: 20px;
+  font-size: 36px;
+  margin-left: 25px;
+
 }
 
 .equipment-icons {
   display: flex;
   flex-direction: row;
+  justify-content: center;
+  padding-top: 20px;
 }
 
 .equipment-item {

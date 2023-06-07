@@ -1,0 +1,13 @@
+.hotel-img{
+    width: 100%;
+    height: 400px;
+    object-fit: cover;
+  }
+  
+  .hotel-card{
+    margin-bottom: 10px;
+  }
+
+  .hotel-list{
+    display: flex;
+  }
