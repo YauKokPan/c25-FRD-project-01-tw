@@ -47,10 +47,8 @@ export default function ContactUs() {
       <div className="contactus-background">
         <div className="register-form">
           <form onSubmit={handleSubmit}>
-            <Title mainTitle="♥️聯絡我們♥️" />
-            <div className="contact-us">
-              如果想提交時鐘酒店資料或對酒店資料有任何疑問，請以以下聯絡方式聯絡。
-            </div>
+            <Title mainTitle="聯絡我們" />
+
             <div className="mb-3">
               <label>姓名</label>
               <input
