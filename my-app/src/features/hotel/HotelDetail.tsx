@@ -10,6 +10,8 @@ import "swiper/css/free-mode";
 import Gallery from "../gallery/Gallery";
 import { Col, Row } from "react-bootstrap";
 import Bookings from "../bookings/Bookings";
+import RatingForm from "../rating/RatingForm";
+
 
 export default function HotelDetail() {
   let { hotelId } = useParams();
@@ -48,6 +50,10 @@ export default function HotelDetail() {
         <Col md={6}>
           <h2>酒店預約😉</h2>
           <Bookings hotel={hotel} />
+        </Col>
+        <Col md={6}>
+          <h2>發表評論👍</h2>
+          <RatingForm/>
         </Col>
       </Row>
     </div>
