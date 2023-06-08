@@ -19,7 +19,7 @@ export default function HomePage() {
   return (
     <>
       <div className="background-image search-container"></div>
-      <Title mainTitle="❤️‍🔥熱門時鐘酒店❤️‍🔥" />
+      <Title mainTitle="❤️‍🔥熱門之選❤️‍🔥" />
 
       <Grid container rowSpacing={2} columnSpacing={{ xs: 2, sm: 4, md: 8 }}>
         {hotelInfo.slice(140, 146).map((hotel) => (
