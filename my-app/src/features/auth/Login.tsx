@@ -19,7 +19,7 @@ export default function Login() {
     e.preventDefault();
     const result = await localLogin(name, email, password);
     if (result) {
-      dispatch(login(email || name));
+      dispatch(login(email));
       navigate("/");
     }
   };

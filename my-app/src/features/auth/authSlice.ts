@@ -8,7 +8,7 @@ interface IAuthState {
 
 const initialState: IAuthState = {
   isAuth: localStorage.getItem("token") !== null,
-  username: "",
+  username: localStorage.getItem("username") || "",
 };
 
 export const authSlice = createSlice({
@@ -18,11 +18,13 @@ export const authSlice = createSlice({
     login: (state, action: PayloadAction<string>) => {
       state.isAuth = true;
       state.username = action.payload;
+      localStorage.setItem("username", action.payload);
     },
     logout: (state) => {
       state.isAuth = false;
       state.username = "";
       localStorage.removeItem("token");
+      localStorage.removeItem("username");
     },
   },
 });
