@@ -37,7 +37,7 @@ async function resetPostgresSequences() {
   );
 }
 
-const hotelSeedFile = join(process.cwd(), './data/hotels_updated.csv');
+const hotelSeedFile = join(process.cwd(), './data/hotels.csv');
 const prisma = new PrismaClient();
 const main = async () => {
   // delete table data first before seeding
