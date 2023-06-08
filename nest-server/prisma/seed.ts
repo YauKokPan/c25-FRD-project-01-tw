@@ -73,7 +73,6 @@ const main = async () => {
       create: { ...user },
     });
   }
-  //dummy data for hotelBooking
 
   const fileContent = fs.readFileSync(hotelSeedFile, 'utf8');
   const parsedData = Papa.parse(fileContent, {
@@ -81,11 +80,20 @@ const main = async () => {
     skipEmptyLines: true,
   });
 
-  const hotels = parsedData.data;
+  interface HotelRecord {
+    user_id: number;
+    name: string;
+    address: string;
+    district: string;
+    google_map_address: string;
+    phone: string;
+    profile_pic: string;
+    description: string;
+  }
+
+  const hotels: HotelRecord[] = parsedData.data;
 
   for (const hotelRecord of hotels) {
-    const userId = parseInt(hotelRecord.user_id);
-
     await prisma.hotel.create({
       data: {
         name: hotelRecord.name,
@@ -95,7 +103,7 @@ const main = async () => {
         phone: hotelRecord.phone,
         profile_pic: hotelRecord.profile_pic,
         description: hotelRecord.description,
-        user_id: userId,
+        user_id: +hotelRecord.user_id,
       },
     });
   }

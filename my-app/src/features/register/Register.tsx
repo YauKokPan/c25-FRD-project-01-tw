@@ -90,9 +90,9 @@ export default function Register() {
             </button>
           </div>
 
-          <p className="forgot-password text-right">
-            Already registered <a href="/sign-in">sign in?</a>
-          </p>
+          <h5 className="forgot-password text-right">
+            已有帳戶？<a href="/login">立即登入</a>
+          </h5>
         </form>
       </div>
     </div>
