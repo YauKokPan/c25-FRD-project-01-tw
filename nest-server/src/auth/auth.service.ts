@@ -18,24 +18,26 @@ export class AuthService {
       where: {
         OR: [{ name: loginDto.name }, { email: loginDto.email }],
       },
-      select: { id: true, password: true },
+      select: { id: true, password: true, name: true, email: true },
     });
 
     if (!user || !(await checkPassword(loginDto.password, user.password))) {
       throw new UnauthorizedException();
     }
 
-    return this.signToken(user.id);
+    return this.signToken(user);
   }
 
-  async signToken(userId: number) {
-    const payload = { sub: userId };
+  async signToken(user: { id: number; name: string; email: string }) {
+    const payload = { sub: user.id };
     console.log(this.config.get('JWT_SECRET'));
     return {
       access_token: await this.jwt.signAsync(payload, {
         expiresIn: '1d',
         secret: this.config.get('JWT_SECRET'),
       }),
+      name: user.name,
+      email: user.email,
     };
   }
 

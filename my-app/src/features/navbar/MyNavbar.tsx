@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import { Link } from "react-router-dom";
@@ -7,15 +7,22 @@ import { useAppDispatch } from "../../app/hook";
 import { Form, Button } from "react-bootstrap";
 import { logout } from "../auth/authSlice";
 import { AuthGuard } from "../auth/AuthGuard";
-import { useAppSelector } from "../../app/hook";
-import { IRootState } from "../../app/store";
+// import { useAppSelector } from "../../app/hook";
+// import { IRootState } from "../../app/store";
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { getUserName } from "../auth/authAPI";
 
 export default function MyNavbar() {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  const username = useAppSelector((state: IRootState) => state.auth.username);
+  // const username = useAppSelector((state: IRootState) => state.auth.username);
+
+  const [username, setUsername] = useState<string | null>("");
+
+  useEffect(() => {
+    setUsername(getUserName());
+  });
+
   const guardPage = AuthGuard();
   const [searchQuery, setSearchQuery] = useState("");
   const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
