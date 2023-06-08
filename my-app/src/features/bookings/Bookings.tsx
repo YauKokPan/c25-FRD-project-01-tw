@@ -72,7 +72,6 @@ function Bookings(props: {hotel: Hotel}) {
 
   return (
     <>
-      <h2>Hotel Bookings</h2>
       <Form>
         <div>預約酒店為：{hotel?.name}</div>
         <div>
