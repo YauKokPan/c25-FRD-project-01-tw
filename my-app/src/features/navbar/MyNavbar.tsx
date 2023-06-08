@@ -16,14 +16,13 @@ export default function MyNavbar() {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   // const username = useAppSelector((state: IRootState) => state.auth.username);
-
+  const guardPage = AuthGuard();
   const [username, setUsername] = useState<string | null>("");
 
   useEffect(() => {
     setUsername(getUserName());
-  });
+  }, [guardPage]);
 
-  const guardPage = AuthGuard();
   const [searchQuery, setSearchQuery] = useState("");
   const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchQuery(event.target.value);
@@ -32,6 +31,7 @@ export default function MyNavbar() {
   const handleSearchSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     navigate(`/search?query=${searchQuery}`);
+    setSearchQuery("");
   };
 
   return (

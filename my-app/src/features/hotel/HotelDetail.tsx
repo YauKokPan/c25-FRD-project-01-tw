@@ -11,7 +11,7 @@ import Gallery from "../gallery/Gallery";
 import { Col, Row } from "react-bootstrap";
 import Bookings from "../bookings/Bookings";
 import RatingForm from "../rating/RatingForm";
-
+import BookingSlot from "../bookings/BookingTesting";
 
 export default function HotelDetail() {
   let { hotelId } = useParams();
@@ -53,7 +53,11 @@ export default function HotelDetail() {
         </Col>
         <Col md={6}>
           <h2>發表評論👍</h2>
-          <RatingForm/>
+          <RatingForm />
+        </Col>
+        <Col md={6}>
+          <h2>預約testing</h2>
+          <BookingSlot hotel={hotel} />
         </Col>
       </Row>
     </div>
