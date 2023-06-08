@@ -5,6 +5,7 @@ import Title from "../title/Title";
 import { useNavigate } from "react-router-dom";
 import { contactUsAPI } from "./contactUsAPI";
 import emailjs from '@emailjs/browser';
+import { Form } from "react-bootstrap";
 
 export default function ContactUs() {
   const navigate = useNavigate();
@@ -12,6 +13,7 @@ export default function ContactUs() {
   const [contact_email, setContact_email] = useState("");
   const [contact_phone, setContact_phone] = useState("");
   const [contact_message, setContact_message] = useState("");
+  const [contact_issue, setContact_issue] = useState("");
 
   const handleNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setContact_name(event.target.value);
@@ -25,8 +27,16 @@ export default function ContactUs() {
     setContact_phone(event.target.value);
   };
 
-  const handleMessageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleMessageChange = (
+    event: React.ChangeEvent<HTMLTextAreaElement>
+  ) => {
     setContact_message(event.target.value);
+  };
+
+  const handleIssueChange = (
+    event: React.ChangeEvent<HTMLSelectElement>
+  ) => {
+    setContact_issue(event.target.value);
   };
 
   const sendEmail = (formData: Record<string, unknown> | undefined) => {
@@ -38,16 +48,15 @@ export default function ContactUs() {
         "RNXy4IKK-6Gbe5PCe"
       )
       .then(
-        (result) => {
+        (result: { text: any; }) => {
           console.log(result.text);
           alert("Email sent successfully!");
         },
-        (error) => {
+        (error: { text: any; message: string; }) => {
           console.log(error.text);
           alert("Error sending email: " + error.message);
         }
       );
-
   };
 
   const handleSubmit = async (e: FormEvent) => {
@@ -64,6 +73,7 @@ export default function ContactUs() {
         user_email: contact_email,
         user_phone: contact_phone,
         message: contact_message,
+        issue: contact_issue,
       };
       sendEmail(formData);
       navigate("/");
@@ -114,11 +124,27 @@ export default function ContactUs() {
                 onChange={handlePhoneChange}
               />
             </div>
+            <div className="mb-3">
+              <label>問題回報</label>
+              <Form.Select
+                aria-label="Default select example"
+                required 
+                name="issue"
+                value={contact_issue} 
+                onChange={handleIssueChange} 
+              >
+                <option value="">請選擇回報事項</option> 
+                <option value="加入酒店到平台">加入酒店到平台</option>
+                <option value="酒店資料與實際不相符">酒店資料與實際不相符</option>
+                <option value="付款或退款問題">付款或退款問題</option>
+                <option value="其他">其他</option>
+              </Form.Select>
+              <div className="invalid-feedback">請選擇回報事項</div> 
+            </div>
 
             <div className="mb-3">
               <label>Message</label>
-              <input
-                type="text"
+              <textarea
                 required
                 className="form-control"
                 placeholder="給我們的訊息"
