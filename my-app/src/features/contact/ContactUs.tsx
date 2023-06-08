@@ -4,6 +4,7 @@ import { useState, FormEvent } from "react";
 import Title from "../title/Title";
 import { useNavigate } from "react-router-dom";
 import { contactUsAPI } from "./contactUsAPI";
+import emailjs from '@emailjs/browser';
 
 export default function ContactUs() {
   const navigate = useNavigate();
@@ -28,6 +29,27 @@ export default function ContactUs() {
     setContact_message(event.target.value);
   };
 
+  const sendEmail = (formData: Record<string, unknown> | undefined) => {
+    emailjs
+      .send(
+        "service_lmytsyp",
+        "template_tsi6b48",
+        formData,
+        "RNXy4IKK-6Gbe5PCe"
+      )
+      .then(
+        (result) => {
+          console.log(result.text);
+          alert("Email sent successfully!");
+        },
+        (error) => {
+          console.log(error.text);
+          alert("Error sending email: " + error.message);
+        }
+      );
+
+  };
+
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     const result = await contactUsAPI(
@@ -37,6 +59,13 @@ export default function ContactUs() {
       contact_message
     );
     if (result) {
+      const formData = {
+        user_name: contact_name,
+        user_email: contact_email,
+        user_phone: contact_phone,
+        message: contact_message,
+      };
+      sendEmail(formData);
       navigate("/");
       alert("成功提交");
     }
@@ -55,6 +84,7 @@ export default function ContactUs() {
                 type="text"
                 className="form-control"
                 placeholder="請輸入名字"
+                name="user_name"
                 value={contact_name}
                 onChange={handleNameChange}
               />
@@ -66,6 +96,7 @@ export default function ContactUs() {
                 type="email"
                 className="form-control"
                 placeholder="請輸入電郵地址"
+                name="user_email"
                 value={contact_email}
                 onChange={handleEmailChange}
               />
@@ -78,6 +109,7 @@ export default function ContactUs() {
                 required
                 className="form-control"
                 placeholder="請輸入電話號碼"
+                name="user_phone"
                 value={contact_phone}
                 onChange={handlePhoneChange}
               />
@@ -90,6 +122,7 @@ export default function ContactUs() {
                 required
                 className="form-control"
                 placeholder="給我們的訊息"
+                name="message"
                 value={contact_message}
                 onChange={handleMessageChange}
               />
