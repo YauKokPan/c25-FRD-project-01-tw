@@ -38,7 +38,7 @@ export default function RatingForm() {
     <div className="rating-form">
       <form onSubmit={handleSubmit}>
         <label htmlFor="name">
-          <div className="sub-title">你的名字🙆‍♀️:</div>
+          <div className="sub-title">你的暱稱🙆‍♀️:</div>
           <input
             type="text"
             id="name"
