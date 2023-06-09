@@ -1,7 +1,7 @@
 import React from "react";
 import { useParams } from "react-router-dom";
 import Title from "../title/Title";
-import { UseHotelInfo } from "./hotelAPI";
+import { UseHotelInfo, useHotelDetail } from "./hotelAPI";
 import Equipment from "../equipment/Equipment";
 import "./HotelList.css";
 import "swiper/css";
@@ -9,24 +9,32 @@ import "swiper/css/pagination";
 import "swiper/css/free-mode";
 import Gallery from "../gallery/Gallery";
 import { Col, Row } from "react-bootstrap";
-import Bookings from "../bookings/Bookings";
 import RatingForm from "../rating/RatingForm";
 import BookingSlot from "../bookings/BookingTesting";
 
 export default function HotelDetail() {
   let { hotelId } = useParams();
   const hotelIdNum = Number(hotelId);
-  const hotelInfo = UseHotelInfo();
 
   // Find the specific hotel using the hotelId
-  const hotel = hotelInfo.find((hotel) => hotel.id === hotelIdNum);
+  const {
+    isLoading,
+    error,
+    data: hotel,
+    isFetching,
+  } = useHotelDetail(hotelIdNum);
 
-  if (!hotel) {
+  if (isLoading) {
     return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <div>Failed to load hotel details: {String(error)}</div>;
   }
 
   return (
     <div className="content-container">
+      <p>fetching?: {isFetching ? "yes" : "no"}</p>
       <Title mainTitle="酒店資料🏨" />
       <Gallery hotel={hotel} />
       <Row>
@@ -49,15 +57,11 @@ export default function HotelDetail() {
         </Col>
         <Col md={6}>
           <h2>酒店預約😉</h2>
-          <Bookings hotel={hotel} />
+          <BookingSlot hotel={hotel} />
         </Col>
         <Col md={6}>
           <h2>發表評論👍</h2>
           <RatingForm />
-        </Col>
-        <Col md={6}>
-          <h2>預約testing</h2>
-          <BookingSlot hotel={hotel} />
         </Col>
       </Row>
     </div>

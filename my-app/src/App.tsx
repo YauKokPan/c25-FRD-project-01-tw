@@ -12,6 +12,7 @@ import UserProfile from "./features/userProfile/UserProfile";
 // import Bookings from "./features/bookings/Bookings";
 import HomePage from "./features/home/HomePage";
 import SearchPage from "./features/searchPage/SearchPage";
+// import "./ionic";
 
 export default function App() {
   return (

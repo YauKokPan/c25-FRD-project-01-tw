@@ -1,4 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
+import { get } from "../../api";
 
 export interface GalleryKey {
   hotel_img: string | undefined;
@@ -50,9 +51,23 @@ export function UseHotelInfo() {
     },
   });
 
-  if (isLoading || isFetching || error || !data) {
-    return [];
-  }
-  console.log("Data:", data);
-  return data;
+  return data || [];
+
+  // if (isLoading || isFetching || error || !data) {
+  //   return [];
+  // }
+  // console.log("Data:", data);`
+  // return data;
+}
+
+export function useHotelDetail(id: number) {
+  return useQuery<Hotel, Error>({
+    queryKey: ["hotelInfo", "hotel:" + id],
+    queryFn: async () => {
+      let hotels = (await get("/hotel/allHotels")) as Hotel[];
+      let hotel = hotels.find((hotel) => hotel.id == id);
+      if (!hotel) throw new Error("Hotel not found");
+      return hotel;
+    },
+  });
 }
