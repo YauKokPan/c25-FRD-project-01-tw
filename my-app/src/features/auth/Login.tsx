@@ -12,6 +12,8 @@ export default function Login() {
   const [email, setEmail] = useState("");
   const [name] = useState("");
   const [password, setPassword] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
+  const [successMessage, setSuccessMessage] = useState("");
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
 
@@ -20,7 +22,14 @@ export default function Login() {
     const result = await localLogin(name, email, password);
     if (result) {
       dispatch(login(email));
-      navigate("/");
+      setSuccessMessage("Login successful");
+      setErrorMessage("");
+      setTimeout(() => {
+        setSuccessMessage("");
+        navigate("/");
+      }, 2000);
+    } else {
+      setErrorMessage("Invalid email or password");
     }
   };
 
@@ -37,6 +46,8 @@ export default function Login() {
       <div className="login-form">
         <form onSubmit={handleSubmit}>
           <Title mainTitle="💁‍♀️登入" />
+          {errorMessage && <p className="text-danger">{errorMessage}</p>}
+          {successMessage && <p className="text-success">{successMessage}</p>}
           <div className="mb-3">
             <label>電郵</label>
             <input

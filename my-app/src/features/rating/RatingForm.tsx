@@ -3,17 +3,14 @@ import Rating from "@mui/material/Rating";
 import Box from "@mui/material/Box";
 import StarIcon from "@mui/icons-material/Star";
 import "./RatingForm.css";
+import { useParams } from "react-router-dom";
+import { Hotel, UseHotelInfo } from "../hotel/hotelAPI";
 
 const labels: { [index: string]: string } = {
-  0.5: "極差",
-  1: "非常差",
-  1.5: "差",
+  1: "極差",
   2: "差勁",
-  2.5: "一般",
   3: "尚可",
-  3.5: "好",
   4: "非常好",
-  4.5: "卓越",
   5: "完美",
 };
 
@@ -38,7 +35,7 @@ export default function RatingForm() {
     <div className="rating-form">
       <form onSubmit={handleSubmit}>
         <label htmlFor="name">
-          <div className="sub-title">你的名字🙆‍♀️:</div>
+          <div className="sub-title">你的暱稱🙆‍♀️:</div>
           <input
             type="text"
             id="name"
@@ -59,7 +56,7 @@ export default function RatingForm() {
             defaultValue={2}
             size="large"
             value={value}
-            precision={0.5}
+            precision={1}
             getLabelText={getLabelText}
             onChange={(event, newValue) => {
               setValue(newValue);
