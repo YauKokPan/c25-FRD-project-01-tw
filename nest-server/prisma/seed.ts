@@ -19,17 +19,6 @@ async function resetPostgresSequences() {
   );
 
   await prisma.$executeRaw(
-    Prisma.sql`ALTER SEQUENCE "equipments_id_seq" RESTART WITH 1;`,
-  );
-
-  await prisma.$executeRaw(
-    Prisma.sql`ALTER SEQUENCE "room_types_id_seq" RESTART WITH 1;`,
-  );
-  await prisma.$executeRaw(
-    Prisma.sql`ALTER SEQUENCE "rooms_id_seq" RESTART WITH 1;`,
-  );
-
-  await prisma.$executeRaw(
     Prisma.sql`ALTER SEQUENCE "gallery_id_seq" RESTART WITH 1;`,
   );
   await prisma.$executeRaw(
@@ -43,9 +32,6 @@ const main = async () => {
   // delete table data first before seeding
   await resetPostgresSequences();
   await prisma.booking.deleteMany();
-  await prisma.equipment.deleteMany();
-  await prisma.room.deleteMany();
-  await prisma.roomType.deleteMany();
   await prisma.gallery.deleteMany();
   await prisma.hotel.deleteMany();
 
@@ -116,41 +102,6 @@ const main = async () => {
       for (const row of galleryResults) {
         row['hotel_id'] = +row['hotel_id'];
         await prisma.gallery.create({ data: row });
-      }
-    });
-
-  const roomTypesResults = [];
-  fs.createReadStream(__dirname + '/../data/room_types.csv')
-    .pipe(csv())
-    .on('data', (data) => roomTypesResults.push(data))
-    .on('end', async () => {
-      for (const row of roomTypesResults) {
-        await prisma.roomType.create({ data: row });
-      }
-    });
-
-  const roomResults = [];
-  fs.createReadStream(__dirname + '/../data/rooms.csv')
-    .pipe(csv())
-    .on('data', (data) => roomResults.push(data))
-    .on('end', async () => {
-      for (const row of roomResults) {
-        row['hotel_id'] = +row['hotel_id'];
-        row['number'] = +row['number'];
-        row['hourly_rate'] = +row['hourly_rate'];
-        row['available'] = Boolean(row['available']);
-        row['room_type_id'] = +row['room_type_id'];
-        await prisma.room.create({ data: row });
-      }
-    });
-
-  const equipmentResults = [];
-  fs.createReadStream(__dirname + '/../data/equipments.csv')
-    .pipe(csv())
-    .on('data', (data) => equipmentResults.push(data))
-    .on('end', async () => {
-      for (const row of equipmentResults) {
-        await prisma.equipment.create({ data: row });
       }
     });
 };

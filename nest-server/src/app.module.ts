@@ -7,6 +7,7 @@ import { HotelModule } from './hotel/hotel.module';
 import { BookingsModule } from './bookings/bookings.module';
 import { GalleryModule } from './gallery/gallery.module';
 import { ContactUsModule } from './contactUs/contactUs.module';
+import { CommentsModule } from './comments/comments.module';
 
 @Module({
   imports: [
@@ -18,6 +19,8 @@ import { ContactUsModule } from './contactUs/contactUs.module';
     BookingsModule,
     GalleryModule,
     ContactUsModule,
+    CommentsModule,
+    CommentsModule,
   ],
   controllers: [],
   providers: [],

@@ -11,7 +11,7 @@ export class BookingsService {
   async createBooking(data: CreateBookingDto): Promise<Booking> {
     const {
       user_id,
-      room_id,
+      hotel_id,
       start_time,
       end_time,
       total_hours,
@@ -23,7 +23,7 @@ export class BookingsService {
     const booking = await this.prisma.booking.create({
       data: {
         user_booking_key: { connect: { id: user_id } },
-        room_booking_key: { connect: { id: room_id } },
+        hotel_booking_key: { connect: { id: hotel_id } },
         start_time,
         end_time,
         total_hours,

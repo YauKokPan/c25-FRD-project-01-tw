@@ -5,7 +5,7 @@ export class CreateBookingDto {
   user_id: number;
 
   //   @IsNotEmpty()
-  room_id: number;
+  hotel_id: number;
 
   //   @IsNotEmpty()
   @IsDateString()
