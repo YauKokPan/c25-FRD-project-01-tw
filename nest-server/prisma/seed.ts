@@ -75,6 +75,8 @@ const main = async () => {
     phone: string;
     profile_pic: string;
     description: string;
+    room_number: number;
+    hourly_rate: number;
   }
 
   const hotels: HotelRecord[] = parsedData.data;
@@ -90,6 +92,8 @@ const main = async () => {
         profile_pic: hotelRecord.profile_pic,
         description: hotelRecord.description,
         user_id: +hotelRecord.user_id,
+        room_number: +hotelRecord.room_number,
+        hourly_rate: +hotelRecord.hourly_rate,
       },
     });
   }

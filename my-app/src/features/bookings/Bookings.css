@@ -1,5 +1,3 @@
-@import url("http://cdn.syncfusion.com/ej2/material.css");
-
 div {
   margin: 10px 0;
 }
@@ -8,4 +6,13 @@ div {
   margin: 20px 0;
   font-weight: 600;
   font-size: 2rem;
+}
+
+.timeslots-container {
+  margin-bottom: 0;
+}
+
+.reset-btn {
+  margin-top: 0;
+  margin-bottom: 20px;
 }

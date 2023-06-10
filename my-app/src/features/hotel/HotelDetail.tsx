@@ -10,19 +10,14 @@ import "swiper/css/free-mode";
 import Gallery from "../gallery/Gallery";
 import { Col, Row } from "react-bootstrap";
 import RatingForm from "../rating/RatingForm";
-import BookingSlot from "../bookings/BookingTesting";
+import BookingSlot from "../bookings/Bookings";
 
 export default function HotelDetail() {
   let { hotelId } = useParams();
   const hotelIdNum = Number(hotelId);
 
   // Find the specific hotel using the hotelId
-  const {
-    isLoading,
-    error,
-    data: hotel,
-    isFetching,
-  } = useHotelDetail(hotelIdNum);
+  const { isLoading, error, data: hotel } = useHotelDetail(hotelIdNum);
 
   if (isLoading) {
     return <div>Loading...</div>;
@@ -34,7 +29,6 @@ export default function HotelDetail() {
 
   return (
     <div className="content-container">
-      <p>fetching?: {isFetching ? "yes" : "no"}</p>
       <Title mainTitle="酒店資料🏨" />
       <Gallery hotel={hotel} />
       <Row>
