@@ -1,7 +1,7 @@
 import React from "react";
 import { useParams } from "react-router-dom";
 import Title from "../title/Title";
-import { UseHotelInfo, useHotelDetail } from "./hotelAPI";
+import { useHotelDetail } from "./hotelAPI";
 import Equipment from "../equipment/Equipment";
 import "./HotelList.css";
 import "swiper/css";
@@ -59,9 +59,8 @@ export default function HotelDetail() {
           <h2>酒店預約😉</h2>
           <BookingSlot hotel={hotel} />
         </Col>
-        <Col md={6}>
-          <h2>發表評論👍</h2>
-          <RatingForm />
+        <Col md={{ span: 4, offset: 4 }}>
+          <RatingForm hotel={hotel} />
         </Col>
       </Row>
     </div>

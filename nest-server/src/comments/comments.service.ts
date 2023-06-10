@@ -28,8 +28,13 @@ export class CommentsService {
     return `This action returns all comments`;
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} comment`;
+  async findOne(hotelId: number): Promise<Comment[]> {
+    return await this.prisma.comment.findMany({
+      where: {
+        user_hotel_booking_key: { id: hotelId },
+        is_deleted: false,
+      },
+    });
   }
 
   update(id: number, updateCommentDto: UpdateCommentDto) {

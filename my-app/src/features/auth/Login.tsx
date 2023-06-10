@@ -4,7 +4,7 @@ import "./Login.css";
 import Title from "../title/Title";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "../../app/store";
-import { localLogin } from "./authAPI";
+import { getUserId, localLogin } from "./authAPI";
 import { login } from "./authSlice";
 import { useNavigate } from "react-router-dom";
 
@@ -19,15 +19,18 @@ export default function Login() {
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    const result = await localLogin(name, email, password);
+
+    const userIdNum = Number(getUserId());
+
+    const result = await localLogin(userIdNum, name, email, password);
     if (result) {
-      dispatch(login(email));
+      dispatch(login(getUserId()));
       setSuccessMessage("Login successful");
       setErrorMessage("");
       setTimeout(() => {
         setSuccessMessage("");
         navigate("/");
-      }, 2000);
+      }, 1000);
     } else {
       setErrorMessage("Invalid email or password");
     }

@@ -1,3 +1,5 @@
+import { API_ORIGIN } from "../../api";
+
 export async function ratingAPI(
   user_id: number,
   hotel_id: number,
@@ -19,4 +21,12 @@ export async function ratingAPI(
     }),
   });
   return res;
+}
+
+export async function fetchComments(hotelId: number) {
+  const response = await fetch(`${API_ORIGIN}/comments/${hotelId}`);
+  if (!response.ok) {
+    throw new Error(`Error fetching comments: ${response.statusText}`);
+  }
+  return await response.json();
 }

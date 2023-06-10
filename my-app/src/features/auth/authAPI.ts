@@ -1,4 +1,5 @@
 export async function localLogin(
+  id: number,
   name: string,
   email: string,
   password: string
@@ -9,6 +10,7 @@ export async function localLogin(
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
+      id,
       name,
       email,
       password,
@@ -17,6 +19,7 @@ export async function localLogin(
 
   const result = await res.json();
   if (res.status === 200) {
+    localStorage.setItem("id", result.id);
     localStorage.setItem("token", result.access_token);
     localStorage.setItem("name", result.name);
     localStorage.setItem("email", result.email);
@@ -29,4 +32,8 @@ export async function localLogin(
 
 export function getUserName() {
   return localStorage.getItem("name");
+}
+
+export function getUserId(): string {
+  return localStorage.getItem("id")!;
 }

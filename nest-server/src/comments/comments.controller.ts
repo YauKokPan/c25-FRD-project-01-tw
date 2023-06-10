@@ -28,9 +28,9 @@ export class CommentsController {
     return this.commentsService.findAll();
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.commentsService.findOne(+id);
+  @Get(':hotelId')
+  async findOne(@Param('hotelId') hotelId: string) {
+    return await this.commentsService.findOne(+hotelId);
   }
 
   @Patch(':id')

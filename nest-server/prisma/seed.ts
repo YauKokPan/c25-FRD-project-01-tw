@@ -22,6 +22,9 @@ async function resetPostgresSequences() {
     Prisma.sql`ALTER SEQUENCE "gallery_id_seq" RESTART WITH 1;`,
   );
   await prisma.$executeRaw(
+    Prisma.sql`ALTER SEQUENCE "comments_id_seq" RESTART WITH 1;`,
+  );
+  await prisma.$executeRaw(
     Prisma.sql`ALTER SEQUENCE "hotels_id_seq" RESTART WITH 1;`,
   );
 }
@@ -33,6 +36,7 @@ const main = async () => {
   await resetPostgresSequences();
   await prisma.booking.deleteMany();
   await prisma.gallery.deleteMany();
+  await prisma.comment.deleteMany();
   await prisma.hotel.deleteMany();
 
   const insertUsers = [
