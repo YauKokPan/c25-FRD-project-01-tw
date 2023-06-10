@@ -17,10 +17,12 @@ export interface Hotel {
   profile_pic: string;
   user_id: number;
   google_map_address: string;
+  room_number: number;
+  hourly_rate: number;
 }
 
 export function UseHotelInfo() {
-  const { data, error, isLoading, isFetching } = useQuery<Hotel[], Error>({
+  const { data } = useQuery<Hotel[], Error>({
     queryKey: ["hotelInfo"],
     queryFn: async () => {
       try {
@@ -30,7 +32,7 @@ export function UseHotelInfo() {
             method: "GET",
             headers: {
               "Content-Type": "application/json",
-              Authorization: `Bearer ${localStorage.getItem("token")}`,
+              "Authorization": `Bearer ${localStorage.getItem("token")}`,
             },
           }
         );
@@ -65,7 +67,7 @@ export function useHotelDetail(id: number) {
     queryKey: ["hotelInfo", "hotel:" + id],
     queryFn: async () => {
       let hotels = (await get("/hotel/allHotels")) as Hotel[];
-      let hotel = hotels.find((hotel) => hotel.id == id);
+      let hotel = hotels.find((hotel) => hotel.id === id);
       if (!hotel) throw new Error("Hotel not found");
       return hotel;
     },
