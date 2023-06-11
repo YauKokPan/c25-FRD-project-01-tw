@@ -45,6 +45,16 @@ function formatDate(date: Date) {
   return `${year}-${month}-${day} ${hour}:${minute}`;
 }
 
+const parseDateString = (dateString: string) => {
+  const parsedDate = new Date(dateString);
+  if (isNaN(parsedDate.getTime())) {
+    // Handle invalid date format
+    console.error(`Invalid date format: ${dateString}`);
+    return new Date(); // Return the current date as a fallback
+  }
+  return parsedDate;
+};
+
 const StyledRating = styled(Rating)({
   "& .MuiRating-iconFilled": {
     color: "#ff6d75",
@@ -97,9 +107,14 @@ const RatingForm: React.FC<{ hotel: Hotel }> = (props) => {
           rating: responseBody.rating,
           createdAt: responseBody.created_at,
         };
+
+        const parsedNewComment = {
+          ...newComment,
+          createdAt: parseDateString(newComment.createdAt),
+        };
         setDisplayComments((prevDisplayComments) => [
           ...prevDisplayComments,
-          newComment,
+          parsedNewComment,
         ]);
       } else {
         setApiError(
@@ -121,7 +136,18 @@ const RatingForm: React.FC<{ hotel: Hotel }> = (props) => {
     const fetchAndSetComments = async () => {
       try {
         const comments = await fetchComments(hotel.id);
-        setDisplayComments(comments);
+        const parsedComments = comments.map(
+          (comment: {
+            nick_name: string;
+            comment_text: string;
+            rating: number;
+            createdAt: string;
+          }) => ({
+            ...comment,
+            createdAt: parseDateString(comment.createdAt),
+          })
+        );
+        setDisplayComments(parsedComments);
       } catch (error) {
         console.error(error);
       }
@@ -229,11 +255,6 @@ const RatingForm: React.FC<{ hotel: Hotel }> = (props) => {
                   😓
                 </IconButton>
               </Box>
-            }
-            endDecorator={
-              <Typography variant="body2" sx={{ ml: "auto" }}>
-                字數︰{comment.length}
-              </Typography>
             }
           />
           {/* <textarea
