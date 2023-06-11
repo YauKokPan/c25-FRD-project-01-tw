@@ -18,7 +18,13 @@ export class AuthService {
       where: {
         OR: [{ name: loginDto.name }, { email: loginDto.email }],
       },
-      select: { id: true, password: true, name: true, email: true },
+      select: {
+        id: true,
+        password: true,
+        name: true,
+        email: true,
+        is_admin: true,
+      },
     });
 
     if (!user || !(await checkPassword(loginDto.password, user.password))) {
@@ -28,7 +34,12 @@ export class AuthService {
     return this.signToken(user);
   }
 
-  async signToken(user: { id: number; name: string; email: string }) {
+  async signToken(user: {
+    id: number;
+    name: string;
+    email: string;
+    is_admin: boolean;
+  }) {
     const payload = { sub: user.id };
     console.log(this.config.get('JWT_SECRET'));
     return {
@@ -39,6 +50,7 @@ export class AuthService {
       name: user.name,
       email: user.email,
       id: user.id,
+      is_admin: user.is_admin,
     };
   }
 

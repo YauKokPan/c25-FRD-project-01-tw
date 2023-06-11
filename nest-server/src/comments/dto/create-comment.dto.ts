@@ -13,4 +13,6 @@ export class CreateCommentDto {
 
   @IsNotEmpty()
   rating: number;
+
+  created_at: Date;
 }

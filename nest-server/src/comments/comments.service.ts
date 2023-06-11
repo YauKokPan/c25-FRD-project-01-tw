@@ -4,6 +4,13 @@ import { CreateCommentDto } from './dto/create-comment.dto';
 import { UpdateCommentDto } from './dto/update-comment.dto';
 import { PrismaService } from 'src/prisma/prisma.service';
 
+export interface CommentData {
+  nick_name: string;
+  comment_text: string;
+  rating: number;
+  createdAt: Date;
+}
+
 @Injectable()
 export class CommentsService {
   constructor(private readonly prisma: PrismaService) {}
@@ -28,11 +35,17 @@ export class CommentsService {
     return `This action returns all comments`;
   }
 
-  async findOne(hotelId: number): Promise<Comment[]> {
+  async findOne(hotelId: number): Promise<CommentData[]> {
     return await this.prisma.comment.findMany({
       where: {
         user_hotel_booking_key: { id: hotelId },
-        is_deleted: false,
+      },
+
+      select: {
+        nick_name: true,
+        comment_text: true,
+        rating: true,
+        createdAt: true,
       },
     });
   }

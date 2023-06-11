@@ -48,14 +48,16 @@ export default function HotelDetail() {
             className="map"
             dangerouslySetInnerHTML={{ __html: hotel.google_map_address }}
           />
+          <h2 className="rating">發表評論👍</h2>
+          <RatingForm hotel={hotel} />
         </Col>
         <Col md={6}>
           <h2>酒店預約😉</h2>
           <BookingSlot hotel={hotel} />
         </Col>
-        <Col md={{ span: 4, offset: 4 }}>
-          <RatingForm hotel={hotel} />
-        </Col>
+        {/* <Col md={6}>
+         
+        </Col> */}
       </Row>
     </div>
   );

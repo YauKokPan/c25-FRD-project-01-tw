@@ -2,7 +2,8 @@
   width: 50%;
   height: 80vh; /* set the height of the form to 80% of the viewport height */
   margin: auto; /* center the form horizontally and vertically */
-  display: flex; /* use flexbox to center the form contents */
+  display: flex;
+  /* use flexbox to center the form contents */
   flex-direction: column; /* stack the form contents vertically */
   justify-content: center; /* center the form contents vertically */
 }

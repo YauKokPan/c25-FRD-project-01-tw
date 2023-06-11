@@ -4,13 +4,11 @@ import type { PayloadAction } from "@reduxjs/toolkit";
 interface IAuthState {
   isAuth: boolean;
   username: string;
-  userID: number;
 }
 
 const initialState: IAuthState = {
   isAuth: localStorage.getItem("token") !== null,
   username: localStorage.getItem("username") || "",
-  userID: Number(localStorage.getItem("id")) || 0,
 };
 
 export const authSlice = createSlice({
@@ -21,7 +19,6 @@ export const authSlice = createSlice({
       state.isAuth = true;
       state.username = action.payload;
       localStorage.setItem("username", action.payload);
-      localStorage.setItem("id", action.payload);
     },
     logout: (state) => {
       state.isAuth = false;

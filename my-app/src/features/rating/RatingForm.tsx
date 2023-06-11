@@ -11,6 +11,10 @@ import AlertTitle from "@mui/material/AlertTitle";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import { styled } from "@mui/material/styles";
+import { Typography } from "@mui/material";
+import IconButton from "@mui/joy/IconButton";
+import Textarea from "@mui/joy/Textarea";
+import Button from "@mui/joy/Button";
 
 const labels: { [index: string]: string } = {
   1: "極差",
@@ -20,8 +24,25 @@ const labels: { [index: string]: string } = {
   5: "完美",
 };
 
+const CommentSectionBox = styled(Box)(({ theme }) => ({
+  width: "100%",
+  borderRadius: "10px",
+  padding: "10px",
+  backgroundColor: theme.palette.background.default,
+}));
+
 function getLabelText(value: number) {
   return `${value} Heart${value !== 1 ? "s" : ""}`;
+}
+
+function formatDate(date: Date) {
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, "0");
+  const day = String(date.getDate()).padStart(2, "0");
+  const hour = String(date.getHours()).padStart(2, "0");
+  const minute = String(date.getMinutes()).padStart(2, "0");
+
+  return `${year}-${month}-${day} ${hour}:${minute}`;
 }
 
 const StyledRating = styled(Rating)({
@@ -43,13 +64,17 @@ const RatingForm: React.FC<{ hotel: Hotel }> = (props) => {
   const [comment, setComment] = React.useState("");
 
   const [displayComments, setDisplayComments] = React.useState<
-    Array<{ nick_name: string; comment_text: string; rating: number }>
+    Array<{
+      nick_name: string;
+      comment_text: string;
+      rating: number;
+      createdAt: Date;
+    }>
   >([]);
   const [apiError, setApiError] = React.useState<string | null>(null);
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    console.log("form submitted");
 
     try {
       // Call the ratingAPI function
@@ -62,14 +87,15 @@ const RatingForm: React.FC<{ hotel: Hotel }> = (props) => {
       );
 
       // Process the response and set the displayComment state
-      console.log("Response status:", response.status);
+
       if (response.ok) {
         const responseBody = await response.json();
-        console.log("Response body:", responseBody);
+
         const newComment = {
           nick_name: responseBody.nick_name,
           comment_text: responseBody.comment_text,
           rating: responseBody.rating,
+          createdAt: responseBody.created_at,
         };
         setDisplayComments((prevDisplayComments) => [
           ...prevDisplayComments,
@@ -81,7 +107,6 @@ const RatingForm: React.FC<{ hotel: Hotel }> = (props) => {
             "An error occurred while submitting your rating."
         );
       }
-      console.log("After response status check");
 
       // Clear the form fields
       setName("");
@@ -105,17 +130,27 @@ const RatingForm: React.FC<{ hotel: Hotel }> = (props) => {
     fetchAndSetComments();
   }, [hotel.id]);
 
+  const addEmoji = (emoji: string) => () => {
+    setComment((prevComment) => prevComment + emoji);
+  };
+
   return (
     <div className="rating-form">
-      <h2>發表評論👍</h2>
       <form onSubmit={handleSubmit}>
         <label htmlFor="name">
           <div className="sub-title">暱稱🙆‍♀️</div>
-          <input
+          {/* <input
             type="text"
             id="name"
             value={name}
             onChange={(event) => setName(event.target.value)}
+          /> */}
+          <Textarea
+            color="warning"
+            className="comment-input"
+            value={name}
+            onChange={(event) => setName(event.target.value)}
+            required
           />
         </label>
         <div className="sub-title">評分💯</div>
@@ -148,16 +183,72 @@ const RatingForm: React.FC<{ hotel: Hotel }> = (props) => {
         </Box>
         <label htmlFor="comment">
           <div className="sub-title">留言🗣️</div>
-          <textarea
+          <Textarea
+            color="warning"
+            required
+            className="comment-input"
+            value={comment}
+            onChange={(event) => setComment(event.target.value)}
+            minRows={2}
+            maxRows={4}
+            startDecorator={
+              <Box sx={{ display: "flex", gap: 0.5 }}>
+                <IconButton
+                  variant="outlined"
+                  color="neutral"
+                  onClick={addEmoji("👍")}
+                >
+                  👍
+                </IconButton>
+                <IconButton
+                  variant="outlined"
+                  color="neutral"
+                  onClick={addEmoji("😂")}
+                >
+                  😂
+                </IconButton>
+                <IconButton
+                  variant="outlined"
+                  color="neutral"
+                  onClick={addEmoji("😍")}
+                >
+                  😍
+                </IconButton>
+                <IconButton
+                  variant="outlined"
+                  color="neutral"
+                  onClick={addEmoji("☹️")}
+                >
+                  ☹️
+                </IconButton>
+                <IconButton
+                  variant="outlined"
+                  color="neutral"
+                  onClick={addEmoji("😓")}
+                >
+                  😓
+                </IconButton>
+              </Box>
+            }
+            endDecorator={
+              <Typography variant="body2" sx={{ ml: "auto" }}>
+                字數︰{comment.length}
+              </Typography>
+            }
+          />
+          {/* <textarea
             id="comment"
             rows={5}
             cols={40}
             value={comment}
             onChange={(event) => setComment(event.target.value)}
-          />
+          /> */}
         </label>
         <div>
-          <button type="submit">Submit</button>
+          {/* <button type="submit">Submit</button> */}
+          <Button type="submit" color="warning" size="md">
+            提交
+          </Button>
         </div>
       </form>
       {apiError && (
@@ -166,17 +257,59 @@ const RatingForm: React.FC<{ hotel: Hotel }> = (props) => {
           <strong>請先登入以發佈評論！</strong>
         </Alert>
       )}
-      <div className="comment-section">
+
+      <CommentSectionBox
+        className={`comment-section ${
+          displayComments.length > 0 ? "commentSectionBackground" : ""
+        }`}
+        sx={{
+          backgroundColor:
+            displayComments.length > 0 ? "#f5f0f0" : "transparent",
+        }}
+      >
         {displayComments.map((comment, index) => (
-          <div key={index} className="comment">
-            <div className="comment-nickname">
-              Nickname: {comment.nick_name}
-            </div>
-            <div className="comment-text">Comment: {comment.comment_text}</div>
-            <div className="comment-rating">Rating: {comment.rating}</div>
-          </div>
+          <Box
+            key={index}
+            className="comment"
+            sx={{
+              marginBottom: 2,
+              borderBottom:
+                index !== displayComments.length - 1
+                  ? "1px solid #ccc"
+                  : "none",
+              paddingBottom: 2,
+            }}
+          >
+            <Typography variant="h5" gutterBottom>
+              {comment.nick_name}
+            </Typography>
+            <Box>
+              <Typography
+                variant="body1"
+                component="span"
+                gutterBottom
+              ></Typography>
+              <Rating
+                value={comment.rating}
+                precision={0.5}
+                readOnly
+                icon={<FavoriteIcon style={{ color: "#ff6d75" }} />}
+                emptyIcon={
+                  <FavoriteIcon style={{ opacity: 0.2, color: "#ff3d47" }} />
+                }
+                sx={{ marginLeft: 0 }}
+              />
+            </Box>
+            <Typography variant="body1" gutterBottom>
+              {comment.comment_text}
+            </Typography>
+
+            <Typography variant="body2">
+              {formatDate(new Date(comment.createdAt))}
+            </Typography>
+          </Box>
         ))}
-      </div>
+      </CommentSectionBox>
     </div>
   );
 };

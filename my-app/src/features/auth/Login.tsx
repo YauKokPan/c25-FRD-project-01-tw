@@ -4,16 +4,18 @@ import "./Login.css";
 import Title from "../title/Title";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "../../app/store";
-import { getUserId, localLogin } from "./authAPI";
+import { getIsAdmin, getUserId, localLogin } from "./authAPI";
 import { login } from "./authSlice";
 import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 
 export default function Login() {
   const [email, setEmail] = useState("");
   const [name] = useState("");
   const [password, setPassword] = useState("");
-  const [errorMessage, setErrorMessage] = useState("");
-  const [successMessage, setSuccessMessage] = useState("");
+  //   const [errorMessage, setErrorMessage] = useState("");
+  // const [successMessage, setSuccessMessage] = useState("");
+
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
 
@@ -21,18 +23,30 @@ export default function Login() {
     e.preventDefault();
 
     const userIdNum = Number(getUserId());
+    const adminCheck = getIsAdmin();
 
-    const result = await localLogin(userIdNum, name, email, password);
+    const result = await localLogin(
+      userIdNum,
+      name,
+      email,
+      password,
+      adminCheck
+    );
     if (result) {
       dispatch(login(getUserId()));
-      setSuccessMessage("Login successful");
-      setErrorMessage("");
+      Swal.fire({
+        title: "登入成功！",
+        timer: 2000,
+      });
       setTimeout(() => {
-        setSuccessMessage("");
         navigate("/");
-      }, 1000);
+      }, 2000);
     } else {
-      setErrorMessage("Invalid email or password");
+      Swal.fire({
+        title: "登入失敗！",
+        text: "電郵或密瑪錯誤",
+        timer: 2000,
+      });
     }
   };
 
@@ -49,8 +63,8 @@ export default function Login() {
       <div className="login-form">
         <form onSubmit={handleSubmit}>
           <Title mainTitle="💁‍♀️登入" />
-          {errorMessage && <p className="text-danger">{errorMessage}</p>}
-          {successMessage && <p className="text-success">{successMessage}</p>}
+          {/* {errorMessage && <p className="text-danger">{errorMessage}</p>}
+          {successMessage && <p className="text-success">{successMessage}</p>} */}
           <div className="mb-3">
             <label>電郵</label>
             <input

@@ -2,7 +2,8 @@ export async function localLogin(
   id: number,
   name: string,
   email: string,
-  password: string
+  password: string,
+  is_admin: boolean
 ) {
   const res = await fetch(`${process.env.REACT_APP_API_SERVER}/auth/login`, {
     method: "POST",
@@ -14,6 +15,7 @@ export async function localLogin(
       name,
       email,
       password,
+      is_admin,
     }),
   });
 
@@ -23,6 +25,7 @@ export async function localLogin(
     localStorage.setItem("token", result.access_token);
     localStorage.setItem("name", result.name);
     localStorage.setItem("email", result.email);
+    localStorage.setItem("is_admin", result.is_admin);
 
     return true;
   } else {
@@ -36,4 +39,8 @@ export function getUserName() {
 
 export function getUserId(): string {
   return localStorage.getItem("id")!;
+}
+
+export function getIsAdmin(): boolean {
+  return Boolean(localStorage.getItem("is_admin"));
 }
