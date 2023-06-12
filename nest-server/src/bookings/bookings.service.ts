@@ -18,6 +18,7 @@ export class BookingsService {
       total_price,
       booking_phone,
       booking_email,
+      is_shown_up,
     } = data;
 
     const booking = await this.prisma.booking.create({

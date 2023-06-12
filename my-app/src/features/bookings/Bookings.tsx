@@ -7,6 +7,7 @@ import {
 import { useState } from "react";
 import { Hotel } from "../hotel/hotelAPI";
 import { useEffect } from "react";
+import { getUserId } from "../auth/authAPI";
 
 interface TimeButtonProps {
   time: string;
@@ -37,6 +38,8 @@ const BookingSlot: React.FC<{ hotel: Hotel }> = (props) => {
   const [bookingDate, setBookingDate] = useState<Date | null>(null);
   const [startTime, setStartTime] = useState<Date | null>(null);
   const [endTime, setEndTime] = useState<Date | null>(null);
+  const [booking_email, setBookingEmail] = useState("");
+  const [booking_phone, setBookingPhone] = useState("");
 
   const [timeslots, setTimeslots] = useState([
     { slot: "07:00 - 08:00", clicked: false },
@@ -70,6 +73,19 @@ const BookingSlot: React.FC<{ hotel: Hotel }> = (props) => {
   }
 
   const hotel = props.hotel;
+  const userID = Number(getUserId());
+
+  const handleBookingPhoneChange = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    setBookingPhone(event.target.value);
+  };
+
+  const handleBookingEmailChange = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    setBookingEmail(event.target.value);
+  };
 
   const onDateChange = (e: CalendarChangeEvent) => {
     setBookingDate(e.value);
@@ -181,6 +197,7 @@ const BookingSlot: React.FC<{ hotel: Hotel }> = (props) => {
         重置預約時間
       </button>
 
+      <div>可訂房間數目: {hotel.room_number} </div>
       <div>Selected Date: {bookingDate?.toDateString()}</div>
       <div>Selected Timeslot: {renderSelectedTime()}</div>
       <div>預約總時數為: {clickedCount} 小時</div>
@@ -193,8 +210,16 @@ const BookingSlot: React.FC<{ hotel: Hotel }> = (props) => {
       <div className="">共需費用為: {totalPrice} 元</div>
       <form>
         <div>
-          Email* : <input type="email" placeholder="請輸入電郵" required />
+          Email* :{" "}
+          <input
+            type="email"
+            placeholder="請輸入電郵"
+            value={booking_email}
+            onChange={handleBookingEmailChange}
+            required
+          />
         </div>
+
         <div>
           WhatsApp聯絡電話* :{" "}
           <input
@@ -203,6 +228,8 @@ const BookingSlot: React.FC<{ hotel: Hotel }> = (props) => {
             required
             className="form-control"
             placeholder="請輸入電話號碼"
+            value={booking_phone}
+            onChange={handleBookingPhoneChange}
           />
         </div>
         <div>

@@ -1,12 +1,13 @@
 export async function bookingsAPI(
-  name: string,
-  hotel_name: string,
+  user_id: number,
+  hotel_id: number,
   start_time: Date,
   end_time: Date,
   total_hours: number,
-  email: string,
-  phone: number,
-  total_price: number
+  total_price: number,
+  booking_phone: string,
+  booking_email: string,
+  is_shown_up: boolean
 ) {
   const res = await fetch(`${process.env.REACT_APP_API_SERVER}/bookings/`, {
     method: "POST",
@@ -14,14 +15,15 @@ export async function bookingsAPI(
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
-      name,
-      hotel_name,
+      user_id,
+      hotel_id,
       start_time,
       end_time,
       total_hours,
-      email,
-      phone,
       total_price,
+      booking_phone,
+      booking_email,
+      is_shown_up,
     }),
   });
   return res;
