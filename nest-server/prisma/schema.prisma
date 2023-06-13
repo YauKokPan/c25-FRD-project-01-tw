@@ -58,6 +58,7 @@ total_hours Int
 total_price Int
 booking_phone String
 booking_email String
+remarks String
 is_shown_up Boolean
 createdAt DateTime @default(now()) @map("created_at")
 updatedAt DateTime @updatedAt @map("updated_at")

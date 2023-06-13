@@ -6,8 +6,9 @@ import {
 } from "@progress/kendo-react-dateinputs";
 import { useState } from "react";
 import { Hotel } from "../hotel/hotelAPI";
-import { useEffect } from "react";
 import { getUserId } from "../auth/authAPI";
+import { bookingsAPI } from "./bookingsAPI";
+import { useNavigate } from "react-router-dom";
 
 interface TimeButtonProps {
   time: string;
@@ -40,6 +41,8 @@ const BookingSlot: React.FC<{ hotel: Hotel }> = (props) => {
   const [endTime, setEndTime] = useState<Date | null>(null);
   const [booking_email, setBookingEmail] = useState("");
   const [booking_phone, setBookingPhone] = useState("");
+  const [remarks, setRemarks] = useState("");
+  const [is_shown_up, setIsShownUp] = useState<boolean>(false);
 
   const [timeslots, setTimeslots] = useState([
     { slot: "07:00 - 08:00", clicked: false },
@@ -61,6 +64,10 @@ const BookingSlot: React.FC<{ hotel: Hotel }> = (props) => {
     { slot: "00:00 - 07:00", clicked: false, full: true, count: 7 },
   ]);
 
+  const hotel = props.hotel;
+  const userID = Number(getUserId());
+  const navigate = useNavigate();
+
   function renderSelectedTime() {
     const slots = timeslots.filter((slot) => slot.clicked);
     if (slots.length === 0) return;
@@ -72,9 +79,6 @@ const BookingSlot: React.FC<{ hotel: Hotel }> = (props) => {
     // return "?";
   }
 
-  const hotel = props.hotel;
-  const userID = Number(getUserId());
-
   const handleBookingPhoneChange = (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
@@ -85,6 +89,10 @@ const BookingSlot: React.FC<{ hotel: Hotel }> = (props) => {
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
     setBookingEmail(event.target.value);
+  };
+
+  const handleRemarksChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setRemarks(event.target.value);
   };
 
   const onDateChange = (e: CalendarChangeEvent) => {
@@ -148,23 +156,45 @@ const BookingSlot: React.FC<{ hotel: Hotel }> = (props) => {
     setTimeslots(newTimeslots);
   };
 
-  const handleSubmit = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+  const handleSubmit = async (
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) => {
     e.preventDefault();
+    try {
+    } catch (error) {}
     if (bookingDate === null) {
       alert("請先選擇預約日期");
       return;
     }
-
     if (startTime === null || endTime === null) {
       alert("請先選擇預約時間");
       return;
     }
-  };
+    if (booking_email === "" || booking_phone === "") {
+      alert("請填寫電子郵件和電話");
+      return;
+    }
+    try {
+      const response = await bookingsAPI(
+        userID,
+        hotel.id,
+        startTime,
+        endTime,
+        clickedCount,
+        totalPrice,
+        booking_email,
+        booking_phone,
+        is_shown_up,
+        remarks
+      );
 
-  useEffect(() => {
-    console.log("Start time:", startTime);
-    console.log("End time:", endTime);
-  }, [startTime, endTime]);
+      if (response.ok) {
+        navigate("/booking-results");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <div className="k-my-8">
@@ -202,10 +232,6 @@ const BookingSlot: React.FC<{ hotel: Hotel }> = (props) => {
       <div>Selected Timeslot: {renderSelectedTime()}</div>
       <div>預約總時數為: {clickedCount} 小時</div>
 
-      {/* <pre hidden>
-        <code>{JSON.stringify({ bookingDate, timeslots }, null, 2)}</code>
-      </pre> */}
-
       <div className="">酒店一小時的價錢為：{hotel.hourly_rate} 元</div>
       <div className="">共需費用為: {totalPrice} 元</div>
       <form>
@@ -214,6 +240,7 @@ const BookingSlot: React.FC<{ hotel: Hotel }> = (props) => {
           <input
             type="email"
             placeholder="請輸入電郵"
+            className="form-control"
             value={booking_email}
             onChange={handleBookingEmailChange}
             required
@@ -233,7 +260,14 @@ const BookingSlot: React.FC<{ hotel: Hotel }> = (props) => {
           />
         </div>
         <div>
-          備註 : <input type="text" />
+          備註 :{" "}
+          <input
+            type="text"
+            className="form-control"
+            placeholder="如有特別要求，請列明。"
+            value={remarks}
+            onChange={handleRemarksChange}
+          />
         </div>
         <button onClick={handleSubmit}>預約 及 付款</button>
       </form>
