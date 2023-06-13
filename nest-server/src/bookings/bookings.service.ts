@@ -64,6 +64,18 @@ export class BookingsService {
         user_booking_key: true,
         hotel_booking_key: true,
       },
+      orderBy: {
+        id: 'desc',
+      },
+    });
+  }
+
+  async findUserLatestBooking(): Promise<Booking[]> {
+    return await this.prisma.booking.findMany({
+      orderBy: {
+        id: 'desc',
+      },
+      take: 1,
     });
   }
 

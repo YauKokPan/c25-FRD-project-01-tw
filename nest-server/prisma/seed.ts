@@ -80,7 +80,7 @@ const main = async () => {
     profile_pic: string;
     description: string;
     total_rooms: number;
-    has_equipment: Boolean;
+    has_equipment: boolean;
     hourly_rate: number;
   }
 

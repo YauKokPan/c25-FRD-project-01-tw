@@ -40,6 +40,11 @@ export class BookingsController {
     return this.bookingsService.findAllByUserId(+userId);
   }
 
+  @Get('latest')
+  findUserLatestBooking() {
+    return this.bookingsService.findUserLatestBooking();
+  }
+
   @Put(':id')
   @UsePipes(new ValidationPipe())
   async updateBooking(

@@ -1,10 +1,12 @@
-// src/BookingResult.tsx
-
 import React, { useState, useEffect } from "react";
 import { fetchAllBookingData, fetchUserData } from "./bookingsAPI";
 import { getUserId } from "../auth/authAPI";
 
+<<<<<<< Updated upstream
 export interface UserKey {
+=======
+interface UserKey {
+>>>>>>> Stashed changes
   name: string | undefined;
 }
 
@@ -48,10 +50,18 @@ const BookingResult: React.FC = () => {
 
   return (
     <div>
+<<<<<<< Updated upstream
       <h1>預約紀錄</h1>
       <ul>
         {userData.map((booking) => (
           <li key={booking.id}>
+=======
+      <h2>Your Booking History</h2>
+      <ul>
+        {userData.map((booking) => (
+          <li key={booking.id}>
+            {/* <h3>{booking.user_booking_key.name}</h3> */}
+>>>>>>> Stashed changes
             <h3>{booking.hotel_booking_key.name}</h3>
             <p>
               開始日期及時間: {new Date(booking.start_time).toLocaleString()}

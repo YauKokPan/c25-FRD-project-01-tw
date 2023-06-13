@@ -10,7 +10,10 @@ import { getUserId } from "../auth/authAPI";
 import { bookingsAPI, findLatestBooking } from "./bookingsAPI";
 import { useNavigate } from "react-router-dom";
 import emailjs from "@emailjs/browser";
+<<<<<<< Updated upstream
 import { UserData } from "./BookingResult";
+=======
+>>>>>>> Stashed changes
 
 interface TimeButtonProps {
   time: string;
@@ -202,12 +205,12 @@ const BookingSlot: React.FC<{ hotel: Hotel }> = (props) => {
         alert("請先選擇預約日期");
         return false;
       }
-      if (startTime === null || endTime === null) {
-        alert("請先選擇預約時間");
-        return false;
-      }
       if (booking_email === "" || booking_phone === "") {
         alert("請填寫電子郵件和電話");
+        return false;
+      }
+      if (startTime === null || endTime === null) {
+        alert("請先選擇預約時間");
         return false;
       }
       return true;
@@ -236,6 +239,7 @@ const BookingSlot: React.FC<{ hotel: Hotel }> = (props) => {
       const latestBookingsData: UserData = await latestBookings.json();
 
       if (response.ok && isValid) {
+<<<<<<< Updated upstream
         const bookingData = {
           hotelname: latestBookingsData.hotel_booking_key.name,
           username: latestBookingsData.user_booking_key.name,
@@ -245,6 +249,28 @@ const BookingSlot: React.FC<{ hotel: Hotel }> = (props) => {
           totalPrice: totalPrice,
         };
         sendEmail(bookingData);
+=======
+        // Send email using EmailJS
+        emailjs.init("ywtyMqUa1YbghI0M-");
+        emailjs
+          .send("charkai@gmail.com", "template_76r364s", {
+            username: userID,
+            hotelName: hotel.name,
+            startTime: startTime?.toLocaleString(),
+            endTime: endTime?.toLocaleString(),
+            totalPrice: totalPrice,
+            email: booking_email, // Make sure to pass the email to the template
+          })
+          .then(
+            (result) => {
+              console.log("Email sent: ", result.text);
+            },
+            (error) => {
+              console.log("Failed to send email: ", error.text);
+            }
+          );
+
+>>>>>>> Stashed changes
         navigate("/booking-results");
       }
     } catch (error) {

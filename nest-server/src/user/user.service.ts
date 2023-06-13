@@ -12,4 +12,8 @@ export class UserService {
     });
     return foundUser;
   }
+
+  update(id: number, updateUserDto: UpdateUserDto) {
+    return `This action updates a #${id} comment`;
+  }
 }
