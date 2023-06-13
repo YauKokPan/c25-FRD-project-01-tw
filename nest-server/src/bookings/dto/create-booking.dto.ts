@@ -1,29 +1,52 @@
-import { IsNotEmpty, IsDateString } from 'class-validator';
+import {
+  IsNotEmpty,
+  IsDateString,
+  IsNumber,
+  IsString,
+  IsEmail,
+  IsOptional,
+  IsBoolean,
+  IsInt,
+} from 'class-validator';
 
 export class CreateBookingDto {
   @IsNotEmpty()
+  @IsInt()
   user_id: number;
 
-  //   @IsNotEmpty()
+  @IsNotEmpty()
+  @IsInt()
   hotel_id: number;
 
-  //   @IsNotEmpty()
+  @IsNotEmpty()
   @IsDateString()
   start_time: Date;
 
-  //   @IsNotEmpty()
+  @IsNotEmpty()
   @IsDateString()
   end_time: Date;
 
-  //   @IsNotEmpty()
+  @IsNotEmpty()
+  @IsInt()
   total_hours: number;
 
-  //   @IsNotEmpty()
+  @IsNotEmpty()
+  @IsNumber()
   total_price: number;
 
+  @IsNotEmpty()
+  @IsString()
   booking_phone: string;
 
+  @IsNotEmpty()
+  @IsEmail()
   booking_email: string;
 
-  is_shown_up: boolean;
+  @IsOptional()
+  @IsBoolean()
+  is_shown_up?: boolean;
+
+  @IsOptional()
+  @IsString()
+  remarks?: string;
 }

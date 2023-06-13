@@ -18,6 +18,8 @@ export class BookingsService {
       total_price,
       booking_phone,
       booking_email,
+      is_shown_up,
+      remarks,
     } = data;
 
     const booking = await this.prisma.booking.create({
@@ -31,25 +33,32 @@ export class BookingsService {
         booking_phone,
         booking_email,
         is_shown_up: true,
+        remarks,
       },
     });
 
     return booking;
   }
 
-  findAll() {
-    return `This action returns all bookings`;
+  async findAll(): Promise<Booking[]> {
+    return this.prisma.booking.findMany();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} booking`;
+  async findOne(id: number): Promise<Booking | null> {
+    return this.prisma.booking.findUnique({ where: { id } });
   }
 
-  updateBooking(id: number, _updateBookingDto: UpdateBookingDto) {
-    return `This action updates a #${id} booking`;
+  async updateBooking(
+    id: number,
+    updateBookingDto: UpdateBookingDto,
+  ): Promise<Booking> {
+    return this.prisma.booking.update({
+      where: { id },
+      data: updateBookingDto,
+    });
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} booking`;
+  async remove(id: number): Promise<Booking> {
+    return this.prisma.booking.delete({ where: { id } });
   }
 }
