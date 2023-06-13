@@ -38,7 +38,7 @@ export function getUserName() {
 }
 
 export function getUserId(): string {
-  return localStorage.getItem("id")!;
+  return String(localStorage.getItem("id"));
 }
 
 export function getIsAdmin(): boolean {

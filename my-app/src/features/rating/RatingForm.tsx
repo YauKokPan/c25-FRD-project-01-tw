@@ -15,6 +15,9 @@ import { Typography } from "@mui/material";
 import IconButton from "@mui/joy/IconButton";
 import Textarea from "@mui/joy/Textarea";
 import Button from "@mui/joy/Button";
+import ReCAPTCHA from "react-google-recaptcha";
+
+const recaptchaRef = React.createRef<ReCAPTCHA>();
 
 const labels: { [index: string]: string } = {
   1: "極差",
@@ -64,11 +67,16 @@ const StyledRating = styled(Rating)({
   },
 });
 
-const RatingForm: React.FC<{ hotel: Hotel }> = (props) => {
+type RatingFormProps = {
+  hotel: Hotel;
+};
+const RatingForm: React.FC<RatingFormProps> = (props) => {
   const hotel = props.hotel;
+
   const userID = Number(getUserId());
 
   const [value, setValue] = React.useState<number | null>(0);
+  const [googleValue, setGoogleValue] = React.useState<string | null>("");
   const [hover, setHover] = React.useState(-1);
   const [name, setName] = React.useState("");
   const [comment, setComment] = React.useState("");
@@ -83,8 +91,49 @@ const RatingForm: React.FC<{ hotel: Hotel }> = (props) => {
   >([]);
   const [apiError, setApiError] = React.useState<string | null>(null);
 
-  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
+  const [error, setError] = React.useState<string | null>(null);
+
+  const [captchaValue, captchaSetValue] = React.useState<string | null>(null);
+  const [expired, setExpired] = React.useState<string | null>(null);
+  const [callback, setCallback] = React.useState<string | null>(null);
+  const [isSubmitting, setIsSubmitting] = React.useState(false);
+
+  // google reCAPTCHA
+  const handleChange = (googleValue: string | null) => {
+    console.log("Captcha value:", captchaValue);
+    setGoogleValue(googleValue);
+
+    // if value is null, recaptcha expired
+    if (googleValue === null) {
+      setExpired("true");
+    }
+  };
+
+  const asyncScriptOnLoad = () => {
+    setCallback("called!");
+    console.log("scriptLoad - reCaptcha Ref-", recaptchaRef);
+  };
+
+  const handleRecaptchaVerification = async () => {
+    if (recaptchaRef.current) {
+      const recaptchaValue = recaptchaRef.current.getValue();
+
+      // Check the recaptchaValue and proceed with the handleSubmit if it's valid
+      if (recaptchaValue) {
+        handleSubmit();
+      } else {
+        setError("reCAPTCHA verification failed. Please try again.");
+      }
+    } else {
+      setError("reCAPTCHA verification failed. Please try again.");
+    }
+  };
+
+  const handleSubmit = async (event?: React.FormEvent<HTMLFormElement>) => {
+    if (event) {
+      event.preventDefault();
+      setIsSubmitting(true);
+    }
 
     try {
       // Call the ratingAPI function
@@ -129,6 +178,8 @@ const RatingForm: React.FC<{ hotel: Hotel }> = (props) => {
       setValue(0);
     } catch (error) {
       setApiError("An error occurred while submitting your rating.");
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -265,9 +316,20 @@ const RatingForm: React.FC<{ hotel: Hotel }> = (props) => {
             onChange={(event) => setComment(event.target.value)}
           /> */}
         </label>
+        <ReCAPTCHA
+          ref={recaptchaRef}
+          sitekey="6LdF9owmAAAAAIil4OgvbkKJQwW-0yY5UAr-PcVE"
+          onChange={handleChange}
+          asyncScriptOnLoad={asyncScriptOnLoad}
+        />
         <div>
           {/* <button type="submit">Submit</button> */}
-          <Button type="submit" color="warning" size="md">
+          <Button
+            type="submit"
+            disabled={isSubmitting}
+            color="warning"
+            size="md"
+          >
             提交
           </Button>
         </div>

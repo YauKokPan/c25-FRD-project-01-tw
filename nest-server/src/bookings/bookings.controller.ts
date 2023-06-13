@@ -19,9 +19,10 @@ export class BookingsController {
   constructor(private readonly bookingsService: BookingsService) {}
 
   @Post()
+  @UsePipes(new ValidationPipe())
   async createBooking(@Body() createBookingDto: CreateBookingDto) {
-    const booking = await this.bookingsService.createBooking(createBookingDto);
-    return booking;
+    const result = await this.bookingsService.createBooking(createBookingDto);
+    return result;
   }
 
   @Get()
