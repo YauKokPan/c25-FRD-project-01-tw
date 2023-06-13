@@ -33,7 +33,8 @@ model Hotel {
   phone       String
   profile_pic String
   description String
-  room_number Int
+  total_rooms Int
+  has_equipment Boolean
   hourly_rate Int
   user_prisma        User     @relation(fields: [user_id], references: [id])
   user_id     Int

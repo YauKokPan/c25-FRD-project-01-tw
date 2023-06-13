@@ -79,7 +79,8 @@ const main = async () => {
     phone: string;
     profile_pic: string;
     description: string;
-    room_number: number;
+    total_rooms: number;
+    has_equipment: Boolean;
     hourly_rate: number;
   }
 
@@ -96,7 +97,8 @@ const main = async () => {
         profile_pic: hotelRecord.profile_pic,
         description: hotelRecord.description,
         user_id: +hotelRecord.user_id,
-        room_number: +hotelRecord.room_number,
+        total_rooms: +hotelRecord.total_rooms,
+        has_equipment: Boolean(hotelRecord.has_equipment),
         hourly_rate: +hotelRecord.hourly_rate,
       },
     });

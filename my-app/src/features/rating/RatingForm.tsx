@@ -109,12 +109,15 @@ const RatingForm: React.FC<RatingFormProps> = (props) => {
     }
   };
 
-  const asyncScriptOnLoad = () => {
-    setCallback("called!");
-    console.log("scriptLoad - reCaptcha Ref-", recaptchaRef);
-  };
+  // const asyncScriptOnLoad = () => {
+  //   setCallback("called!");
+  //   console.log("scriptLoad - reCaptcha Ref-", recaptchaRef);
+  // };
 
-  const handleRecaptchaVerification = async () => {
+  const handleRecaptchaVerification = async (
+    event: React.FormEvent<HTMLFormElement>
+  ) => {
+    event.preventDefault();
     if (recaptchaRef.current) {
       const recaptchaValue = recaptchaRef.current.getValue();
 
@@ -213,7 +216,7 @@ const RatingForm: React.FC<RatingFormProps> = (props) => {
 
   return (
     <div className="rating-form">
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleRecaptchaVerification}>
         <label htmlFor="name">
           <div className="sub-title">暱稱🙆‍♀️</div>
           {/* <input
@@ -320,7 +323,7 @@ const RatingForm: React.FC<RatingFormProps> = (props) => {
           ref={recaptchaRef}
           sitekey="6LdF9owmAAAAAIil4OgvbkKJQwW-0yY5UAr-PcVE"
           onChange={handleChange}
-          asyncScriptOnLoad={asyncScriptOnLoad}
+          // asyncScriptOnLoad={asyncScriptOnLoad}
         />
         <div>
           {/* <button type="submit">Submit</button> */}

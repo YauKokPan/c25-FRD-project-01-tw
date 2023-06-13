@@ -55,7 +55,12 @@ const BookingSlot: React.FC<{ hotel: Hotel }> = (props) => {
     { slot: "20:00 - 21:00", clicked: false },
     { slot: "21:00 - 22:00", clicked: false },
     { slot: "22:00 - 23:00", clicked: false },
-    { slot: "00:00 - 07:00", clicked: false, full: true, count: 7 },
+    { slot: "00:00 - 01:00", clicked: false },
+    { slot: "01:00 - 02:00", clicked: false },
+    { slot: "03:00 - 04:00", clicked: false },
+    { slot: "05:00 - 06:00", clicked: false },
+    { slot: "06:00 - 07:00", clicked: false },
+    // { slot: "00:00 - 07:00", clicked: false, full: true, count: 7 },
   ]);
 
   function renderSelectedTime() {
@@ -118,7 +123,7 @@ const BookingSlot: React.FC<{ hotel: Hotel }> = (props) => {
 
   const clickedCount = timeslots.reduce((count, slot) => {
     if (slot.clicked) {
-      return count + (slot.full ? 7 : 1);
+      return count + (slot ? 7 : 1);
     } else {
       return count;
     }
