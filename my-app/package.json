@@ -31,6 +31,8 @@
     "@progress/kendo-svg-icons": "^1.5.0",
     "@progress/kendo-theme-default": "^6.4.0",
     "@reduxjs/toolkit": "^1.9.5",
+    "@stripe/react-stripe-js": "^2.1.0",
+    "@stripe/stripe-js": "^1.54.0",
     "@syncfusion/ej2-react-calendars": "^21.2.8",
     "@tanstack/react-query": "^4.29.11",
     "@testing-library/jest-dom": "^5.16.5",
