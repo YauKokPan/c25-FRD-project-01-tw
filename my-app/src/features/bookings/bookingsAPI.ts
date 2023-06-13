@@ -81,23 +81,7 @@ export async function fetchHotelData(hotel_id: number): Promise<any> {
   return res;
 }
 
-<<<<<<< Updated upstream
 // not configure yet for controller and service
-=======
-export async function fetchUserLatestBooking(userID: number) {
-  const res = await fetch(
-    `${process.env.REACT_APP_API_SERVER}/bookings/${userID}`,
-    {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    }
-  );
-  return res;
-}
-
->>>>>>> Stashed changes
 export async function updateBookingData(userID: number) {
   const res = await fetch(
     `${process.env.REACT_APP_API_SERVER}/bookings/${userID}`,
