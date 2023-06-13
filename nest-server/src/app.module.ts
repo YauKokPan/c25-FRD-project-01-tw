@@ -8,6 +8,7 @@ import { BookingsModule } from './bookings/bookings.module';
 import { GalleryModule } from './gallery/gallery.module';
 import { ContactUsModule } from './contactUs/contactUs.module';
 import { CommentsModule } from './comments/comments.module';
+import { PaymentModule } from './payment/payment.module';
 
 @Module({
   imports: [
@@ -21,6 +22,7 @@ import { CommentsModule } from './comments/comments.module';
     ContactUsModule,
     CommentsModule,
     CommentsModule,
+    PaymentModule,
   ],
   controllers: [],
   providers: [],
