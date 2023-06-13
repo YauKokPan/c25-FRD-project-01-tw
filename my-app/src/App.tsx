@@ -28,10 +28,7 @@ export default function App() {
         <Route path="/user-profile" element={<UserProfile />} />
         {/* <Route path="/bookings" element={<Bookings />} /> */}
         <Route path="/search" element={<SearchPage />} />
-        <Route
-          path="/booking-results"
-          element={<BookingResults userID={0} hotel_id={0} />}
-        />
+        <Route path="/booking-results" element={<BookingResults />} />
         <Route path="*" element={<h1>404 NOT FOUND!!!!</h1>} />
 
         {/* <Route path=":id" element={<HotelDetail />} /> */}

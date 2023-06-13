@@ -1,8 +1,8 @@
 export async function bookingsAPI(
   user_id: number,
   hotel_id: number,
-  start_time: Date,
-  end_time: Date,
+  start_time: Date | null,
+  end_time: Date | null,
   total_hours: number,
   total_price: number,
   booking_email: string,
@@ -41,9 +41,9 @@ export async function fetchAllBookingData() {
   return res;
 }
 
-export async function fetchUserData(userID: number): Promise<any> {
+export async function fetchUserData(userID: number) {
   const res = await fetch(
-    `${process.env.REACT_APP_API_SERVER}/users/${userID}`,
+    `${process.env.REACT_APP_API_SERVER}/bookings/${userID}`,
     {
       method: "GET",
       headers: {

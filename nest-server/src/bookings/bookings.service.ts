@@ -44,8 +44,16 @@ export class BookingsService {
     return this.prisma.booking.findMany();
   }
 
-  async findOne(id: number): Promise<Booking | null> {
-    return this.prisma.booking.findUnique({ where: { id } });
+  async findAllByUserId(userId: number): Promise<Booking[]> {
+    return await this.prisma.booking.findMany({
+      where: {
+        user_id: userId,
+      },
+      include: {
+        user_booking_key: true,
+        hotel_booking_key: true,
+      },
+    });
   }
 
   async updateBooking(

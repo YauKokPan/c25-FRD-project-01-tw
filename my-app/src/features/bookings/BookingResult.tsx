@@ -1,62 +1,66 @@
 // src/BookingResult.tsx
 
 import React, { useState, useEffect } from "react";
-import {
-  fetchAllBookingData,
-  fetchUserData,
-  fetchHotelData,
-} from "./bookingsAPI";
-import { useParams } from "react-router-dom";
+import { fetchAllBookingData, fetchUserData } from "./bookingsAPI";
+import { getUserId } from "../auth/authAPI";
 
 interface BookingResultProps {
-  userID: number;
   hotel_id: number;
 }
 
-interface BookingData {
+interface UserKey {
+  name: string | undefined;
+}
+
+interface HotelBookingKey {
+  name: string | undefined;
+  address: string | undefined;
+  phone: string | undefined;
+  total_rooms: number | undefined;
+}
+
+interface UserData {
   id: number;
-  hotel_name: string;
   start_time: Date;
   end_time: Date;
   total_hours: number;
   total_price: number;
   booking_email: string;
   booking_phone: string;
+  remarks: string;
+  user_booking_key: UserKey;
+  hotel_booking_key: HotelBookingKey;
 }
 
-const BookingResult: React.FC<BookingResultProps> = ({ userID, hotel_id }) => {
-  const [bookingData, setBookingData] = useState<BookingData[]>([]);
-  const [userName, setUserName] = useState<string>("");
-  const [hotelName, setHotelName] = useState<string>("");
+const userID = Number(getUserId());
+
+const BookingResult: React.FC = () => {
+  const [userData, setUserData] = useState<UserData[]>([]);
 
   useEffect(() => {
     const fetchData = async () => {
       const bookingResponse = await fetchAllBookingData();
-      const bookingData = await bookingResponse.json();
 
       const userResponse = await fetchUserData(userID);
       const userData = await userResponse.json();
 
-      const hotelResponse = await fetchHotelData(hotel_id);
-      const hotelData = await hotelResponse.json();
-
-      setBookingData(bookingData);
-      setUserName(userData.name); // Assuming the user data has a 'name' property
-      setHotelName(hotelData.name); // Assuming the hotel data has a 'name' property
+      setUserData(userData);
     };
 
     fetchData();
-  }, [userID, hotel_id]);
+  }, [userID]);
   return (
     <div>
       <h2>Booking Results</h2>
       <ul>
-        {bookingData.map((booking) => (
+        {userData.map((booking) => (
           <li key={booking.id}>
-            <h3>{userName}</h3>
-            <h3>{hotelName}</h3>
-            <p>開始日期及時間: {booking.start_time.toLocaleString()}</p>
-            <p>完結日期及時間: {booking.end_time.toLocaleString()}</p>
+            <h3>{booking.user_booking_key.name}</h3>
+            <h3>{booking.hotel_booking_key.name}</h3>
+            <p>
+              開始日期及時間: {new Date(booking.start_time).toLocaleString()}
+            </p>
+            <p>完結日期及時間: {new Date(booking.end_time).toLocaleString()}</p>
             <p>預約總時數為: {booking.total_hours} 小時</p>
             <p>需付金額: {booking.total_price} 元</p>
             <p>預約者電郵: {booking.booking_email}</p>

@@ -30,9 +30,9 @@ export class BookingsController {
     return this.bookingsService.findAll();
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.bookingsService.findOne(+id);
+  @Get(':userId')
+  findAllByUserId(@Param('userId') userId: string) {
+    return this.bookingsService.findAllByUserId(+userId);
   }
 
   @Put(':id')
