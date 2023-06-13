@@ -7,8 +7,10 @@ import {
 import { useState } from "react";
 import { Hotel } from "../hotel/hotelAPI";
 import { getUserId } from "../auth/authAPI";
-import { bookingsAPI } from "./bookingsAPI";
+import { bookingsAPI, findLatestBooking } from "./bookingsAPI";
 import { useNavigate } from "react-router-dom";
+import emailjs from "@emailjs/browser";
+import { UserData } from "./BookingResult";
 
 interface TimeButtonProps {
   time: string;
@@ -162,6 +164,34 @@ const BookingSlot: React.FC<{ hotel: Hotel }> = (props) => {
     setTimeslots(newTimeslots);
   };
 
+  // send emailjs
+  const sendEmail = (bookingData: any) => {
+    emailjs
+      .send(
+        "service_ltoylm6",
+        "template_mc7iyif",
+        {
+          hotel_name: bookingData.hotelname,
+          user_name: bookingData.username,
+          start_time: bookingData.startTime,
+          end_time: bookingData.endTime,
+          total_price: bookingData.totalPrice,
+          booking_email: bookingData.email,
+        },
+        "R0o3xZuCwgV901zHG"
+      )
+      .then(
+        (result) => {
+          console.log(result.text);
+          alert("Email sent successfully!");
+        },
+        (error) => {
+          console.log(error.text);
+          alert("Error sending email: " + error.message);
+        }
+      );
+  };
+
   const handleSubmit = async (
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
@@ -201,7 +231,20 @@ const BookingSlot: React.FC<{ hotel: Hotel }> = (props) => {
         remarks
       );
 
+      const latestBookings = await findLatestBooking();
+
+      const latestBookingsData: UserData = await latestBookings.json();
+
       if (response.ok && isValid) {
+        const bookingData = {
+          hotelname: latestBookingsData.hotel_booking_key.name,
+          username: latestBookingsData.user_booking_key.name,
+          email: booking_email,
+          startTime: startTime?.toLocaleString(),
+          endTime: endTime?.toLocaleString(),
+          totalPrice: totalPrice,
+        };
+        sendEmail(bookingData);
         navigate("/booking-results");
       }
     } catch (error) {

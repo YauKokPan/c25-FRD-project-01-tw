@@ -54,6 +54,20 @@ export async function fetchUserData(userID: number) {
   return res;
 }
 
+export async function findLatestBooking() {
+  const res = await fetch(
+    `${process.env.REACT_APP_API_SERVER}/bookings/latest`,
+    {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }
+  );
+  return res;
+}
+
+// not configure yet for controller and service
 export async function fetchHotelData(hotel_id: number): Promise<any> {
   const res = await fetch(
     `${process.env.REACT_APP_API_SERVER}/hotels/${hotel_id}`,
@@ -67,6 +81,7 @@ export async function fetchHotelData(hotel_id: number): Promise<any> {
   return res;
 }
 
+// not configure yet for controller and service
 export async function updateBookingData(userID: number) {
   const res = await fetch(
     `${process.env.REACT_APP_API_SERVER}/bookings/${userID}`,
