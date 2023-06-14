@@ -1,5 +1,4 @@
 import { Module } from '@nestjs/common';
-import { UserModule } from './user/user.module';
 import { PrismaModule } from './prisma/prisma.module';
 import { AuthModule } from './auth/auth.module';
 import { ConfigModule } from '@nestjs/config';
@@ -9,6 +8,7 @@ import { GalleryModule } from './gallery/gallery.module';
 import { ContactUsModule } from './contactUs/contactUs.module';
 import { CommentsModule } from './comments/comments.module';
 import { PaymentModule } from './payment/payment.module';
+import { UserModule } from './user/user.module';
 
 @Module({
   imports: [

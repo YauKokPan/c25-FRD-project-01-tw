@@ -37,8 +37,11 @@ const BookingResult: React.FC = () => {
 
       const userResponse = await fetchUserData(userID);
       const userData = await userResponse.json();
-
-      setUserData(userData);
+      if (userData.length) {
+        setUserData(userData);
+      } else {
+        setUserData([]);
+      }
     };
 
     fetchData();
@@ -47,21 +50,29 @@ const BookingResult: React.FC = () => {
   return (
     <div>
       <h1>預約紀錄</h1>
-      <ul>
-        {userData.map((booking) => (
-          <li key={booking.id}>
-            <h3>{booking.hotel_booking_key.name}</h3>
-            <p>
-              開始日期及時間: {new Date(booking.start_time).toLocaleString()}
-            </p>
-            <p>結束日期及時間: {new Date(booking.end_time).toLocaleString()}</p>
-            <p>預約總時數: {booking.total_hours} 小時</p>
-            <p>合計: {booking.total_price} 元</p>
-            <p>電郵: {booking.booking_email}</p>
-            <p>電話: {booking.booking_phone}</p>
-          </li>
-        ))}
-      </ul>
+      {userData === null ? (
+        <p>Loading...</p>
+      ) : userData.length ? (
+        <ul>
+          {userData.map((booking) => (
+            <li key={booking.id}>
+              <h3>{booking.hotel_booking_key.name}</h3>
+              <p>
+                開始日期及時間: {new Date(booking.start_time).toLocaleString()}
+              </p>
+              <p>
+                結束日期及時間: {new Date(booking.end_time).toLocaleString()}
+              </p>
+              <p>預約總時數: {booking.total_hours} 小時</p>
+              <p>合計: {booking.total_price} 元</p>
+              <p>電郵: {booking.booking_email}</p>
+              <p>電話: {booking.booking_phone}</p>
+            </li>
+          ))}
+        </ul>
+      ) : (
+        <p>No Booking</p>
+      )}
     </div>
   );
 };
