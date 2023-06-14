@@ -9,7 +9,7 @@ import { Hotel } from "../hotel/hotelAPI";
 import { getUserId } from "../auth/authAPI";
 import { bookingsAPI, findLatestBooking } from "./bookingsAPI";
 import { useNavigate } from "react-router-dom";
-import CheckOutPage from "../payment/CheckOutPage";
+// import CheckOutPage from "../payment/CheckOutPage";
 import emailjs from "@emailjs/browser";
 import { UserData } from "./BookingResult";
 

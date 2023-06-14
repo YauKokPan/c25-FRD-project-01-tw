@@ -10,6 +10,7 @@ import { UseHotelInfo } from "../hotel/hotelAPI";
 export default function HotelList() {
   const hotelsPerPage = 9; // Change this to adjust the number of hotels per page
   const hotelInfo = UseHotelInfo();
+  console.log("hotelInfo", hotelInfo);
   const [activePage, setActivePage] = useState(1);
 
   // Calculate the index of the first and last hotel to display on the current page

@@ -11,7 +11,8 @@ import HotelDetail from "./features/hotel/HotelDetail";
 import UserProfile from "./features/userProfile/UserProfile";
 import HomePage from "./features/home/HomePage";
 import SearchPage from "./features/searchPage/SearchPage";
-import BookingResult from "./features/bookings/BookingResult";
+// import BookingResults from "./features/bookings/BookingResult";
+// import CheckOutPage from "./features/payment/CheckOutPage";
 
 export default function App() {
   return (
@@ -28,6 +29,7 @@ export default function App() {
         <Route path="/user-profile" element={<UserProfile />} />
         {/* <Route path="/bookings" element={<Bookings />} /> */}
         <Route path="/search" element={<SearchPage />} />
+        {/* <Route path="/payment" element={<CheckOutPage />} /> */}
         {/* <Route path="/booking-results" element={<BookingResult />} /> */}
         <Route path="*" element={<h1>404 NOT FOUND!!!!</h1>} />
 

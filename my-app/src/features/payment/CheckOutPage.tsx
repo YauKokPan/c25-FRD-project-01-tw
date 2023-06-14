@@ -45,7 +45,7 @@ export default function CheckOutPage() {
       Client Sercret: {clientSecret}
       {clientSecret && (
         <Elements options={options} stripe={stripePromise}>
-          <CheckOutForm />{" "}
+          <CheckOutForm />
         </Elements>
       )}
     </>
