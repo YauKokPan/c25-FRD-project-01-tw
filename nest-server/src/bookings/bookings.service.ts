@@ -18,7 +18,7 @@ export class BookingsService {
       total_price,
       booking_phone,
       booking_email,
-      is_shown_up,
+
       remarks,
     } = data;
 
@@ -43,6 +43,17 @@ export class BookingsService {
   async findAll(): Promise<Booking[]> {
     return this.prisma.booking.findMany();
   }
+  async findLatestBooking(): Promise<Booking> {
+    return this.prisma.booking.findFirst({
+      orderBy: {
+        id: 'desc',
+      },
+      include: {
+        user_booking_key: true,
+        hotel_booking_key: true,
+      },
+    });
+  }
 
   async findAllByUserId(userId: number): Promise<Booking[]> {
     return await this.prisma.booking.findMany({
@@ -53,6 +64,18 @@ export class BookingsService {
         user_booking_key: true,
         hotel_booking_key: true,
       },
+      orderBy: {
+        id: 'desc',
+      },
+    });
+  }
+
+  async findUserLatestBooking(): Promise<Booking[]> {
+    return await this.prisma.booking.findMany({
+      orderBy: {
+        id: 'desc',
+      },
+      take: 1,
     });
   }
 

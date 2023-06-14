@@ -1,25 +1,19 @@
-// src/BookingResult.tsx
-
 import React, { useState, useEffect } from "react";
 import { fetchAllBookingData, fetchUserData } from "./bookingsAPI";
 import { getUserId } from "../auth/authAPI";
 
-interface BookingResultProps {
-  hotel_id: number;
-}
-
-interface UserKey {
+export interface UserKey {
   name: string | undefined;
 }
 
-interface HotelBookingKey {
+export interface HotelBookingKey {
   name: string | undefined;
   address: string | undefined;
   phone: string | undefined;
   total_rooms: number | undefined;
 }
 
-interface UserData {
+export interface UserData {
   id: number;
   start_time: Date;
   end_time: Date;
@@ -49,22 +43,22 @@ const BookingResult: React.FC = () => {
 
     fetchData();
   }, [userID]);
+
   return (
     <div>
-      <h2>Booking Results</h2>
+      <h1>預約紀錄</h1>
       <ul>
         {userData.map((booking) => (
           <li key={booking.id}>
-            <h3>{booking.user_booking_key.name}</h3>
             <h3>{booking.hotel_booking_key.name}</h3>
             <p>
               開始日期及時間: {new Date(booking.start_time).toLocaleString()}
             </p>
-            <p>完結日期及時間: {new Date(booking.end_time).toLocaleString()}</p>
-            <p>預約總時數為: {booking.total_hours} 小時</p>
-            <p>需付金額: {booking.total_price} 元</p>
-            <p>預約者電郵: {booking.booking_email}</p>
-            <p>預約者電話: {booking.booking_phone}</p>
+            <p>結束日期及時間: {new Date(booking.end_time).toLocaleString()}</p>
+            <p>預約總時數: {booking.total_hours} 小時</p>
+            <p>合計: {booking.total_price} 元</p>
+            <p>電郵: {booking.booking_email}</p>
+            <p>電話: {booking.booking_phone}</p>
           </li>
         ))}
       </ul>
