@@ -328,7 +328,6 @@ const BookingSlot: React.FC<{ hotel: Hotel }> = (props) => {
         </div>
         <button onClick={handleSubmit}>預約 及 付款</button>
       </form>
-      <CheckOutPage />
     </div>
   );
 };
