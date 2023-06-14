@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { fetchAllBookingData, fetchUserData } from "./bookingsAPI";
-import { getUserId } from "../auth/authAPI";
 
 export interface UserKey {
   name: string | undefined;
@@ -26,19 +25,22 @@ export interface UserData {
   hotel_booking_key: HotelBookingKey;
 }
 
-const userID = Number(getUserId());
-
-const BookingResult: React.FC = () => {
+const BookingResult: React.FC<{ userID: number }> = ({ userID }) => {
   const [userData, setUserData] = useState<UserData[]>([]);
 
   useEffect(() => {
     const fetchData = async () => {
-      const bookingResponse = await fetchAllBookingData();
+      // const bookingResponse = await fetchAllBookingData();
 
-      const userResponse = await fetchUserData(userID);
+      const userResponse = await fetchUserData(Number(userID));
       const userData = await userResponse.json();
 
-      setUserData(userData);
+      if (Array.isArray(userData)) {
+        setUserData(userData);
+      } else {
+        console.error("userData is not an array:", userData);
+        setUserData([]);
+      }
     };
 
     fetchData();

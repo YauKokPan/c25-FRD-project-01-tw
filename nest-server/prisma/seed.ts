@@ -80,8 +80,8 @@ const main = async () => {
     profile_pic: string;
     description: string;
     total_rooms: number;
-    has_equipment: boolean;
     hourly_rate: number;
+    is_deleted: boolean;
   }
 
   const hotels: HotelRecord[] = parsedData.data;
@@ -97,8 +97,8 @@ const main = async () => {
         profile_pic: hotelRecord.profile_pic,
         description: hotelRecord.description,
         user_id: +hotelRecord.user_id,
+        is_deleted: Boolean(hotelRecord.is_deleted),
         total_rooms: +hotelRecord.total_rooms,
-        has_equipment: Boolean(hotelRecord.has_equipment),
         hourly_rate: +hotelRecord.hourly_rate,
       },
     });

@@ -34,10 +34,10 @@ model Hotel {
   profile_pic String
   description String
   total_rooms Int
-  has_equipment Boolean
   hourly_rate Int
   user_prisma        User     @relation(fields: [user_id], references: [id])
   user_id     Int
+  is_deleted Boolean
   gallery_key Gallery[]
   comment_key Comment[]
   booking_key Booking[]
@@ -60,7 +60,6 @@ total_price Int
 booking_phone String
 booking_email String
 remarks String
-is_shown_up Boolean
 createdAt DateTime @default(now()) @map("created_at")
 updatedAt DateTime @updatedAt @map("updated_at")
 

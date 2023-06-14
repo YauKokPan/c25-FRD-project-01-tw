@@ -34,9 +34,6 @@ export async function bookingsAPI(
 export async function fetchAllBookingData() {
   const res = await fetch(`${process.env.REACT_APP_API_SERVER}/bookings/`, {
     method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-    },
   });
   return res;
 }
@@ -46,9 +43,6 @@ export async function fetchUserData(userID: number) {
     `${process.env.REACT_APP_API_SERVER}/bookings/${userID}`,
     {
       method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
     }
   );
   return res;
@@ -59,9 +53,6 @@ export async function findLatestBooking() {
     `${process.env.REACT_APP_API_SERVER}/bookings/latest`,
     {
       method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
     }
   );
   return res;
@@ -73,9 +64,6 @@ export async function fetchHotelData(hotel_id: number): Promise<any> {
     `${process.env.REACT_APP_API_SERVER}/hotels/${hotel_id}`,
     {
       method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
     }
   );
   return res;

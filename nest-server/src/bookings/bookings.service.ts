@@ -32,7 +32,6 @@ export class BookingsService {
         total_price,
         booking_phone,
         booking_email,
-        is_shown_up: true,
         remarks,
       },
     });

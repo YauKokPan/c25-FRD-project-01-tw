@@ -3,9 +3,15 @@ import { Container, Paper, Tabs, Tab } from "@mui/material";
 import { Inbox as InboxIcon, Menu as MenuIcon } from "@mui/icons-material";
 import BookingResult from "../bookings/BookingResult";
 import UserInfo from "./UserInfo";
+import { getUserId } from "../auth/authAPI";
 
-function UserProfile() {
+// interface ProfileProps {
+//   userID: number;
+// }
+
+const UserProfile: React.FC = () => {
   const [selectedTab, setSelectedTab] = useState(0);
+  const userID = Number(getUserId());
 
   const handleChange = (event: React.ChangeEvent<{}>, newValue: number) => {
     setSelectedTab(newValue);
@@ -50,7 +56,7 @@ function UserProfile() {
         )}
         {selectedTab === 1 && (
           <div>
-            <BookingResult />
+            <BookingResult userID={userID} />
           </div>
         )}
         {selectedTab === 2 && <div>Others</div>}
@@ -58,6 +64,6 @@ function UserProfile() {
       </Paper>
     </Container>
   );
-}
+};
 
 export default UserProfile;
