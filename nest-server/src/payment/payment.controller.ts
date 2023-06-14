@@ -8,16 +8,20 @@ export class PaymentController {
   constructor(private paymentService: PaymentService) {}
 
   @Post()
-  createPayment(
+  async createPayment(
     @Res() response: Response,
     @Body() paymentRequestBody: IPaymentRequestBody,
   ) {
-    this.paymentService
+    await this.paymentService
       .createPayment(paymentRequestBody)
       .then((res) => {
-        return res;
+        console.log('payment Controller: ', res.client_secret);
+        const result = {clientSecret: res.client_secret};
+        console.log('res: ', result);
+        return result;
       })
       .catch((err) => {
+        console.log('[ERROR]payment Controller: ', err);
         return err;
       });
   }

@@ -13,14 +13,20 @@ export class PaymentService {
     });
   }
 
-  createPayment(paymentRequestBody: IPaymentRequestBody): Promise<any> {
-    let sumAmount = 0;
-    paymentRequestBody.products.forEach((product) => {
-      sumAmount += product.price * product.quantity;
-    });
-    return this.stripe.paymentIntents.create({
-      amount: sumAmount * 100,
+  async createPayment(paymentRequestBody: IPaymentRequestBody): Promise<any> {
+    let sum = 0;
+    sum +=
+      paymentRequestBody.hotel.price_per_hour *
+      paymentRequestBody.hotel.total_hours;
+    console.log('amount', sum);
+    return await this.stripe.paymentIntents.create({
+      amount: +sum * 100,
       currency: paymentRequestBody.currency,
+      payment_method_types: ['card'],
+      // receipt_email: this.configService.get('STRIPE_RECEIPT_EMAIL'),
+      // automatic_payment_methods: {
+      //   enabled: true,
+      // },
     });
   }
 

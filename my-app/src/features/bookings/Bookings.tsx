@@ -9,6 +9,7 @@ import { Hotel } from "../hotel/hotelAPI";
 import { getUserId } from "../auth/authAPI";
 import { bookingsAPI } from "./bookingsAPI";
 import { useNavigate } from "react-router-dom";
+import CheckOutPage from "../payment/CheckOutPage";
 
 interface TimeButtonProps {
   time: string;
@@ -284,6 +285,7 @@ const BookingSlot: React.FC<{ hotel: Hotel }> = (props) => {
         </div>
         <button onClick={handleSubmit}>預約 及 付款</button>
       </form>
+      <CheckOutPage />
     </div>
   );
 };

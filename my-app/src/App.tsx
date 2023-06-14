@@ -13,6 +13,7 @@ import HomePage from "./features/home/HomePage";
 import SearchPage from "./features/searchPage/SearchPage";
 import BookingResults from "./features/bookings/BookingResult";
 
+
 export default function App() {
   return (
     <>
