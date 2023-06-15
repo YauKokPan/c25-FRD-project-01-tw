@@ -12,7 +12,7 @@ import { useNavigate } from "react-router-dom";
 // import CheckOutPage from "../payment/CheckOutPage";
 import emailjs from "@emailjs/browser";
 import { UserData } from "./BookingResult";
-import Paypal from "../payment/Paypal";
+
 
 interface TimeButtonProps {
   time: string;
@@ -185,11 +185,9 @@ const BookingSlot: React.FC<{ hotel: Hotel }> = (props) => {
       .then(
         (result) => {
           console.log(result.text);
-          alert("Email sent successfully!");
         },
         (error) => {
           console.log(error.text);
-          alert("Error sending email: " + error.message);
         }
       );
   };
@@ -247,7 +245,7 @@ const BookingSlot: React.FC<{ hotel: Hotel }> = (props) => {
           totalPrice: totalPrice,
         };
         sendEmail(bookingData);
-        navigate("/user-profile");
+        navigate("/payment");
       }
     } catch (error) {
       console.log(error);
@@ -329,7 +327,7 @@ const BookingSlot: React.FC<{ hotel: Hotel }> = (props) => {
         </div>
         <button onClick={handleSubmit}>預約 及 付款</button>
       </form>
-      <Paypal />
+
     </div>
   );
 };

@@ -6,7 +6,7 @@ import {
 } from "@paypal/react-paypal-js";
 import Swal from "sweetalert2";
 
-export default function Paypal() {
+export default function Payment() {
   // const clientId =
   //   "AdYRozjxbFdDRCAJEbCGwemMlhG7egDUTsTiJuHD710JOtzgGK--PY0mn5vodLfnYNAo0nGa7UjwduiI";
 
