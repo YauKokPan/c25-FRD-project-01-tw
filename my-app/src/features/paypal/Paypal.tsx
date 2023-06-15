@@ -1,5 +1,7 @@
 import React from "react";
 import { PayPalScriptProvider, PayPalButtons, ReactPayPalScriptOptions } from "@paypal/react-paypal-js";
+import Swal from "sweetalert2";
+
 
 export default function Paypal() {
   const clientId = "AdYRozjxbFdDRCAJEbCGwemMlhG7egDUTsTiJuHD710JOtzgGK--PY0mn5vodLfnYNAo0nGa7UjwduiI";
@@ -18,11 +20,22 @@ export default function Paypal() {
               purchase_units: [
                 {
                   amount: {
-                    value: "13.99",
+                    value: "0.01",
                   },
                 },
               ],
             });
+          }}
+          onApprove={async function (data, actions) {
+            if (actions.order) {
+              await actions.order.capture();
+              Swal.fire({
+                title: "付款成功！",
+                text: "謝謝使用本平台預訂🤗",
+                timer: 2000,
+              });
+            }
+            return Promise.resolve();
           }}
           />
       </PayPalScriptProvider>
