@@ -1,7 +1,7 @@
 // paypal.controller.ts
 import { Controller, Post, Body } from '@nestjs/common';
 import client from './paypalEnv';
-import paypal from '@paypal/checkout-server-sdk';
+import * as paypal from '@paypal/checkout-server-sdk';
 import { PaypalService, PaymentData } from './paypal.service';
 
 @Controller('paypal')
@@ -9,7 +9,7 @@ export class PaypalController {
   constructor(private readonly paypalService: PaypalService) {}
 
   @Post('create-order')
-  async handle(
+  async create(
     @Body() createOrderDto: { user_id: number; booking_id: number },
   ) {
     try {
@@ -50,7 +50,11 @@ export class PaypalController {
       return { orderID: payment.orderID };
     } catch (err: any) {
       console.error('Error in PaypalController:', err);
-      return { statusCode: 500, message: 'Internal server error' };
+      return {
+        statusCode: 500,
+        message: 'Internal server error',
+        error: err.message,
+      };
     }
   }
 }

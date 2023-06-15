@@ -14,7 +14,7 @@ export class HotelService {
         },
       },
     });
-    console.log('allHotels: ', allHotels);
+    // console.log('allHotels: ', allHotels);
     return allHotels;
   }
 }

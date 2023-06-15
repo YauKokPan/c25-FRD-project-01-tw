@@ -36,7 +36,7 @@ export function UseHotelInfo() {
             },
           }
         );
-        console.log("API response:", res);
+        // console.log("API response:", res);
 
         if (!res.ok) {
           throw new Error("Error fetching hotel data");
