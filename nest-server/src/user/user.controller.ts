@@ -35,14 +35,21 @@ export class UserController {
   }
 
   @Put(':id')
-  async update(
-    @Param('id') id: string,
-    @Body() updateUserDto: UpdateUserDto,
-    @Res() res: Response,
-  ) {
+  async update(@Body() updateUserDto: UpdateUserDto, @Res() res: Response) {
+    const id = updateUserDto.id;
+    if (id === undefined || isNaN(+id)) {
+      return res.status(400).json({
+        statusCode: 400,
+        message: 'Invalid user ID',
+      });
+    }
+
     try {
+      console.log('Received request to update user:', id);
+      console.log('UpdateUserDto:', updateUserDto);
       const updatedUser = await this.userService.update(+id, updateUserDto);
-      return res.sendStatus(200).json(updatedUser);
+      console.log('Updated user:', updatedUser);
+      return res.status(200).json(updatedUser);
     } catch (error) {
       console.error('Error updating user:', error.message, error.stack);
       return res.status(500).json({

@@ -1,0 +1,24 @@
+.userUpdate-label {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin: 20px auto;
+}
+
+.userUpdate-form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding-bottom: 50px;
+}
+
+.userUpdate-span {
+  margin-left: 5px;
+}
+
+.userUpdate-btn {
+  margin-top: 20px;
+  border-radius: 5px;
+  font-size: 1.3rem;
+  padding: 5px 20px;
+}

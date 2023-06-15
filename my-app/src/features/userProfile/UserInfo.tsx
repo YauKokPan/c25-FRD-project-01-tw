@@ -1,10 +1,18 @@
-import React, { useState, useEffect, FormEvent } from "react";
-import { getUser, updateUser, User } from "./userAPI";
+import React, { useState, useEffect } from "react";
+import { getUser, User } from "./userAPI";
 import { getUserId } from "../auth/authAPI";
+import "./UserInfo.css";
 
-export default function UserInfo() {
+interface UserInfoProps {
+  onEditComplete: () => void;
+}
+
+export default function UserInfo({ onEditComplete }: UserInfoProps) {
   const [user, setUser] = useState<User | null>(null);
-  const [isUpdating, setIsUpdating] = useState(false);
+
+  const handleEditClick = () => {
+    onEditComplete();
+  };
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -16,60 +24,29 @@ export default function UserInfo() {
     fetchUser();
   }, []);
 
-  const handleSubmit = async (e: FormEvent) => {
-    e.preventDefault();
-
-    if (user) {
-      const updated = await updateUser(user);
-      if (updated) {
-        alert("User updated successfully");
-      } else {
-        alert("User not updated");
-      }
-    }
-  };
-
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = event.target;
-    setUser((prevUser) => (prevUser ? { ...prevUser, [name]: value } : null));
-  };
-
   if (!user) {
-    return <div>Loading...</div>;
+    return <div>No User</div>;
   }
 
   return (
     <div>
-      <h1>User Info</h1>
-      <form onSubmit={handleSubmit}>
-        <label>
-          Name:
-          <input
-            type="text"
-            name="name"
-            value={user.name}
-            onChange={handleChange}
-          />
-        </label>
-        <label>
-          Email:
-          <input
-            type="email"
-            name="email"
-            value={user.email}
-            onChange={handleChange}
-          />
-        </label>
-        <label>
-          Phone:
-          <input
-            type="tel"
-            name="phone"
-            value={user.phone}
-            onChange={handleChange}
-          />
-        </label>
-        <button type="submit">Update</button>
+      <form className="userInfo-form">
+        <div className="userInfo-label">
+          Name :<span className="userInfo-span">{user.name} </span>
+        </div>
+        <div className="userInfo-label">
+          Email :<span className="userInfo-span">{user.email}</span>
+        </div>
+        <div className="userInfo-label">
+          Phone :<span className="userInfo-span">{user.phone}</span>
+        </div>
+        <button
+          className="userInfo-btn"
+          type="button"
+          onClick={handleEditClick}
+        >
+          更改個人資料
+        </button>
       </form>
     </div>
   );

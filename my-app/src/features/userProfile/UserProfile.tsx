@@ -2,26 +2,31 @@ import React, { useState } from "react";
 import { Container, Paper, Tabs, Tab } from "@mui/material";
 import { Inbox as InboxIcon, Menu as MenuIcon } from "@mui/icons-material";
 import BookingResult from "../bookings/BookingResult";
-import UserInfo from "./UserInfo";
 import { getUserId } from "../auth/authAPI";
-
-// interface ProfileProps {
-//   userID: number;
-// }
+import UserInfo from "./UserInfo";
+import UserUpdate from "./UserUpdate";
 
 const UserProfile: React.FC = () => {
   const [selectedTab, setSelectedTab] = useState(0);
+  const [isEditing, setIsEditing] = useState(false);
+
   const userID = Number(getUserId());
 
   const handleChange = (event: React.ChangeEvent<{}>, newValue: number) => {
     setSelectedTab(newValue);
   };
 
+  const handleEditComplete = () => {
+    setIsEditing(!isEditing);
+  };
+
   return (
     <Container
       maxWidth={false} // Remove the maxWidth restriction
       sx={{
-        width: "100%", // Set the width to 100%
+        width: "100%",
+        height: "100%",
+        paddingBottom: 50,
         paddingLeft: 0,
         paddingRight: 0,
         marginLeft: 0,
@@ -38,7 +43,7 @@ const UserProfile: React.FC = () => {
           scrollButtons="auto"
           aria-label="email categories"
           sx={{
-            "width": "100%", // Set the width to 100%
+            "width": "100%",
             "& .MuiTab-root": {
               fontSize: "1.2rem", // Set the font size for the tabs
             },
@@ -51,7 +56,11 @@ const UserProfile: React.FC = () => {
         </Tabs>
         {selectedTab === 0 && (
           <div>
-            <UserInfo />
+            {!isEditing ? (
+              <UserInfo onEditComplete={handleEditComplete} />
+            ) : (
+              <UserUpdate onEditComplete={handleEditComplete} />
+            )}
           </div>
         )}
         {selectedTab === 1 && (
