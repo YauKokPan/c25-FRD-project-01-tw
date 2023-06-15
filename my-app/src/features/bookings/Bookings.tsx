@@ -12,7 +12,7 @@ import { useNavigate } from "react-router-dom";
 // import CheckOutPage from "../payment/CheckOutPage";
 import emailjs from "@emailjs/browser";
 import { UserData } from "./BookingResult";
-import Paypal from "../paypal/Paypal";
+import Paypal from "../payment/Paypal";
 
 interface TimeButtonProps {
   time: string;
