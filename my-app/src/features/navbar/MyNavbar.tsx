@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
-import Nav from "react-bootstrap/Nav";
-import Navbar from "react-bootstrap/Navbar";
+import { Nav, Navbar, NavLink } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import "./MyNavbar.css";
 import { useAppDispatch } from "../../app/hook";
@@ -35,62 +34,74 @@ export default function MyNavbar() {
   };
 
   return (
-    <Navbar bg="bg" variant="light" className="my-navbar" sticky="top">
+    <Navbar
+      bg="bg"
+      variant="light"
+      className="my-navbar"
+      sticky="top"
+      expand="sm"
+    >
       <img src={process.env.PUBLIC_URL + "/img/logo.png"} alt="Company Logo" />
-      <Nav className="me-auto">
-        <Nav.Link as={Link} to="/">
-          💋主頁
-        </Nav.Link>
-        <Nav.Link as={Link} to="/hotels">
-          🏩酒店一覽
-        </Nav.Link>
-        <Nav.Link as={Link} to="/contact-us">
-          💌聯絡我們
-        </Nav.Link>
-        <Form className="d-flex" onSubmit={handleSearchSubmit}>
-          <Form.Control
-            type="search"
-            placeholder="輸入地區或酒店名"
-            className="me-2"
-            aria-label="Search"
-            value={searchQuery}
-            onChange={handleSearchChange}
-          />
-          <Button variant="outline-success" type="submit">
-            Search
-          </Button>
-        </Form>
-      </Nav>
-      <Nav>
-        {guardPage || [
-          <Nav.Link key="login" as={Link} to="/login">
-            💁‍♀️登入
-          </Nav.Link>,
-          <Nav.Link key="register" as={Link} to="/register">
-            💁‍♂️註冊
-          </Nav.Link>,
-        ]}
-      </Nav>
-      {guardPage && (
-        <Nav.Item>
-          <Nav.Link as={Link} to="/user-profile">
-            {username}
+      <Navbar.Toggle
+        aria-controls="navbarScroll"
+        data-bs-target="#navbarScroll"
+      />
+      <Navbar.Collapse id="navbarScroll">
+        <Nav className="me-auto">
+          <Nav.Link as={Link} to="/">
+            💋主頁
           </Nav.Link>
-        </Nav.Item>
-      )}
-      {guardPage && (
-        <Nav.Item>
-          <Button
-            variant="warning"
-            onClick={() => {
-              dispatch(logout());
-              navigate("/");
-            }}
-          >
-            登出
-          </Button>
-        </Nav.Item>
-      )}
+          <Nav.Link as={Link} to="/hotels">
+            🏩酒店一覽
+          </Nav.Link>
+          <Nav.Link as={Link} to="/contact-us">
+            💌聯絡我們
+          </Nav.Link>
+          <Form className="d-flex" onSubmit={handleSearchSubmit}>
+            <Form.Control
+              type="search"
+              placeholder="輸入地區或酒店名"
+              className="me-2"
+              aria-label="Search"
+              value={searchQuery}
+              onChange={handleSearchChange}
+            />
+            <Button variant="outline-success" type="submit">
+              Search
+            </Button>
+          </Form>
+        </Nav>
+        <Nav>
+          {guardPage || [
+            <Nav.Link key="login" as={Link} to="/login">
+              💁‍♀️登入
+            </Nav.Link>,
+            <Nav.Link key="register" as={Link} to="/register">
+              💁‍♂️註冊
+            </Nav.Link>,
+          ]}
+        </Nav>
+        {guardPage && (
+          <Nav.Item>
+            <Nav.Link as={Link} to="/user-profile">
+              {username}
+            </Nav.Link>
+          </Nav.Item>
+        )}
+        {guardPage && (
+          <Nav.Item>
+            <Button
+              variant="warning"
+              onClick={() => {
+                dispatch(logout());
+                navigate("/");
+              }}
+            >
+              登出
+            </Button>
+          </Nav.Item>
+        )}
+      </Navbar.Collapse>
     </Navbar>
   );
 }
