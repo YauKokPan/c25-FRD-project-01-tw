@@ -24,6 +24,7 @@ export default function Payment() {
               purchase_units: [
                 {
                   amount: {
+                    currency_code: "HKD",
                     value: "0.01",
                   },
                 },
