@@ -28,6 +28,7 @@ export const authSlice = createSlice({
       localStorage.removeItem("name");
       localStorage.removeItem("email");
       localStorage.removeItem("id");
+      localStorage.removeItem("is_admin");
     },
   },
 });

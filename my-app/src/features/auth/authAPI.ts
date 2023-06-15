@@ -42,5 +42,6 @@ export function getUserId(): string {
 }
 
 export function getIsAdmin(): boolean {
-  return Boolean(localStorage.getItem("is_admin"));
+  const isAdmin = localStorage.getItem("is_admin");
+  return isAdmin === "true";
 }

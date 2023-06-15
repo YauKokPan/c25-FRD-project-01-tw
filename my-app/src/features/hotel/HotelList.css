@@ -49,3 +49,13 @@ h2 {
 .rating {
   text-align: left;
 }
+
+.title-container {
+  display: flex;
+  justify-content: center;
+}
+
+.fav-container {
+  display: flex;
+  justify-content: space-between;
+}

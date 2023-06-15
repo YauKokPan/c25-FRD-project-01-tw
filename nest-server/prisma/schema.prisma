@@ -39,6 +39,7 @@ model Hotel {
   user_prisma        User     @relation(fields: [user_id], references: [id])
   user_id     Int
   is_deleted Boolean
+  is_favorite Boolean
   gallery_key Gallery[]
   comment_key Comment[]
   booking_key Booking[]
