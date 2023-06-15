@@ -19,7 +19,6 @@ export default function Paypal() {
                 {
                   amount: {
                     value: "13.99",
-                    currency_code:"HKD"
                   },
                 },
               ],
