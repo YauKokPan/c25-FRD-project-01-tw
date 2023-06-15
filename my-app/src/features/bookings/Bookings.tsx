@@ -265,20 +265,24 @@ const BookingSlot: React.FC<{ hotel: Hotel }> = (props) => {
           min={currentDateTime}
         />
       </div>
-      <div className="k-mb-4 k-font-weight-bold">請選擇預約時間：</div>
-      <div className="k-mb-4">
-        <div className="timeslots-container">
-          {timeslots.map((timeslot, index) => (
-            <TimeButton
-              key={timeslot.slot}
-              time={timeslot.slot}
-              clicked={timeslot.clicked}
-              onClick={() => handleTimeClick(index)}
-              index={index}
-            />
-          ))}
-        </div>
-      </div>
+      {bookingDate && (
+        <>
+          <div className="k-mb-4 k-font-weight-bold">請選擇預約時間：</div>
+          <div className="k-mb-4">
+            <div className="timeslots-container">
+              {timeslots.map((timeslot, index) => (
+                <TimeButton
+                  key={timeslot.slot}
+                  time={timeslot.slot}
+                  clicked={timeslot.clicked}
+                  onClick={() => handleTimeClick(index)}
+                  index={index}
+                />
+              ))}
+            </div>
+          </div>
+        </>
+      )}
       <button className="reset-btn" onClick={handleResetClick}>
         重置預約時間
       </button>
