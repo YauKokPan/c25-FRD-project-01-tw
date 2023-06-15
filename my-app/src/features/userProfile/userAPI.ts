@@ -3,10 +3,12 @@ import { API_ORIGIN } from "../../api";
 
 export interface User {
   user_id: number;
+  username: string;
   name: string;
   password: string;
   email: string;
   phone: string;
+  isAdmin: boolean;
 }
 
 export async function getUser(userId: number): Promise<User | null> {
@@ -21,17 +23,22 @@ export async function getUser(userId: number): Promise<User | null> {
   }
 }
 
-export async function updateUser(user: User): Promise<boolean> {
+export async function updateUser(
+  userId: number,
+  updatedUser: User
+): Promise<boolean> {
   try {
-    const response = await fetch(API_ORIGIN + `/user/${user.user_id}`, {
+    const response = await fetch(API_ORIGIN + `/user/${userId}`, {
       method: "PUT",
       headers: {
         "Accept": "application/json",
         "Content-Type": "application/json",
         "Authorization": `Bearer ${localStorage.getItem("token")}`,
       },
-      body: JSON.stringify(user),
+      body: JSON.stringify(updatedUser),
     });
+    console.log("Request to update user:", userId);
+    console.log("Response:", response);
     if (response.status === 200) {
       return true;
     } else {
