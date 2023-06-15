@@ -17,6 +17,7 @@ model User {
   hotel_prisma    Hotel[]
   comment_prisma Comment[]
    booking_key Booking[]
+   payment_key Payment[]
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
 
@@ -53,6 +54,7 @@ user_booking_key User @relation(fields:[user_id], references: [id])
 user_id Int
 hotel_booking_key Hotel @relation(fields:[hotel_id],references: [id])
 hotel_id Int
+payment_key Payment?
 start_time DateTime
 end_time DateTime
 total_hours Int
@@ -100,4 +102,17 @@ model Comment{
   is_deleted Boolean
 
   @@map("comments")
+}
+
+model Payment {
+        id      Int    @id @default(autoincrement())
+        orderID String
+        status  String
+        method String
+        user_payment_key User @relation(fields:[user_id], references: [id])
+        user_id Int 
+        booking_payment_key Booking @relation(fields:[booking_id], references: [id])
+        booking_id Int @unique
+
+    @@map("payment")
 }

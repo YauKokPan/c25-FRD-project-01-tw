@@ -9,6 +9,7 @@ import { ContactUsModule } from './contactUs/contactUs.module';
 import { CommentsModule } from './comments/comments.module';
 import { PaymentModule } from './payment/payment.module';
 import { UserModule } from './user/user.module';
+import { PaypalModule } from './paypal/paypal.module';
 
 @Module({
   imports: [
@@ -23,6 +24,7 @@ import { UserModule } from './user/user.module';
     CommentsModule,
     CommentsModule,
     PaymentModule,
+    PaypalModule,
   ],
   controllers: [],
   providers: [],
