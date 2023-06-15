@@ -1,21 +1,25 @@
 import React from "react";
-import { PayPalScriptProvider, PayPalButtons, ReactPayPalScriptOptions } from "@paypal/react-paypal-js";
+import {
+  PayPalScriptProvider,
+  PayPalButtons,
+  ReactPayPalScriptOptions,
+} from "@paypal/react-paypal-js";
 import Swal from "sweetalert2";
 
-
 export default function Paypal() {
-  const clientId = "AdYRozjxbFdDRCAJEbCGwemMlhG7egDUTsTiJuHD710JOtzgGK--PY0mn5vodLfnYNAo0nGa7UjwduiI";
+  // const clientId =
+  //   "AdYRozjxbFdDRCAJEbCGwemMlhG7egDUTsTiJuHD710JOtzgGK--PY0mn5vodLfnYNAo0nGa7UjwduiI";
 
   const options: ReactPayPalScriptOptions = {
-    clientId: clientId
+    clientId: process.env.REACT_APP_PAYPAL_CLIENT_ID || "",
+    // clientId: clientId,
   };
-
 
   return (
     <div>
       <PayPalScriptProvider options={options}>
-        <PayPalButtons 
-        createOrder={(data, actions) => {
+        <PayPalButtons
+          createOrder={(data, actions) => {
             return actions.order.create({
               purchase_units: [
                 {
@@ -37,7 +41,7 @@ export default function Paypal() {
             }
             return Promise.resolve();
           }}
-          />
+        />
       </PayPalScriptProvider>
     </div>
   );
