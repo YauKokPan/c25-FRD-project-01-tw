@@ -21,3 +21,10 @@
   display: flex;
   justify-content: center;
 }
+
+@media screen and (max-width: 600px) {
+  .background-image {
+    height: 30vh !important;
+    background-size: contain;
+  }
+}

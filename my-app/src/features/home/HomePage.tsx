@@ -9,6 +9,8 @@ import {
   CardMedia,
   Grid,
   Typography,
+  makeStyles,
+  Box,
 } from "@mui/material";
 import "./HomePage.css";
 import { Link } from "react-router-dom";
@@ -23,8 +25,16 @@ export default function HomePage() {
 
       <Grid container rowSpacing={2} columnSpacing={{ xs: 2, sm: 4, md: 8 }}>
         {hotelInfo.slice(140, 146).map((hotel) => (
-          <Grid item key={hotel.id} xs={4} className="popular-hotel-container">
-            <Card sx={{ width: 360 }}>
+          <Grid
+            item
+            key={hotel.id}
+            xs={12}
+            sm={6}
+            md={4}
+            lg={4}
+            className="popular-hotel-container"
+          >
+            <Card sx={{ maxWidth: { xs: "100%", sm: 360 } }}>
               <Link to={"/hotel-detail/" + hotel.id}>
                 <CardMedia
                   component="img"

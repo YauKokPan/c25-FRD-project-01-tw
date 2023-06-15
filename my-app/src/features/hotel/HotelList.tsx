@@ -25,7 +25,21 @@ export default function HotelList() {
 
   // Generate an array of page numbers to display in the pagination controls
   const pageNumbers = [];
-  for (let i = 1; i <= totalPages; i++) {
+  const maxPageNumbers = 5; // Change this to adjust the maximum number of page numbers to display
+  const middlePageNumber = Math.ceil(maxPageNumbers / 2);
+  let startPageNumber = activePage - middlePageNumber + 1;
+  if (startPageNumber < 1) {
+    startPageNumber = 1;
+  }
+  let endPageNumber = startPageNumber + maxPageNumbers - 1;
+  if (endPageNumber > totalPages) {
+    endPageNumber = totalPages;
+    startPageNumber = endPageNumber - maxPageNumbers + 1;
+    if (startPageNumber < 1) {
+      startPageNumber = 1;
+    }
+  }
+  for (let i = startPageNumber; i <= endPageNumber; i++) {
     pageNumbers.push(i);
   }
 
