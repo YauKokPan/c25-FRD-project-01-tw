@@ -1,6 +1,8 @@
 import * as React from "react";
 import Rating from "@mui/material/Rating";
 import Box from "@mui/material/Box";
+import { useTheme } from "@mui/material/styles";
+import useMediaQuery from "@mui/material/useMediaQuery";
 // import StarIcon from "@mui/icons-material/Star";
 import "./RatingForm.css";
 import { Hotel } from "../hotel/hotelAPI";
@@ -230,6 +232,15 @@ const RatingForm: React.FC<RatingFormProps> = (props) => {
             className="comment-input"
             value={name}
             onChange={(event) => setName(event.target.value)}
+            sx={{
+              width: {
+                xs: "100%",
+                sm: "180%",
+                md: "200%",
+                lg: "250%",
+                xl: "300%",
+              },
+            }}
             required
           />
         </label>
@@ -271,8 +282,18 @@ const RatingForm: React.FC<RatingFormProps> = (props) => {
             onChange={(event) => setComment(event.target.value)}
             minRows={2}
             maxRows={4}
+            sx={{
+              width: {
+                xs: "100%",
+                sm: "180%",
+                md: "200%",
+                lg: "250%",
+                xl: "300%",
+              },
+              minHeight: { xs: "60px", sm: "80px" },
+            }}
             startDecorator={
-              <Box sx={{ display: "flex", gap: 0.5 }}>
+              <Box sx={{ display: "flex", gap: { xs: 0.5, sm: 1 } }}>
                 <IconButton
                   variant="outlined"
                   color="neutral"

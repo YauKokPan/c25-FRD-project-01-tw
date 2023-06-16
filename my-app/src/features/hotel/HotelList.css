@@ -59,3 +59,18 @@ h2 {
   display: flex;
   justify-content: space-between;
 }
+
+.map-container {
+  position: relative;
+  padding-bottom: 56.25%; /* This maintains a 16:9 aspect ratio */
+  height: 0;
+  overflow: hidden;
+}
+
+.map {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100% !important; /* Override any inline width setting */
+  height: 100% !important; /* Override any inline height setting */
+}

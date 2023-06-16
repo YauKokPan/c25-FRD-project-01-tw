@@ -14,5 +14,10 @@
 }
 
 .contactus-button {
-  width: 10vw;
+  width: 25vw;
+}
+
+.contact-title {
+  text-align: center;
+  margin-top: 50px;
 }

@@ -13,3 +13,13 @@
 .my-navbar .nav-link {
   font-size: 24px;
 }
+
+.custom-navbar-toggler {
+  display: none;
+}
+
+@media (max-width: 900px) {
+  .custom-navbar-toggler {
+    display: block;
+  }
+}

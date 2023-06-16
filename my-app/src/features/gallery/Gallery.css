@@ -24,3 +24,18 @@
 .content-container {
   padding: 0px 20px;
 }
+
+.hotel-gallery {
+  width: 100%;
+}
+
+.mySwiper {
+  width: 100%;
+  height: auto;
+}
+
+.mySwiper img {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+}

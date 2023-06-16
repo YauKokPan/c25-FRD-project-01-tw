@@ -4,7 +4,7 @@ import { useState, FormEvent } from "react";
 import Title from "../title/Title";
 import { useNavigate } from "react-router-dom";
 import { contactUsAPI } from "./contactUsAPI";
-import emailjs from '@emailjs/browser';
+import emailjs from "@emailjs/browser";
 import { Form } from "react-bootstrap";
 
 export default function ContactUs() {
@@ -33,9 +33,7 @@ export default function ContactUs() {
     setContact_message(event.target.value);
   };
 
-  const handleIssueChange = (
-    event: React.ChangeEvent<HTMLSelectElement>
-  ) => {
+  const handleIssueChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setContact_issue(event.target.value);
   };
 
@@ -48,11 +46,11 @@ export default function ContactUs() {
         "RNXy4IKK-6Gbe5PCe"
       )
       .then(
-        (result: { text: any; }) => {
+        (result: { text: any }) => {
           console.log(result.text);
           alert("Email sent successfully!");
         },
-        (error: { text: any; message: string; }) => {
+        (error: { text: any; message: string }) => {
           console.log(error.text);
           alert("Error sending email: " + error.message);
         }
@@ -86,7 +84,7 @@ export default function ContactUs() {
       <div className="contactus-background">
         <div className="register-form">
           <form onSubmit={handleSubmit}>
-            <Title mainTitle="聯絡我們" />
+            <h3 className="contact-title">聯絡我們</h3>
 
             <div className="mb-3">
               <label>姓名</label>
@@ -128,18 +126,20 @@ export default function ContactUs() {
               <label>問題回報</label>
               <Form.Select
                 aria-label="Default select example"
-                required 
+                required
                 name="issue"
-                value={contact_issue} 
-                onChange={handleIssueChange} 
+                value={contact_issue}
+                onChange={handleIssueChange}
               >
-                <option value="">請選擇回報事項</option> 
+                <option value="">請選擇回報事項</option>
                 <option value="加入酒店到平台">加入酒店到平台</option>
-                <option value="酒店資料與實際不相符">酒店資料與實際不相符</option>
+                <option value="酒店資料與實際不相符">
+                  酒店資料與實際不相符
+                </option>
                 <option value="付款或退款問題">付款或退款問題</option>
                 <option value="其他">其他</option>
               </Form.Select>
-              <div className="invalid-feedback">請選擇回報事項</div> 
+              <div className="invalid-feedback">請選擇回報事項</div>
             </div>
 
             <div className="mb-3">

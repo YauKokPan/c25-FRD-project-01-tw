@@ -20,3 +20,11 @@ div {
 h1 {
   text-align: center;
 }
+
+.calendar-width {
+  width: 110% !important;
+}
+
+.calendar-width .k-widget {
+  width: 110%;
+}

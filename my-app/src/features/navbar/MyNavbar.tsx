@@ -18,6 +18,9 @@ export default function MyNavbar() {
   const guardPage = AuthGuard();
   const [username, setUsername] = useState<string | null>("");
 
+  // this state to manage the collapse state
+  const [navbarOpen, setNavbarOpen] = useState(false);
+
   useEffect(() => {
     setUsername(getUserName());
   }, [guardPage]);
@@ -33,28 +36,35 @@ export default function MyNavbar() {
     setSearchQuery("");
   };
 
+  // this function to close the navbar
+  const closeNavbar = () => {
+    setNavbarOpen(false);
+  };
+
   return (
     <Navbar
       bg="bg"
       variant="light"
       className="my-navbar"
       sticky="top"
-      expand="sm"
+      expand="lg"
+      expanded={navbarOpen}
     >
       <img src={process.env.PUBLIC_URL + "/img/logo.png"} alt="Company Logo" />
       <Navbar.Toggle
+        onClick={() => setNavbarOpen(!navbarOpen)}
         aria-controls="navbarScroll"
         data-bs-target="#navbarScroll"
       />
       <Navbar.Collapse id="navbarScroll">
         <Nav className="me-auto">
-          <Nav.Link as={Link} to="/">
+          <Nav.Link as={Link} to="/" onClick={closeNavbar}>
             💋主頁
           </Nav.Link>
-          <Nav.Link as={Link} to="/hotels">
+          <Nav.Link as={Link} to="/hotels" onClick={closeNavbar}>
             🏩酒店一覽
           </Nav.Link>
-          <Nav.Link as={Link} to="/contact-us">
+          <Nav.Link as={Link} to="/contact-us" onClick={closeNavbar}>
             💌聯絡我們
           </Nav.Link>
           <Form className="d-flex" onSubmit={handleSearchSubmit}>

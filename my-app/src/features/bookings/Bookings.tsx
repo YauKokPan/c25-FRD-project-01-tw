@@ -257,12 +257,14 @@ const BookingSlot: React.FC<{ hotel: Hotel }> = (props) => {
 
       <div className="k-mb-4 k-font-weight-bold">
         <div className="calendar-container">請選擇預約日期：</div>
-        <Calendar
-          value={bookingDate}
-          onChange={onDateChange}
-          className="k-mb-4"
-          min={currentDateTime}
-        />
+        <div style={{ width: "100%" }}>
+          <Calendar
+            value={bookingDate}
+            onChange={onDateChange}
+            className="k-mb-4 calendar-width"
+            min={currentDateTime}
+          />
+        </div>
       </div>
       {bookingDate && (
         <>
@@ -286,7 +288,7 @@ const BookingSlot: React.FC<{ hotel: Hotel }> = (props) => {
         重置預約時間
       </button>
 
-      <div>可訂房間數目: {hotel.total_rooms} </div>
+      {/* <div>可訂房間數目: {hotel.room_number} </div> */}
       <div>Selected Date: {bookingDate?.toDateString()}</div>
       <div>Selected Timeslot: {renderSelectedTime()}</div>
       <div>預約總時數為: {clickedCount} 小時</div>
