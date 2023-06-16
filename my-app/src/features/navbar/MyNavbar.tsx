@@ -50,7 +50,10 @@ export default function MyNavbar() {
       expand="lg"
       expanded={navbarOpen}
     >
+      <Nav.Link as={Link} to="/" onClick={closeNavbar}>
       <img src={process.env.PUBLIC_URL + "/img/logo.png"} alt="Company Logo" />
+      </Nav.Link>
+      
       <Navbar.Toggle
         onClick={() => setNavbarOpen(!navbarOpen)}
         aria-controls="navbarScroll"
