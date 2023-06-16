@@ -1,47 +1,20 @@
 import React, { useState, useEffect } from "react";
-import { findLatestBooking } from "../bookings/bookingsAPI";
+import { fetchUserData } from "../bookings/bookingsAPI";
 import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
 import Swal from "sweetalert2";
+import { getUserId } from "../auth/authAPI";
+import { UserData } from "../bookings/BookingResult";
 
-interface Booking {
-  id: number;
-  user_id: number;
-  hotel_id: number;
-  start_time: string;
-  end_time: string;
-  total_hours: number;
-  total_price: number;
-  booking_email: string;
-  booking_phone: string;
-  remarks: string;
-  createdAt: string;
-  updatedAt: string;
-  user_booking_key: {
-    id: number;
-    name: string;
-    email: string;
-    phone: string;
-    is_admin: boolean;
-    createdAt: string;
-    updatedAt: string;
-  };
-  hotel_booking_key: {
-    id: number;
-    name: string;
-    address: string;
-    district: string;
-    phone: string;
-  };
-}
+const userID = Number(getUserId());
 
 export default function Payment() {
-  const [bookingInfo, setBookingInfo] = useState<Booking | null>(null);
+  const [bookingInfo, setBookingInfo] = useState<UserData | null>(null);
 
   useEffect(() => {
     const fetchData = async () => {
-      const response = await findLatestBooking();
-      const latestBooking = await response.json();
-      setBookingInfo(latestBooking);
+      const response = await fetchUserData(userID);
+      const userLatestBooking = await response.json();
+      setBookingInfo(userLatestBooking[0]);
     };
     fetchData();
   }, []);
