@@ -93,7 +93,7 @@ export default function MyNavbar() {
         </Nav>
         {guardPage && (
           <Nav.Item>
-            <Nav.Link as={Link} to="/user-profile">
+            <Nav.Link as={Link} to="/user-profile" onClick={closeNavbar}>
               {username}
             </Nav.Link>
           </Nav.Item>
