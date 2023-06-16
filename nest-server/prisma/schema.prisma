@@ -30,7 +30,6 @@ model Hotel {
   address     String
   google_map_address String
   district    String
-  // tag String
   phone       String
   profile_pic String
   description String

@@ -15,6 +15,9 @@ async function hashPassword(plainPassword: string) {
 // reset  postgres id sequences
 async function resetPostgresSequences() {
   await prisma.$executeRaw(
+    Prisma.sql`ALTER SEQUENCE "payment_id_seq" RESTART WITH 1;`,
+  );
+  await prisma.$executeRaw(
     Prisma.sql`ALTER SEQUENCE "bookings_id_seq" RESTART WITH 1;`,
   );
 
@@ -34,6 +37,7 @@ const prisma = new PrismaClient();
 const main = async () => {
   // delete table data first before seeding
   await resetPostgresSequences();
+  await prisma.payment.deleteMany();
   await prisma.booking.deleteMany();
   await prisma.gallery.deleteMany();
   await prisma.comment.deleteMany();
@@ -82,6 +86,7 @@ const main = async () => {
     total_rooms: number;
     hourly_rate: number;
     is_deleted: boolean;
+    is_favorite: boolean;
   }
 
   const hotels: HotelRecord[] = parsedData.data;
@@ -100,6 +105,7 @@ const main = async () => {
         is_deleted: Boolean(hotelRecord.is_deleted),
         total_rooms: +hotelRecord.total_rooms,
         hourly_rate: +hotelRecord.hourly_rate,
+        is_favorite: Boolean(hotelRecord.is_favorite),
       },
     });
   }
