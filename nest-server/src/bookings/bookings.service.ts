@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { Booking } from '@prisma/client';
 import { PrismaService } from '../prisma/prisma.service';
 import { CreateBookingDto } from './dto/create-booking.dto';
@@ -18,9 +18,17 @@ export class BookingsService {
       total_price,
       booking_phone,
       booking_email,
-
       remarks,
     } = data;
+
+    // Check if the User record exists
+    const user = await this.prisma.user.findUnique({
+      where: { id: user_id },
+    });
+
+    if (!user) {
+      throw new NotFoundException(`User with ID '${user_id}' not found.`);
+    }
 
     const booking = await this.prisma.booking.create({
       data: {

@@ -21,10 +21,17 @@ h1 {
   text-align: center;
 }
 
-.calendar-width {
-  width: 110% !important;
-}
+@media screen and (max-width: 500px) {
+  .calendar-width {
+    left: 0 !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    margin-left: 0 !important;
+    width: 110% !important;
+    font-size: 0.7em !important;
+  }
 
-.calendar-width .k-widget {
-  width: 110%;
+  .calendar-width .k-calendar .k-header {
+    font-size: 1rem !important; /* Adjust header font size */
+  }
 }

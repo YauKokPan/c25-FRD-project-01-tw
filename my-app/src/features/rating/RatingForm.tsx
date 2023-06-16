@@ -235,10 +235,10 @@ const RatingForm: React.FC<RatingFormProps> = (props) => {
             sx={{
               width: {
                 xs: "100%",
-                sm: "180%",
-                md: "200%",
-                lg: "250%",
-                xl: "300%",
+                sm: "130%",
+                md: "170%",
+                lg: "230%",
+                xl: "270%",
               },
             }}
             required
@@ -285,10 +285,10 @@ const RatingForm: React.FC<RatingFormProps> = (props) => {
             sx={{
               width: {
                 xs: "100%",
-                sm: "180%",
-                md: "200%",
-                lg: "250%",
-                xl: "300%",
+                sm: "130%",
+                md: "170%",
+                lg: "230%",
+                xl: "270%",
               },
               minHeight: { xs: "60px", sm: "80px" },
             }}
