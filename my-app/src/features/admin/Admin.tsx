@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { getUserId } from "../auth/authAPI";
 import { useCreateHotel } from "../hotel/hotelAPI";
-import {}
 import {
   TextField,
   Button,
