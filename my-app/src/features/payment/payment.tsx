@@ -4,6 +4,7 @@ import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
 import Swal from "sweetalert2";
 import { getUserId } from "../auth/authAPI";
 import { UserData } from "../bookings/BookingResult";
+import "./payment.css";
 
 const userID = Number(getUserId());
 
@@ -24,50 +25,39 @@ export default function Payment() {
   };
 
   return (
-    <div
-      style={{
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        height: "100vh",
-      }}
-    >
+    <div className="payment-container">
       {bookingInfo ? (
-        <div style={{ textAlign: "center", margin: "0 auto" }}>
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              alignSelf: "flex-start",
-            }}
-          >
-            <h2>請確認以下資料與付款：</h2>
-            <p style={{ alignSelf: "flex-start" }}>
-              預訂人姓名: {bookingInfo.user_booking_key.name}
+        <div className="payment-info-container">
+          <h2 className="payment-heading">請確認以下資料與付款：</h2>
+          <div className="booking-info">
+            <p>
+              <strong>預訂人姓名:</strong> {bookingInfo.user_booking_key.name}
             </p>
-            <p style={{ alignSelf: "flex-start" }}>
-              酒店名稱: {bookingInfo.hotel_booking_key.name}
+            <p>
+              <strong>酒店名稱:</strong> {bookingInfo.hotel_booking_key.name}
             </p>
-            <p style={{ alignSelf: "flex-start" }}>
-              開始時間: {new Date(bookingInfo.start_time).toLocaleString()}
+            <p>
+              <strong>開始時間:</strong>{" "}
+              {new Date(bookingInfo.start_time).toLocaleString()}
             </p>
-            <p style={{ alignSelf: "flex-start" }}>
-              結束時間: {new Date(bookingInfo.end_time).toLocaleString()}
+            <p>
+              <strong>結束時間:</strong>{" "}
+              {new Date(bookingInfo.end_time).toLocaleString()}
             </p>
-            <p style={{ alignSelf: "flex-start" }}>
-              總時間: {bookingInfo.total_hours}小時
+            <p>
+              <strong>總時間:</strong> {bookingInfo.total_hours}小時
             </p>
-            <p style={{ alignSelf: "flex-start" }}>
-              最後金額: {bookingInfo.total_price}元
+            <p>
+              <strong>最後金額:</strong> {bookingInfo.total_price}元
             </p>
-            <p style={{ alignSelf: "flex-start" }}>
-              預訂人電郵: {bookingInfo.booking_email}
+            <p>
+              <strong>預訂人電郵:</strong> {bookingInfo.booking_email}
             </p>
-            <p style={{ alignSelf: "flex-start" }}>
-              預訂人電話: {bookingInfo.booking_phone}
+            <p>
+              <strong>預訂人電話:</strong> {bookingInfo.booking_phone}
             </p>
-            <p style={{ alignSelf: "flex-start" }}>
-              備註: {bookingInfo.remarks}
+            <p>
+              <strong>備註:</strong> {bookingInfo.remarks}
             </p>
           </div>
 
@@ -78,7 +68,6 @@ export default function Payment() {
                   purchase_units: [
                     {
                       amount: {
-                        // currency_code: "HKD",
                         value: bookingInfo.total_price.toString(),
                       },
                     },
