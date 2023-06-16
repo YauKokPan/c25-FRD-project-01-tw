@@ -88,101 +88,103 @@ export default function HotelList() {
 
   return (
     <>
-      <div className="title-container">
-        <Title mainTitle="酒店一覽🏩" />
-        {buttonState === "visible" && (
-          <IconButton
-            aria-label="add"
-            size="large"
-            onClick={() => navigate("/admin")}
-          >
-            <AddCircleRoundedIcon fontSize="inherit" />
-          </IconButton>
-        )}
-      </div>
-          <SearchBox/>
-      <Row>
-        {currentHotels.map((hotel) => {
-          return (
-            // Add the key prop to the Col component
-            <Col md={4} className="hotel-card" key={hotel.id}>
-              <Card>
-                <Link to={"/hotel-detail/" + hotel.id}>
-                  <Card.Img
-                    variant="top"
-                    src={hotel.profile_pic}
-                    className="hotel-img"
-                  />
-                </Link>
-
-                <Card.Body>
-                  <div className="fav-container">
-                    <Card.Title>{hotel.name}</Card.Title>
-                    {is_auth && (
-                      <IconButton aria-label="fav">
-                        <FavoriteRoundedIcon />
-                      </IconButton>
-                    )}
-                  </div>
-                  <Card.Text>地址 : {hotel.address}</Card.Text>{" "}
-                  <Card.Text>電話 : {hotel.phone}</Card.Text>
-                  {buttonState === "visible" && (
-                    <Stack direction="row" spacing={1}>
-                      <IconButton aria-label="edit">
-                        <EditRoundedIcon />
-                      </IconButton>
-                      <IconButton aria-label="delete">
-                        <DeleteIcon />
-                      </IconButton>
-                    </Stack>
-                  )}
-                </Card.Body>
-              </Card>
-            </Col>
-          );
-        })}
-      </Row>
-      <nav>
-        <ul className="pagination">
-          <li className={`page-item ${activePage === 1 ? "disabled" : ""}`}>
-            <button
-              className="page-link"
-              onClick={handlePrevClick}
-              disabled={activePage === 1}
+      <div className="hotel-list-container">
+        <div className="title-container">
+          <Title mainTitle="酒店一覽🏩" />
+          {buttonState === "visible" && (
+            <IconButton
+              aria-label="add"
+              size="large"
+              onClick={() => navigate("/admin")}
             >
-              Previous
-            </button>
-          </li>
-          {pageNumbers.map((pageNumber) => (
+              <AddCircleRoundedIcon fontSize="inherit" />
+            </IconButton>
+          )}
+        </div>
+        <SearchBox />
+        <Row>
+          {currentHotels.map((hotel) => {
+            return (
+              // Add the key prop to the Col component
+              <Col md={4} className="hotel-card" key={hotel.id}>
+                <Card>
+                  <Link to={"/hotel-detail/" + hotel.id}>
+                    <Card.Img
+                      variant="top"
+                      src={hotel.profile_pic}
+                      className="hotel-img"
+                    />
+                  </Link>
+
+                  <Card.Body>
+                    <div className="fav-container">
+                      <Card.Title>{hotel.name}</Card.Title>
+                      {is_auth && (
+                        <IconButton aria-label="fav">
+                          <FavoriteRoundedIcon />
+                        </IconButton>
+                      )}
+                    </div>
+                    <Card.Text>地址 : {hotel.address}</Card.Text>{" "}
+                    <Card.Text>電話 : {hotel.phone}</Card.Text>
+                    {buttonState === "visible" && (
+                      <Stack direction="row" spacing={1}>
+                        <IconButton aria-label="edit">
+                          <EditRoundedIcon />
+                        </IconButton>
+                        <IconButton aria-label="delete">
+                          <DeleteIcon />
+                        </IconButton>
+                      </Stack>
+                    )}
+                  </Card.Body>
+                </Card>
+              </Col>
+            );
+          })}
+        </Row>
+        <nav>
+          <ul className="pagination">
+            <li className={`page-item ${activePage === 1 ? "disabled" : ""}`}>
+              <button
+                className="page-link"
+                onClick={handlePrevClick}
+                disabled={activePage === 1}
+              >
+                Previous
+              </button>
+            </li>
+            {pageNumbers.map((pageNumber) => (
+              <li
+                key={pageNumber}
+                className={`page-item ${
+                  activePage === pageNumber ? "active" : ""
+                }`}
+              >
+                <button
+                  className="page-link"
+                  onClick={() => handlePageChange(pageNumber)}
+                >
+                  {pageNumber}
+                </button>
+              </li>
+            ))}
             <li
-              key={pageNumber}
               className={`page-item ${
-                activePage === pageNumber ? "active" : ""
+                activePage === totalPages ? "disabled" : ""
               }`}
             >
               <button
                 className="page-link"
-                onClick={() => handlePageChange(pageNumber)}
+                onClick={handleNextClick}
+                disabled={activePage === totalPages}
               >
-                {pageNumber}
+                Next
               </button>
             </li>
-          ))}
-          <li
-            className={`page-item ${
-              activePage === totalPages ? "disabled" : ""
-            }`}
-          >
-            <button
-              className="page-link"
-              onClick={handleNextClick}
-              disabled={activePage === totalPages}
-            >
-              Next
-            </button>
-          </li>
-        </ul>
-      </nav>
+          </ul>
+        </nav>
+      </div>
     </>
   );
 }

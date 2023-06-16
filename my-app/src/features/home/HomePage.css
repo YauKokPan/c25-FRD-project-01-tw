@@ -28,3 +28,13 @@
     background-size: contain;
   }
 }
+
+.hot-choice{
+  background-image: linear-gradient(
+      rgba(255, 255, 255, 0.5),
+      rgba(255, 255, 255, 0.5)
+    ),
+    url("../../../public/img/background-img.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+}
