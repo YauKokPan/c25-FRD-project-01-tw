@@ -13,6 +13,7 @@ import EditRoundedIcon from "@mui/icons-material/EditRounded";
 import { getIsAdmin } from "../auth/authAPI";
 import { AuthGuard } from "../auth/AuthGuard";
 import FavoriteRoundedIcon from "@mui/icons-material/FavoriteRounded";
+import SearchBox from "../searchBox/SearchBox";
 
 export default function HotelList() {
   const hotelsPerPage = 9; // Change this to adjust the number of hotels per page
@@ -99,7 +100,7 @@ export default function HotelList() {
           </IconButton>
         )}
       </div>
-
+          <SearchBox/>
       <Row>
         {currentHotels.map((hotel) => {
           return (
