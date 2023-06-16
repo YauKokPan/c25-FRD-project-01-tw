@@ -83,10 +83,15 @@ export default function MyNavbar() {
         </Nav>
         <Nav>
           {guardPage || [
-            <Nav.Link key="login" as={Link} to="/login">
+            <Nav.Link key="login" as={Link} to="/login" onClick={closeNavbar}>
               💁‍♀️登入
             </Nav.Link>,
-            <Nav.Link key="register" as={Link} to="/register">
+            <Nav.Link
+              key="register"
+              as={Link}
+              to="/register"
+              onClick={closeNavbar}
+            >
               💁‍♂️註冊
             </Nav.Link>,
           ]}
