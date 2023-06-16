@@ -3,7 +3,7 @@ import "./HotelList.css";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Card from "react-bootstrap/Card";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Title from "../title/Title";
 import { UseHotelInfo } from "../hotel/hotelAPI";
 import { IconButton, Stack } from "@mui/material";
@@ -23,6 +23,8 @@ export default function HotelList() {
   const [buttonState, setButtonState] = useState("");
 
   const is_auth = AuthGuard();
+
+  const navigate = useNavigate();
 
   // Calculate the index of the first and last hotel to display on the current page
   const lastIndex = activePage * hotelsPerPage;
@@ -88,7 +90,11 @@ export default function HotelList() {
       <div className="title-container">
         <Title mainTitle="酒店一覽🏩" />
         {buttonState === "visible" && (
-          <IconButton aria-label="add" size="large">
+          <IconButton
+            aria-label="add"
+            size="large"
+            onClick={() => navigate("/admin")}
+          >
             <AddCircleRoundedIcon fontSize="inherit" />
           </IconButton>
         )}

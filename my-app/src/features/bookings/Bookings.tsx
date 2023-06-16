@@ -13,7 +13,6 @@ import { useNavigate } from "react-router-dom";
 import emailjs from "@emailjs/browser";
 import { UserData } from "./BookingResult";
 
-
 interface TimeButtonProps {
   time: string;
   clicked: boolean;
@@ -287,7 +286,7 @@ const BookingSlot: React.FC<{ hotel: Hotel }> = (props) => {
         重置預約時間
       </button>
 
-      <div>可訂房間數目: {hotel.room_number} </div>
+      <div>可訂房間數目: {hotel.total_rooms} </div>
       <div>Selected Date: {bookingDate?.toDateString()}</div>
       <div>Selected Timeslot: {renderSelectedTime()}</div>
       <div>預約總時數為: {clickedCount} 小時</div>
@@ -331,7 +330,6 @@ const BookingSlot: React.FC<{ hotel: Hotel }> = (props) => {
         </div>
         <button onClick={handleSubmit}>預約 及 付款</button>
       </form>
-
     </div>
   );
 };
