@@ -64,7 +64,7 @@ const HotelForm = () => {
     <form onSubmit={handleSubmit}>
       <Container maxWidth="sm">
         <Typography variant="h4" align="center" className="createHotelTitle">
-          創建酒店
+          新增酒店
         </Typography>
         <Grid container spacing={2}>
           <Grid item xs={12}>

@@ -62,7 +62,9 @@ export default function HomePage() {
                   </Typography>
                 </CardContent>
                 <CardActions className="popular-hotel-center">
-                  <Button size="medium">立即預約</Button>
+                  <Link to={"/hotel-detail/" + hotel.id}>
+                    <Button size="medium">立即預約</Button>
+                  </Link>
                   <Button size="medium">收藏</Button>
                 </CardActions>
               </Card>

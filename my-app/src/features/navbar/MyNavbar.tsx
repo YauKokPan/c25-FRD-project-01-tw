@@ -50,7 +50,7 @@ export default function MyNavbar() {
       expand="lg"
       expanded={navbarOpen}
     >
-      <Nav.Link as={Link} to="/" onClick={closeNavbar}>
+      <Nav.Link as={Link} to="/" onClick={closeNavbar} className="home-logo">
         <img
           src={process.env.PUBLIC_URL + "/img/logo.png"}
           alt="Company Logo"

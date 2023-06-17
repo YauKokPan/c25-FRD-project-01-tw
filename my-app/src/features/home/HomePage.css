@@ -11,10 +11,11 @@
 
 .background-image {
   background-position: top;
-  background-image: url("../../../public/img/home-background.jpg");
+  background-image: url("../../../public/img/heart-fabric.jpg");
   background-repeat: no-repeat;
   background-size: cover;
   filter: brightness(120%);
+  border-radius: 15px;
 }
 
 .popular-hotel-center {
@@ -29,12 +30,13 @@
   }
 }
 
-.hot-choice{
+.hot-choice {
   background-image: linear-gradient(
       rgba(255, 255, 255, 0.5),
       rgba(255, 255, 255, 0.5)
     ),
-    url("../../../public/img/background-img.jpg");
+    url("../../../public/img/hot-choice.jpg");
   background-repeat: no-repeat;
   background-size: cover;
+  border-radius: 15px;
 }
