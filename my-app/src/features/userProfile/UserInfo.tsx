@@ -29,7 +29,7 @@ export default function UserInfo({ onEditComplete }: UserInfoProps) {
   }
 
   return (
-    <div>
+    <div className="userInfo-container">
       <form className="userInfo-form">
         <div className="userInfo-label">
           Name :<span className="userInfo-span">{user.name} </span>

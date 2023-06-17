@@ -1,6 +1,11 @@
 import React, { useState, useEffect } from "react";
+<<<<<<< Updated upstream
 import { fetchUserData } from "./bookingsAPI";
 import "./BookingResult.css";
+=======
+import { fetchAllBookingData, fetchUserData } from "./bookingsAPI";
+import "./Bookings.css";
+>>>>>>> Stashed changes
 
 export interface UserKey {
   name: string | undefined;
@@ -49,8 +54,8 @@ const BookingResult: React.FC<{ userID: number }> = ({ userID }) => {
   }, [userID]);
 
   return (
-    <div>
-      <h1>預約紀錄</h1>
+    <div className="bookingResult-container">
+      <h1 className="bookingResult-title">預約紀錄</h1>
       {userData === null ? (
         <p>Loading...</p>
       ) : userData.length ? (

@@ -45,7 +45,7 @@ export default function UserUpdate({ onEditComplete }: UserUpdateProps) {
   }
 
   return (
-    <div>
+    <div className="userUpdate-container">
       <form className="userUpdate-form" onSubmit={handleSubmit}>
         <div className="userUpdate-label">
           Name :

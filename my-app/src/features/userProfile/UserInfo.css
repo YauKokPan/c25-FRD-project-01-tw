@@ -1,7 +1,7 @@
 .userInfo-label {
-  font-size: 1.5rem;
+  font-size: 1.1rem;
   font-weight: 600;
-  margin: 20px auto;
+  margin: 20px 5px;
 }
 
 .userInfo-form {
@@ -9,7 +9,13 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding-bottom: 50px;
+  background-color: #f0f0f0;
+  padding: 20px 0 50px 0;
+  border-radius: 10px;
+  box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.5);
+  max-width: 500px;
+  width: 60vw;
+  margin-top: 30px;
 }
 
 .userInfo-span {
@@ -19,6 +25,11 @@
 .userInfo-btn {
   margin-top: 20px;
   border-radius: 5px;
-  font-size: 1.3rem;
+  font-size: 1.1rem;
   padding: 5px 20px;
+}
+
+.userInfo-container {
+  display: flex;
+  justify-content: center;
 }
