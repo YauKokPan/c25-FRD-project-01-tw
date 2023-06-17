@@ -51,9 +51,12 @@ export default function MyNavbar() {
       expanded={navbarOpen}
     >
       <Nav.Link as={Link} to="/" onClick={closeNavbar}>
-      <img src={process.env.PUBLIC_URL + "/img/logo.png"} alt="Company Logo" />
+        <img
+          src={process.env.PUBLIC_URL + "/img/logo.png"}
+          alt="Company Logo"
+        />
       </Nav.Link>
-      
+
       <Navbar.Toggle
         onClick={() => setNavbarOpen(!navbarOpen)}
         aria-controls="navbarScroll"
@@ -79,8 +82,8 @@ export default function MyNavbar() {
               value={searchQuery}
               onChange={handleSearchChange}
             />
-            <Button variant="outline-success" type="submit">
-              Search
+            <Button variant="outline-dark" type="submit" className="search-btn">
+              搜尋
             </Button>
           </Form>
         </Nav>

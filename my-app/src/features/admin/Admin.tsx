@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { ChangeEvent, useState } from "react";
 import { getUserId } from "../auth/authAPI";
 import { useCreateHotel } from "../hotel/hotelAPI";
 import {
@@ -41,10 +41,22 @@ const HotelForm = () => {
     e.preventDefault();
     try {
       await createHotelMutation.mutateAsync(formState);
-      alert("Hotel created successfully");
+      alert("酒店加入成功！");
     } catch (error) {
       console.error(`Error creating hotel: ${error}`);
-      alert("Error creating hotel");
+      alert("酒店加入失敗！");
+    }
+  };
+
+  // Add a new function to handle file uploads
+  const handleFileUpload = (event: ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setFormState({ ...formState, profile_pic: reader.result as string });
+      };
+      reader.readAsDataURL(file);
     }
   };
 
@@ -92,13 +104,25 @@ const HotelForm = () => {
             />
           </Grid>
           <Grid item xs={12}>
-            <TextField
-              fullWidth
-              label="酒店預覽圖片"
-              name="profile_pic"
-              value={formState.profile_pic}
-              onChange={handleChange}
+            <input
+              accept="image/*"
+              style={{ display: "none" }}
+              id="raised-button-file"
+              type="file"
+              onChange={handleFileUpload}
             />
+            <label htmlFor="raised-button-file">
+              <Button variant="contained" component="span">
+                上傳酒店預覽圖片
+              </Button>
+            </label>
+            {formState.profile_pic && (
+              <img
+                src={formState.profile_pic}
+                alt="Preview"
+                style={{ width: "80%", marginTop: "1rem" }}
+              />
+            )}
           </Grid>
           <Grid item xs={12}>
             <TextField

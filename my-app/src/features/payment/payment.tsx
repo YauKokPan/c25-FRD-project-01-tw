@@ -4,7 +4,7 @@ import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
 import Swal from "sweetalert2";
 import { getUserId } from "../auth/authAPI";
 import { UserData } from "../bookings/BookingResult";
-import "./payment.css";
+import "./Payment.css";
 
 const userID = Number(getUserId());
 

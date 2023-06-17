@@ -23,3 +23,7 @@
     display: block;
   }
 }
+
+.search-btn {
+  min-width: 60px;
+}

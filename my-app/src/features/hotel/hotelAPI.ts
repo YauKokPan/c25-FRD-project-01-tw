@@ -87,19 +87,30 @@ export function useHotelDetail(id: number) {
 }
 
 async function createHotel(hotelData: CreateHotel) {
+  const total_rooms = Number(hotelData.total_rooms);
+  const hourly_rate = Number(hotelData.hourly_rate);
   const response = await fetch(
-    `${process.env.REACT_APP_API_SERVER}//hotel/create`,
+    `${process.env.REACT_APP_API_SERVER}/hotel/create`,
     {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
         "Authorization": `Bearer ${localStorage.getItem("token")}`,
       },
-      body: JSON.stringify(hotelData),
+      body: JSON.stringify({
+        ...hotelData,
+        total_rooms,
+        hourly_rate,
+      }),
     }
   );
 
   if (!response.ok) {
+    console.error(
+      "Error creating hotel:",
+      response.status,
+      response.statusText
+    );
     throw new Error("Error creating hotel");
   }
 
