@@ -7,7 +7,6 @@ export async function bookingsAPI(
   total_price: number,
   booking_email: string,
   booking_phone: string,
-  is_shown_up: boolean = true, // added optional is_shown_up parameter with default value
   remarks: string
 ) {
   const res = await fetch(`${process.env.REACT_APP_API_SERVER}/bookings/`, {
@@ -24,7 +23,6 @@ export async function bookingsAPI(
       total_price,
       booking_email,
       booking_phone,
-      is_shown_up, // added is_shown_up field to the request payload
       remarks,
     }),
   });

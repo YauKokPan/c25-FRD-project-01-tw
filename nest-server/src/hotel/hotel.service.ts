@@ -48,7 +48,6 @@ export class HotelService {
         total_rooms,
         hourly_rate,
         is_deleted,
-        is_favorite,
       },
     });
 

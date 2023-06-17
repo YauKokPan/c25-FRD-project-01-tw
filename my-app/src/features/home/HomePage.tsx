@@ -65,7 +65,6 @@ export default function HomePage() {
                   <Link to={"/hotel-detail/" + hotel.id}>
                     <Button size="medium">立即預約</Button>
                   </Link>
-                  <Button size="medium">收藏</Button>
                 </CardActions>
               </Card>
             </Grid>

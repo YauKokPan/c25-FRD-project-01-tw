@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { fetchAllBookingData, fetchUserData } from "./bookingsAPI";
+import { fetchUserData } from "./bookingsAPI";
+import "./BookingResult.css";
 
 export interface UserKey {
   name: string | undefined;
@@ -71,7 +72,7 @@ const BookingResult: React.FC<{ userID: number }> = ({ userID }) => {
           ))}
         </ul>
       ) : (
-        <p>No Booking</p>
+        <h5 className="no-booking">暫無預約紀錄</h5>
       )}
     </div>
   );

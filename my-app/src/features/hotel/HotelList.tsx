@@ -5,12 +5,18 @@ import Col from "react-bootstrap/Col";
 import Card from "react-bootstrap/Card";
 import { Link, useNavigate } from "react-router-dom";
 import Title from "../title/Title";
-import { UseHotelInfo } from "../hotel/hotelAPI";
+import {
+  Hotel,
+  UseHotelInfo,
+  addToFavorites,
+  fetchUserFavorites,
+  removeFromFavorites,
+} from "../hotel/hotelAPI";
 import { IconButton, Stack } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import AddCircleRoundedIcon from "@mui/icons-material/AddCircleRounded";
 import EditRoundedIcon from "@mui/icons-material/EditRounded";
-import { getIsAdmin } from "../auth/authAPI";
+import { getIsAdmin, getUserId } from "../auth/authAPI";
 import { AuthGuard } from "../auth/AuthGuard";
 import FavoriteRoundedIcon from "@mui/icons-material/FavoriteRounded";
 import SearchBox from "../searchBox/SearchBox";
@@ -18,10 +24,29 @@ import SearchBox from "../searchBox/SearchBox";
 export default function HotelList() {
   const hotelsPerPage = 9; // Change this to adjust the number of hotels per page
   const hotelInfo = UseHotelInfo();
-  console.log("hotelInfo", hotelInfo);
+  // console.log("hotelInfo", hotelInfo);
   const [activePage, setActivePage] = useState(1);
 
   const [buttonState, setButtonState] = useState("");
+
+  const [userFavorites, setUserFavorites] = useState<Hotel[]>([]);
+
+  // const [favorites, setFavorites] = useState<Hotel[]>([]);
+
+  const toggleFavorite = async (hotel: Hotel) => {
+    const isCurrentlyFavorite = userFavorites.some(
+      (fav: any) => fav.id === hotel.id
+    );
+    const userId = Number(getUserId()); // Get the user ID from the authenticated user
+
+    if (isCurrentlyFavorite) {
+      await removeFromFavorites(hotel.id, userId); // Use the new function to remove the hotel from favorites
+      setUserFavorites(userFavorites.filter((fav: any) => fav.id !== hotel.id)); // Update the userFavorites state
+    } else {
+      await addToFavorites(hotel.id, true, userId);
+      setUserFavorites([...userFavorites, hotel]);
+    }
+  };
 
   const is_auth = AuthGuard();
 
@@ -31,8 +56,10 @@ export default function HotelList() {
   const lastIndex = activePage * hotelsPerPage;
   const firstIndex = lastIndex - hotelsPerPage;
 
+  const sortedHotelInfo = [...hotelInfo].sort((a, b) => a.id - b.id);
+
   // Slice the hotelInfo array to get the hotels for the current page
-  const currentHotels = hotelInfo.slice(firstIndex, lastIndex);
+  const currentHotels = sortedHotelInfo.slice(firstIndex, lastIndex);
 
   // Calculate the total number of pages based on the number of hotels and hotelsPerPage
   const totalPages = Math.ceil(hotelInfo.length / hotelsPerPage);
@@ -73,7 +100,18 @@ export default function HotelList() {
     }
   };
 
+  const userID = Number(getUserId());
   useEffect(() => {
+    const fetchFavorites = async () => {
+      if (!userID) {
+        return; // If there's no userID, return without fetching favorites
+      }
+      const favorites = await fetchUserFavorites(userID);
+      setUserFavorites(favorites);
+    };
+
+    fetchFavorites();
+
     const updateButtonState = () => {
       const isAdmin = getIsAdmin();
 
@@ -84,7 +122,7 @@ export default function HotelList() {
       }
     };
     updateButtonState();
-  }, [getIsAdmin]);
+  }, [userID, getIsAdmin()]);
 
   return (
     <>
@@ -120,7 +158,17 @@ export default function HotelList() {
                     <div className="fav-container">
                       <Card.Title>{hotel.name}</Card.Title>
                       {is_auth && (
-                        <IconButton aria-label="fav">
+                        <IconButton
+                          aria-label="fav"
+                          onClick={() => toggleFavorite(hotel)}
+                          style={{
+                            color: userFavorites.some(
+                              (fav) => fav.id === hotel.id
+                            )
+                              ? "red"
+                              : "inherit",
+                          }}
+                        >
                           <FavoriteRoundedIcon />
                         </IconButton>
                       )}

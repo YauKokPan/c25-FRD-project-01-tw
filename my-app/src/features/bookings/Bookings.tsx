@@ -45,7 +45,7 @@ const BookingSlot: React.FC<{ hotel: Hotel }> = (props) => {
   const [booking_email, setBookingEmail] = useState("");
   const [booking_phone, setBookingPhone] = useState("");
   const [remarks, setRemarks] = useState("");
-  const [is_shown_up, setIsShownUp] = useState<boolean>(false);
+  // const [is_shown_up, setIsShownUp] = useState<boolean>(false);
 
   const [timeslots, setTimeslots] = useState([
     { slot: "07:00 - 08:00", clicked: false },
@@ -226,7 +226,6 @@ const BookingSlot: React.FC<{ hotel: Hotel }> = (props) => {
         totalPrice,
         booking_email,
         booking_phone,
-        is_shown_up,
         remarks
       );
 

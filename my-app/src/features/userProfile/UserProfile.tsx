@@ -5,6 +5,7 @@ import BookingResult from "../bookings/BookingResult";
 import { getUserId } from "../auth/authAPI";
 import UserInfo from "./UserInfo";
 import UserUpdate from "./UserUpdate";
+import Favorite from "../favorite/Favorite";
 
 const UserProfile: React.FC = () => {
   const [selectedTab, setSelectedTab] = useState(0);
@@ -68,7 +69,11 @@ const UserProfile: React.FC = () => {
             <BookingResult userID={userID} />
           </div>
         )}
-        {selectedTab === 2 && <div>Others</div>}
+        {selectedTab === 2 && (
+          <div>
+            <Favorite userID={userID} />
+          </div>
+        )}
         {/* Add more content for other categories */}
       </Paper>
     </Container>

@@ -10,6 +10,7 @@ import { CommentsModule } from './comments/comments.module';
 import { PaymentModule } from './payment/payment.module';
 import { UserModule } from './user/user.module';
 import { PaypalModule } from './paypal/paypal.module';
+import { FavoriteModule } from './favorite/favorite.module';
 
 @Module({
   imports: [
@@ -25,6 +26,7 @@ import { PaypalModule } from './paypal/paypal.module';
     CommentsModule,
     PaymentModule,
     PaypalModule,
+    FavoriteModule,
   ],
   controllers: [],
   providers: [],
