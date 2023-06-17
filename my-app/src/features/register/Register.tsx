@@ -4,6 +4,7 @@ import { useState, FormEvent } from "react";
 import Title from "../title/Title";
 import { useNavigate } from "react-router-dom";
 import { registerAPI } from "./registerAPI";
+import Swal from "sweetalert2";
 
 export default function Register() {
   const navigate = useNavigate();
@@ -32,7 +33,19 @@ export default function Register() {
     e.preventDefault();
     const result = await registerAPI(name, email, password, phone);
     if (result) {
-      navigate("/");
+      Swal.fire({
+        title: "帳戶註冊成功！",
+        timer: 2000,
+      });
+      setTimeout(() => {
+        navigate("/login");
+      }, 2000);
+    } else {
+      Swal.fire({
+        title: "帳戶註冊失敗！",
+        text: "電郵或密瑪錯誤",
+        timer: 2000,
+      });
     }
   };
 

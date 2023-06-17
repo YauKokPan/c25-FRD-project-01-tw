@@ -56,10 +56,11 @@ export default function HotelList() {
   const lastIndex = activePage * hotelsPerPage;
   const firstIndex = lastIndex - hotelsPerPage;
 
-  const sortedHotelInfo = [...hotelInfo].sort((a, b) => a.id - b.id);
+  // arrange in ascending hotel id order
+  // const sortedHotelInfo = [...hotelInfo].sort((a, b) => a.id - b.id);
 
   // Slice the hotelInfo array to get the hotels for the current page
-  const currentHotels = sortedHotelInfo.slice(firstIndex, lastIndex);
+  const currentHotels = hotelInfo.slice(firstIndex, lastIndex);
 
   // Calculate the total number of pages based on the number of hotels and hotelsPerPage
   const totalPages = Math.ceil(hotelInfo.length / hotelsPerPage);
