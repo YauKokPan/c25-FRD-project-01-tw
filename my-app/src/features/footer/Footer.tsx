@@ -25,7 +25,7 @@ export default function Footer() {
               關於我們
             </Typography>
             <Typography variant="body2" color="text.secondary">
-            Sweethour是一個搜尋時鐘酒店的平台，讓用戶可以方便地找到最適合自己的時鐘酒店。我們提供了豐富的時鐘酒店資訊，包括房間照片、設施、評分和評論等，讓用戶可以更好地了解酒店的情況。此外，我們的平台還支持線上預訂和付款，讓用戶可以輕鬆安排旅程。Sweethour致力於為所有喜歡時鐘酒店的人提供最好的服務和體驗。
+              Sweethour是一個搜尋時鐘酒店的平台，讓用戶可以方便地找到最適合自己的時鐘酒店。我們提供了豐富的時鐘酒店資訊，包括房間照片、設施、評分和評論等，讓用戶可以更好地了解酒店的情況。此外，我們的平台還支持線上預訂和付款，讓用戶可以輕鬆安排旅程。Sweethour致力於為所有喜歡時鐘酒店的人提供最好的服務和體驗。
             </Typography>
           </Grid>
           <Grid item xs={12} sm={4}>
@@ -33,7 +33,7 @@ export default function Footer() {
               聯絡我們
             </Typography>
             <Typography variant="body2" color="text.secondary">
-            20B, TML Tower, 3 Hoi Shing Rd, Tsuen Wan
+              20B, TML Tower, 3 Hoi Shing Rd, Tsuen Wan
             </Typography>
             <Typography variant="body2" color="text.secondary">
               Email: sweethour@gmail.com
@@ -46,7 +46,11 @@ export default function Footer() {
             <Typography variant="h6" color="text.primary" gutterBottom>
               關注我們
             </Typography>
-            <Link href="https://www.facebook.com/tecky.io/?locale=zh_HK" color="inherit">
+
+            <Link
+              href="https://www.facebook.com/tecky.io/?locale=zh_HK"
+              color="inherit"
+            >
               <Facebook />
             </Link>
             <Link
@@ -61,11 +65,16 @@ export default function Footer() {
             </Link>
           </Grid>
         </Grid>
+
         <Box mt={5}>
           <Typography variant="body2" color="text.secondary" align="center">
+            <img
+              src={process.env.PUBLIC_URL + "/img/logo.png"}
+              alt="Company Logo"
+            />
             {"Copyright © "}
             <Link color="inherit" href="https://sweethour.com/">
-            https://sweethour.com/
+              https://sweethour.com/
             </Link>{" "}
             {new Date().getFullYear()}
             {"."}
