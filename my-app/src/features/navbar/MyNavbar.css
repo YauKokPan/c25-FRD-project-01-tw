@@ -7,7 +7,8 @@
 .my-navbar {
   background: linear-gradient(to bottom, #ece9e6, #ffffff);
   z-index: 1000;
-  border-radius: 10px;
+  border-radius: 5px;
+  padding: 0 10px 10px 0 !important;
 }
 
 .my-navbar .nav-link {
@@ -33,4 +34,14 @@
 .custom-navbar-container.container {
   padding-left: 0;
   padding-right: 0;
+}
+
+div.home.container-fluid {
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+div.hotel-card.col-md-4 {
+  padding: 0 !important;
+  margin: 0 !important;
 }
