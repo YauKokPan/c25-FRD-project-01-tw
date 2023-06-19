@@ -44,7 +44,9 @@
     "@types/react": "^18.2.6",
     "@types/react-dom": "^18.2.4",
     "@types/react-google-recaptcha": "^2.1.5",
+    "@types/react-router-dom": "^5.3.3",
     "bootstrap": "^5.2.3",
+    "mdb-react-ui-kit": "^6.1.0",
     "react": "^18.2.0",
     "react-bootstrap": "2",
     "react-dom": "^18.2.0",
@@ -57,7 +59,8 @@
     "sweetalert2": "^11.7.12",
     "swiper": "^9.3.2",
     "typescript": "^4.9.5",
-    "web-vitals": "^2.1.4"
+    "web-vitals": "^2.1.4",
+    "workbox-webpack-plugin": "^7.0.0"
   },
   "scripts": {
     "start": "react-scripts start",

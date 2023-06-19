@@ -29,3 +29,8 @@
 .search-btn {
   min-width: 60px;
 }
+
+.custom-navbar-container.container {
+  padding-left: 0;
+  padding-right: 0;
+}

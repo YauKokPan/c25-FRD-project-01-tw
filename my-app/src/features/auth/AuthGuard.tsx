@@ -1,6 +1,4 @@
-// import { Navigate, Outlet } from "react-router-dom";
 import { useAppSelector } from "../../app/hook";
-// import React from "react";
 
 export function AuthGuard() {
   return useAppSelector((state) => state.auth.isAuth);

@@ -80,8 +80,11 @@ export default function Payment() {
                   Swal.fire({
                     title: "付款成功！",
                     text: "謝謝使用本平台預訂🤗",
-                    timer: 2000,
+                    timer: 3000,
                   });
+                  setTimeout(() => {
+                    window.location.replace("/");
+                  }, 3000);
                 }
                 return Promise.resolve();
               }}
