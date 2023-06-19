@@ -75,20 +75,14 @@ const UserProfile: React.FC = () => {
             </div>
           </Box>
         )}
+
         {selectedTab === 2 && (
           <Box pb={3}>
-            <div>Others</div>{" "}
+            <div>
+              <Favorite userID={userID} />
+            </div>
           </Box>
         )}
-<<<<<<< Updated upstream
-        {selectedTab === 2 && (
-          <div>
-            <Favorite userID={userID} />
-          </div>
-        )}
-=======
->>>>>>> Stashed changes
-        {/* Add more content for other categories */}
       </Paper>
     </Container>
   );

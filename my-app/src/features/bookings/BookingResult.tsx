@@ -1,11 +1,7 @@
 import React, { useState, useEffect } from "react";
-<<<<<<< Updated upstream
 import { fetchUserData } from "./bookingsAPI";
 import "./BookingResult.css";
-=======
-import { fetchAllBookingData, fetchUserData } from "./bookingsAPI";
 import "./Bookings.css";
->>>>>>> Stashed changes
 
 export interface UserKey {
   name: string | undefined;
@@ -59,9 +55,9 @@ const BookingResult: React.FC<{ userID: number }> = ({ userID }) => {
       {userData === null ? (
         <p>Loading...</p>
       ) : userData.length ? (
-        <ul>
+        <ul className="booking-result-ul">
           {userData.map((booking) => (
-            <li key={booking.id}>
+            <li className="booking-result-li" key={booking.id}>
               <h3>{booking.hotel_booking_key.name}</h3>
               <p>
                 開始日期及時間: {new Date(booking.start_time).toLocaleString()}
