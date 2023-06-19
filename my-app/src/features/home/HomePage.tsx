@@ -23,7 +23,7 @@ export default function HomePage() {
       <div className="background-image search-container">
         <div className="text-container">
           <h1 className="caption-title">一站式時鐘酒店平台</h1>
-          <p className="sub-title">隨時、隨地、隨心 預訂您的專屬空間</p>
+          <p className="s-title">隨時、隨地、隨心 預訂您的專屬空間</p>
         </div>
       </div>
       <div className="hot-choice">
