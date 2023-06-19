@@ -13,6 +13,7 @@ import HomePage from "./features/home/HomePage";
 import SearchPage from "./features/searchPage/SearchPage";
 import Payment from "./features/payment/Payment"
 import Admin from "./features/admin/Admin";
+import Footer from "./features/footer/Footer";
 
 // import BookingResults from "./features/bookings/BookingResult";
 // import CheckOutPage from "./features/payment/CheckOutPage";
@@ -39,6 +40,7 @@ export default function App() {
         <Route path="*" element={<h1>404 NOT FOUND!!!!</h1>} />
         {/* <Route path=":id" element={<HotelDetail />} /> */}
       </Routes>
+      <Footer />
     </>
   );
 }
