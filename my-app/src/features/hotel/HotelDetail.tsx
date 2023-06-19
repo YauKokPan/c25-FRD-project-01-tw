@@ -41,7 +41,7 @@ export default function HotelDetail() {
             <p>描述: {hotel.description}</p>
           </Col>
           <Col xs={12} lg={6}>
-            <Equipment />
+            <Equipment className="mobile-hr" />
           </Col>
           <Col xs={12} lg={6}>
             <h2>酒店地圖🗺️</h2>

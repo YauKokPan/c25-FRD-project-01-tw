@@ -1,0 +1,27 @@
+.footer-bar {
+  display: none;
+  justify-content: space-around;
+  align-items: center;
+  background-color: #f8f9fa;
+  padding: 10px 0;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  border-top: 1px solid #dee2e6;
+}
+
+.footer-bar a {
+  text-decoration: none;
+  color: #212529;
+}
+
+.footer-bar a.active-link {
+  color: #007bff;
+}
+
+@media (max-width: 767px) {
+  .footer-bar {
+    display: flex;
+  }
+}

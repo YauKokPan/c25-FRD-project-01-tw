@@ -75,3 +75,13 @@ h2 {
   height: 100% !important; /* Override any inline height setting */
 }
 
+@media (max-width: 991px) {
+  .mobile-hr::before {
+    content: "";
+    display: block;
+    width: 100%;
+    height: 1px;
+    background-color: #ccc; /* Set the horizontal rule color */
+    margin: 16px 0; /* Add some margin around the horizontal rule */
+  }
+}
