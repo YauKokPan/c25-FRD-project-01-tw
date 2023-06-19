@@ -11,13 +11,13 @@
     url("../../../public/img/contactus-background.jpg");
   background-repeat: no-repeat;
   background-size: cover;
+  height: 100vh;
 }
 
 .contactus-button {
   width: 25vw;
 }
 
-.contact-title {
-  text-align: center;
-  margin-top: 50px;
+.mb-3 > label {
+  font-size: 1rem;
 }

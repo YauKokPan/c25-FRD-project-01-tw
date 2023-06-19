@@ -5,11 +5,13 @@ import Link from "@mui/material/Link";
 import Grid from "@mui/material/Grid";
 import { Facebook, Instagram, Twitter } from "@mui/icons-material";
 import { Box } from "@mui/material";
+import "./Footer.css";
 
 export default function Footer() {
   return (
     <Box
       component="footer"
+      className="footer-container"
       sx={{
         backgroundColor: (theme) =>
           theme.palette.mode === "light"

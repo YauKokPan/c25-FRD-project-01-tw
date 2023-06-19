@@ -9,8 +9,6 @@
   margin: auto;
 }
 
-
-
 .popular-hotel-center {
   display: flex;
   justify-content: center;
@@ -20,6 +18,12 @@
   .background-image {
     height: 30vh !important;
     background-size: contain;
+  }
+  .text-container > .caption-title {
+    font-size: 18px;
+  }
+  .text-container > .s-title {
+    font-size: 12px;
   }
 }
 
@@ -42,7 +46,7 @@
   background-size: cover;
   filter: brightness(120%);
   border-radius: 15px;
-  height: 400px; /* set the height of the container */
+  height: 60vh; /* set the height of the container */
 }
 
 .background-image .text-container {
@@ -50,9 +54,14 @@
   top: 50%;
   left: 50%;
   color: white;
-  background: rgba(0, 0, 0, 0.5); /* change the alpha value to make it more transparent */
+  background: rgba(
+    0,
+    0,
+    0,
+    0.5
+  ); /* change the alpha value to make it more transparent */
   transform: translate(-50%, -50%);
-  padding: 30px 25px 25px 25px;
+  padding: 25px 30px 15px 30px;
 }
 
 .background-image h1 {
@@ -75,9 +84,9 @@
   text-align: center;
 }
 
-.s-title{
+.s-title {
   text-align: center;
-	margin-top: 10px;
-	padding: 8px 0 10px 0;
-	border-bottom: solid 3px #fff;
+  margin-top: 10px;
+  padding: 8px 0 10px 0;
+  border-bottom: solid 3px #fff;
 }

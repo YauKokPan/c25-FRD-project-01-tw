@@ -1,11 +1,11 @@
 import React from "react";
 import "./ContactUs.css";
 import { useState, FormEvent } from "react";
-import Title from "../title/Title";
 import { useNavigate } from "react-router-dom";
 import { contactUsAPI } from "./contactUsAPI";
 import emailjs from "@emailjs/browser";
 import { Form } from "react-bootstrap";
+import Title from "../title/Title";
 
 export default function ContactUs() {
   const navigate = useNavigate();
@@ -84,7 +84,7 @@ export default function ContactUs() {
       <div className="contactus-background">
         <div className="register-form">
           <form onSubmit={handleSubmit}>
-            <h3 className="contact-title">聯絡我們</h3>
+            <Title mainTitle="聯絡我們" />
 
             <div className="mb-3">
               <label>姓名</label>
