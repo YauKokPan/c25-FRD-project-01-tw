@@ -11,7 +11,7 @@ import HotelDetail from "./features/hotel/HotelDetail";
 import UserProfile from "./features/userProfile/UserProfile";
 import HomePage from "./features/home/HomePage";
 import SearchPage from "./features/searchPage/SearchPage";
-import Payment from "./features/payment/Payment";
+import Payment from "./features/payment/Payment"
 import Admin from "./features/admin/Admin";
 
 // import BookingResults from "./features/bookings/BookingResult";
