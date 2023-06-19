@@ -14,7 +14,7 @@ import SearchPage from "./features/searchPage/SearchPage";
 import Payment from "./features/payment/Payment";
 import Admin from "./features/admin/Admin";
 import Footer from "./features/footer/Footer";
-import FooterBar from "./features/FooterBar/FooterBar";
+import FooterBar from "./features/footerBar/FooterBar";
 
 // import BookingResults from "./features/bookings/BookingResult";
 // import CheckOutPage from "./features/payment/CheckOutPage";

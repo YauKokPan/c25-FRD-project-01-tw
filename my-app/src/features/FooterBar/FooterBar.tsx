@@ -17,16 +17,20 @@ const FooterBar: React.FC<FooterBarProps> = () => {
   return (
     <div className="footer-bar">
       <NavLink to="/" className="active-link">
-        <HomeIcon />
+        <HomeIcon className="icon-size" />
       </NavLink>
       <NavLink to="/hotels" className="active-link">
-        <SearchIcon />
+        <SearchIcon className="icon-size" />
       </NavLink>
       <NavLink to="/contact-us" className="active-link">
-        <EmailIcon />
+        <EmailIcon className="icon-size" />
       </NavLink>
       <NavLink to={isAuth ? "/user-profile" : "/login"} className="active-link">
-        {isAuth ? <PersonIcon /> : <LoginIcon />}
+        {isAuth ? (
+          <PersonIcon className="icon-size" />
+        ) : (
+          <LoginIcon className="icon-size" />
+        )}
       </NavLink>
     </div>
   );

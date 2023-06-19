@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Nav, Navbar } from "react-bootstrap";
+import { Nav, Navbar, Container } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import "./MyNavbar.css";
 import { useAppDispatch } from "../../app/hook";
@@ -60,7 +60,7 @@ export default function MyNavbar() {
         aria-controls="navbarScroll"
         data-bs-target="#navbarScroll"
       />
-      <Navbar.Collapse id="navbarScroll">
+      <Navbar.Collapse id="navbarScroll" className="custom-navbar-container">
         <Nav className="me-auto">
           <Nav.Link as={Link} to="/" onClick={closeNavbar}>
             💋主頁
