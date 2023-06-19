@@ -19,7 +19,7 @@ export class HotelService {
     return allHotels;
   }
 
-  async createHotel(inputData: CreateHotelDto) {
+  async createHotel(createHotelDto: CreateHotelDto) {
     const {
       name,
       address,
@@ -31,9 +31,9 @@ export class HotelService {
       total_rooms,
       hourly_rate,
       is_deleted,
-      is_favorite,
       user_id,
-    } = inputData;
+      gallery_key,
+    } = createHotelDto;
 
     const postHotel = await this.prismaService.hotel.create({
       data: {
@@ -48,6 +48,12 @@ export class HotelService {
         total_rooms,
         hourly_rate,
         is_deleted,
+        gallery_key: {
+          create: gallery_key?.map((image) => ({
+            hotel_img: image.hotel_img,
+            hotel_name: image.hotel_name,
+          })),
+        },
       },
     });
 

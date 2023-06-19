@@ -1,17 +1,17 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import "./HotelList.css";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Card from "react-bootstrap/Card";
 import { Link, useNavigate } from "react-router-dom";
 import Title from "../title/Title";
+import { Hotel, UseHotelInfo } from "../hotel/hotelAPI";
 import {
-  Hotel,
-  UseHotelInfo,
   addToFavorites,
   fetchUserFavorites,
   removeFromFavorites,
-} from "../hotel/hotelAPI";
+} from "../favorite/favoriteAPI";
+
 import { IconButton, Stack } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import AddCircleRoundedIcon from "@mui/icons-material/AddCircleRounded";
@@ -102,6 +102,9 @@ export default function HotelList() {
   };
 
   const userID = Number(getUserId());
+
+  const isAdmin = useMemo(() => getIsAdmin(), []);
+
   useEffect(() => {
     const fetchFavorites = async () => {
       if (!userID) {
@@ -114,8 +117,6 @@ export default function HotelList() {
     fetchFavorites();
 
     const updateButtonState = () => {
-      const isAdmin = getIsAdmin();
-
       if (isAdmin) {
         setButtonState("visible");
       } else {
@@ -123,7 +124,7 @@ export default function HotelList() {
       }
     };
     updateButtonState();
-  }, [userID, getIsAdmin()]);
+  }, [userID, isAdmin]);
 
   return (
     <>
