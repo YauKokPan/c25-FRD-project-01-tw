@@ -1,3 +1,8 @@
+export class GalleryImageDto {
+  hotel_img: string;
+  hotel_name: string;
+}
+
 export class CreateHotelDto {
   name: string;
   address: string;
@@ -10,9 +15,5 @@ export class CreateHotelDto {
   hourly_rate: number;
   is_deleted: boolean;
   user_id: number;
-  galleryImages?: string[];
-  gallery_key?: {
-    hotel_img: string;
-    hotel_name: string;
-  }[];
+  gallery_key: GalleryImageDto[];
 }

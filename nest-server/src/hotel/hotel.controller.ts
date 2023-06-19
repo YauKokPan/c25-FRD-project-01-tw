@@ -16,10 +16,11 @@ import {
 import { s3, bucketName } from '../../s3upload';
 import * as fs from 'fs';
 import { CreateHotelDto } from './dto/create-hotel.dto';
+import { ManagedUpload } from 'aws-sdk/clients/s3';
 
-type UploadedData = {
-  Location: string;
-};
+// type UploadedData = {
+//   Location: string;
+// };
 
 @Controller('hotel')
 export class HotelController {
@@ -37,22 +38,22 @@ export class HotelController {
     }
   }
 
-  @Post('test')
-  @UseInterceptors(
-    FileFieldsInterceptor([
-      { name: 'file', maxCount: 1 },
-      { name: 'profile_pic', maxCount: 1 },
-    ]),
-  )
-  uploadFile(
-    @UploadedFiles()
-    files: {
-      file?: Express.Multer.File[];
-      profile_pic?: Express.Multer.File[];
-    },
-  ) {
-    console.log(files.file[0].originalname);
-  }
+  // @Post('test')
+  // @UseInterceptors(
+  //   FileFieldsInterceptor([
+  //     { name: 'file', maxCount: 1 },
+  //     { name: 'profile_pic', maxCount: 1 },
+  //   ]),
+  // )
+  // uploadFile(
+  //   @UploadedFiles()
+  //   files: {
+  //     file?: Express.Multer.File[];
+  //     profile_pic?: Express.Multer.File[];
+  //   },
+  // ) {
+  //   console.log(files.file[0].originalname);
+  // }
 
   @Post('create')
   @UseInterceptors(
@@ -69,9 +70,11 @@ export class HotelController {
     },
     @Body() createHotelDto: CreateHotelDto,
   ) {
+    console.log('Files received:', files);
     try {
       // Validate input data
       // ...
+      console.log('Create hotel route called');
 
       // Upload profile pic to S3
       const uploadedProfilePic = files.profile_pic?.[0]
@@ -85,7 +88,7 @@ export class HotelController {
           )
         : null;
 
-      const postHotel = await this.hotelService.createHotel({
+      const createdHotel = await this.hotelService.createHotel({
         ...createHotelDto,
         profile_pic: uploadedProfilePic?.Location,
         gallery_key: uploadedGalleryImages?.map((image) => ({
@@ -94,7 +97,17 @@ export class HotelController {
         })),
       });
 
-      return postHotel;
+      const response = {
+        ...createdHotel,
+        profile_pic: uploadedProfilePic?.Location,
+        gallery_key: uploadedGalleryImages?.map((image) => ({
+          hotel_img: image.Location,
+          hotel_name: createHotelDto.name,
+        })),
+      };
+
+      console.log('Response:', response);
+      return response;
     } catch (error) {
       // handle error
       console.error(error);
@@ -102,54 +115,34 @@ export class HotelController {
     }
   }
 
-  private async uploadToS3(file: Express.Multer.File) {
-    console.log('Uploaded files:', file);
-    if (file && file.path) {
-      const uploadedProfilePic = await this.uploadToS3(file);
-    } else {
-      console.error('File object or file path is undefined:', file);
-    }
+  private async uploadToS3(
+    file: Express.Multer.File,
+  ): Promise<ManagedUpload.SendData> {
+    // Add Promise<ManagedUpload.SendData> as the return type
+    console.log('Uploading files:', file);
 
     const key = file.originalname;
     const uploadParams = {
       Bucket: bucketName,
       Key: key,
-      // Body: fs.createReadStream(file.path),
-      Body: file.buffer,
+      Body: file.buffer || fs.createReadStream(file.path),
       ContentType: file.mimetype,
+      // ACL: 'public-read',
     };
 
-    const uploadedFile = await new Promise<UploadedData>((resolve, reject) => {
-      s3.upload(uploadParams, (err: any, data: any) => {
-        if (err) {
-          reject(err);
-        } else {
-          resolve(data);
-        }
-      });
-    });
-
-    try {
-      fs.unlinkSync(file.path);
-    } catch (error) {
-      console.error('Failed to remove the temporary file:', error);
-    }
+    const uploadedFile = await new Promise<ManagedUpload.SendData>(
+      (resolve, reject) => {
+        s3.upload(uploadParams, (err: any, data: ManagedUpload.SendData) => {
+          if (err) {
+            reject(err);
+          } else {
+            console.log('File uploaded:', data);
+            resolve(data);
+          }
+        });
+      },
+    );
 
     return uploadedFile;
   }
 }
-
-// const postHotel = {
-//   name: '1',
-//   address: '1',
-//   google_map_address: '1',
-//   district: '1',
-//   phone: '1',
-//   profile_pic: uploadedProfilePic?.Location,
-//   description: '1',
-//   total_rooms: 1,
-//   hourly_rate: 1,
-//   is_deleted: false,
-//   user_id: 1,
-//   gallery_key: '1',
-// };

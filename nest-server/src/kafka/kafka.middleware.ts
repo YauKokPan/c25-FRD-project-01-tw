@@ -1,27 +1,30 @@
 import { Injectable, NestMiddleware } from '@nestjs/common';
 import { Producer, Kafka } from 'kafkajs';
 import { Request, Response, NextFunction } from 'express';
-import * as dotenv from 'dotenv';
+// import * as dotenv from 'dotenv';
 
-dotenv.config();
+// dotenv.config();
 
 @Injectable()
 export class KafkaMiddleware implements NestMiddleware {
   kafka: Kafka;
   producer: Producer;
   constructor() {
+    console.log('kafkabroker: ', process.env.KAFKA_BROKERS);
     this.kafka = new Kafka({
       clientId: 'nest-log-producer',
       brokers: [process.env.KAFKA_BROKERS],
     });
-    this.producer = this.kafka.producer();
+    this.producer = this.kafka.producer({
+      allowAutoTopicCreation: true,
+    });
     this.connect();
   }
   async connect() {
     try {
       await this.producer.connect();
     } catch (e) {
-      console.log(e);
+      // console.log(e);
     }
   }
   async use(req: Request, res: Response, next: NextFunction) {
@@ -51,7 +54,7 @@ export class KafkaMiddleware implements NestMiddleware {
         })
         .then(console.log);
     } catch (e) {
-      console.log('[error]', e);
+      // console.log('[error]', e);
     }
     next();
   }
@@ -85,7 +88,7 @@ export class KafkaMiddleware implements NestMiddleware {
         })
         .then(console.log);
     } catch (e) {
-      console.log('[error]', e);
+      // console.log('[error]', e);
     }
   }
 }
