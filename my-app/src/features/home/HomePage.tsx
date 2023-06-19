@@ -9,8 +9,6 @@ import {
   CardMedia,
   Grid,
   Typography,
-  makeStyles,
-  Box,
 } from "@mui/material";
 import "./HomePage.css";
 import { Link } from "react-router-dom";
