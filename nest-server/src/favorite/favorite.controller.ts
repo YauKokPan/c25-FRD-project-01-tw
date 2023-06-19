@@ -5,7 +5,6 @@ import {
   Body,
   ParseIntPipe,
   Get,
-  Post,
   Patch,
   Delete,
 } from '@nestjs/common';

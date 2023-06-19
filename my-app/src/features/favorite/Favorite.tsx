@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import "./Favorite.css";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
@@ -11,11 +11,11 @@ import { getIsAdmin, getUserId } from "../auth/authAPI";
 import { AuthGuard } from "../auth/AuthGuard";
 import FavoriteRoundedIcon from "@mui/icons-material/FavoriteRounded";
 import {
-  Hotel,
   addToFavorites,
   fetchUserFavorites,
   removeFromFavorites,
-} from "../hotel/hotelAPI";
+} from "../favorite/favoriteAPI";
+import { Hotel } from "../hotel/hotelAPI";
 
 const Favorites: React.FC<{ userID: number }> = ({ userID }) => {
   const [userFavorites, setUserFavorites] = useState<Hotel[]>([]);
@@ -40,6 +40,8 @@ const Favorites: React.FC<{ userID: number }> = ({ userID }) => {
     }
   };
 
+  const isAdmin = useMemo(() => getIsAdmin(), []); // Memoize the result of getIsAdmin()
+
   useEffect(() => {
     const fetchFavorites = async () => {
       const favorites = await fetchUserFavorites(userID);
@@ -49,8 +51,6 @@ const Favorites: React.FC<{ userID: number }> = ({ userID }) => {
     fetchFavorites();
 
     const updateButtonState = () => {
-      const isAdmin = getIsAdmin();
-
       if (isAdmin) {
         setButtonState("visible");
       } else {
@@ -58,7 +58,7 @@ const Favorites: React.FC<{ userID: number }> = ({ userID }) => {
       }
     };
     updateButtonState();
-  }, [userID, getIsAdmin()]);
+  }, [userID, isAdmin]); // Use the memoized value in the dependency array
 
   return (
     <div className="favorites-container">
