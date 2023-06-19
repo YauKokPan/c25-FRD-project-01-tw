@@ -4,6 +4,7 @@ import { UseHotelInfo } from "../hotel/hotelAPI";
 import { Row, Col, Card } from "react-bootstrap";
 import "./SearchPage.css";
 import { Hotel } from "../hotel/hotelAPI";
+import SearchBox from "../searchBox/SearchBox";
 
 export default function SearchPage() {
   const location = useLocation();
@@ -20,6 +21,9 @@ export default function SearchPage() {
 
   return (
     <div>
+      <div className="search-box">
+      <SearchBox />
+      </div>
       <h1>「{searchQuery}」的搜尋結果</h1>
       <Row className="search-results">
         {filteredHotels.length > 0 ? (
@@ -49,6 +53,7 @@ export default function SearchPage() {
           <h3>沒有符合「{searchQuery}」的搜尋結果</h3>
         )}
       </Row>
+      
     </div>
   );
 }
