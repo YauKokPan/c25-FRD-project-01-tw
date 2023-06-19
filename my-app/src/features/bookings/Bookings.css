@@ -2,6 +2,11 @@ div {
   margin: 10px 0;
 }
 
+.bookingResult-title {
+  margin-top: 30px;
+  text-align: center;
+}
+
 .total-hour {
   margin: 20px 0;
   font-weight: 600;
@@ -17,10 +22,6 @@ div {
   margin-bottom: 20px;
 }
 
-h1 {
-  text-align: center;
-}
-
 @media screen and (max-width: 500px) {
   .calendar-width {
     left: 0 !important;
@@ -34,4 +35,23 @@ h1 {
   .calendar-width .k-calendar .k-header {
     font-size: 1rem !important; /* Adjust header font size */
   }
+}
+
+.booking-result-ul {
+  display: flex !important;
+  /* flex-direction: column; */
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.booking-result-li {
+  list-style: none;
+  background-color: #f0f0f0;
+  padding: 20px 30px 50px 30px;
+  border-radius: 10px;
+  box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.5);
+  max-width: 500px;
+  width: 70vw;
+  margin-top: 30px;
+  margin-left: 10px;
 }

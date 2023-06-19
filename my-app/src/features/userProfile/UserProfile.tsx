@@ -1,6 +1,5 @@
 import React, { useState } from "react";
-import { Container, Paper, Tabs, Tab } from "@mui/material";
-import { Inbox as InboxIcon, Menu as MenuIcon } from "@mui/icons-material";
+import { Container, Paper, Tabs, Tab, Box } from "@mui/material";
 import BookingResult from "../bookings/BookingResult";
 import { getUserId } from "../auth/authAPI";
 import UserInfo from "./UserInfo";
@@ -56,25 +55,34 @@ const UserProfile: React.FC = () => {
           {/* Add more Tab components for other categories */}
         </Tabs>
         {selectedTab === 0 && (
-          <div>
-            {!isEditing ? (
-              <UserInfo onEditComplete={handleEditComplete} />
-            ) : (
-              <UserUpdate onEditComplete={handleEditComplete} />
-            )}
-          </div>
+          <Box pb={3}>
+            {" "}
+            {/* Add Box wrapper with padding-bottom of 30px */}
+            <div>
+              {!isEditing ? (
+                <UserInfo onEditComplete={handleEditComplete} />
+              ) : (
+                <UserUpdate onEditComplete={handleEditComplete} />
+              )}
+            </div>
+          </Box>
         )}
         {selectedTab === 1 && (
-          <div>
-            <BookingResult userID={userID} />
-          </div>
+          <Box pb={3}>
+            {" "}
+            <div>
+              <BookingResult userID={userID} />
+            </div>
+          </Box>
         )}
+
         {selectedTab === 2 && (
-          <div>
-            <Favorite userID={userID} />
-          </div>
+          <Box pb={3}>
+            <div>
+              <Favorite userID={userID} />
+            </div>
+          </Box>
         )}
-        {/* Add more content for other categories */}
       </Paper>
     </Container>
   );

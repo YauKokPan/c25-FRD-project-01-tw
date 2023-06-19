@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { fetchUserData } from "./bookingsAPI";
 import "./BookingResult.css";
+import "./Bookings.css";
 
 export interface UserKey {
   name: string | undefined;
@@ -49,14 +50,14 @@ const BookingResult: React.FC<{ userID: number }> = ({ userID }) => {
   }, [userID]);
 
   return (
-    <div>
-      <h1>預約紀錄</h1>
+    <div className="bookingResult-container">
+      <h1 className="bookingResult-title">預約紀錄</h1>
       {userData === null ? (
         <p>Loading...</p>
       ) : userData.length ? (
-        <ul>
+        <ul className="booking-result-ul">
           {userData.map((booking) => (
-            <li key={booking.id}>
+            <li className="booking-result-li" key={booking.id}>
               <h3>{booking.hotel_booking_key.name}</h3>
               <p>
                 開始日期及時間: {new Date(booking.start_time).toLocaleString()}

@@ -57,7 +57,8 @@
     "sweetalert2": "^11.7.12",
     "swiper": "^9.3.2",
     "typescript": "^4.9.5",
-    "web-vitals": "^2.1.4"
+    "web-vitals": "^2.1.4",
+    "workbox-webpack-plugin": "^7.0.0"
   },
   "scripts": {
     "start": "react-scripts start",
