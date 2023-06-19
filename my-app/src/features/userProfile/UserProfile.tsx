@@ -55,7 +55,7 @@ const UserProfile: React.FC = () => {
           {/* Add more Tab components for other categories */}
         </Tabs>
         {selectedTab === 0 && (
-          <Box pb={3}>
+          <Box pb={3} sx={{}}>
             {" "}
             {/* Add Box wrapper with padding-bottom of 30px */}
             <div>
