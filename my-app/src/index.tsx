@@ -10,7 +10,7 @@ import { queryClient } from "./query/client";
 import { Provider } from "react-redux";
 import { store } from "./app/store";
 import "@progress/kendo-theme-default/dist/all.css";
-import * as serviceWorker from "./serviceWorker";
+// import * as serviceWorker from "./serviceWorker";
 import "./installApp"; // Import the installApp.ts file
 
 const root = ReactDOM.createRoot(
@@ -30,4 +30,4 @@ root.render(
   </React.StrictMode>
 );
 
-serviceWorker.register();
+// serviceWorker.register();

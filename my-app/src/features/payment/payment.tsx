@@ -6,10 +6,9 @@ import { getUserId } from "../auth/authAPI";
 import { UserData } from "../bookings/BookingResult";
 import "./Payment.css";
 
-const userID = Number(getUserId());
-
 export default function Payment() {
   const [bookingInfo, setBookingInfo] = useState<UserData | null>(null);
+  const userID = Number(getUserId());
 
   useEffect(() => {
     const fetchData = async () => {
@@ -18,7 +17,7 @@ export default function Payment() {
       setBookingInfo(userLatestBooking[0]);
     };
     fetchData();
-  }, []);
+  }, [userID]);
 
   const options = {
     clientId: process.env.REACT_APP_PAYPAL_CLIENT_ID || "",
