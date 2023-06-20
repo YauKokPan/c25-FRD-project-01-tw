@@ -22,13 +22,14 @@ export default function SearchPage() {
   return (
     <div>
       <div className="search-box">
-      <SearchBox />
+        <SearchBox />
       </div>
       <h1>「{searchQuery}」的搜尋結果</h1>
-      <Row className="search-results">
-        {filteredHotels.length > 0 ? (
-          <>
-            <h3>共有{filteredHotels.length}筆紀錄</h3>
+
+      {filteredHotels.length > 0 ? (
+        <>
+          <h3>共有{filteredHotels.length}筆紀錄</h3>
+          <div className="search-results">
             {filteredHotels.map((hotel) => (
               <Col md={4} className="hotel-card" key={hotel.id}>
                 <Card>
@@ -48,12 +49,11 @@ export default function SearchPage() {
                 </Card>
               </Col>
             ))}
-          </>
-        ) : (
-          <h3>沒有符合「{searchQuery}」的搜尋結果</h3>
-        )}
-      </Row>
-      
+          </div>
+        </>
+      ) : (
+        <h3>沒有符合「{searchQuery}」的搜尋結果</h3>
+      )}
     </div>
   );
 }

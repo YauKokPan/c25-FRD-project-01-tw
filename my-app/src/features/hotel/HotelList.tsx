@@ -142,7 +142,7 @@ export default function HotelList() {
           )}
         </div>
         <SearchBox />
-        <Row>
+        <div className="hotel-row">
           {currentHotels.map((hotel) => {
             return (
               // Add the key prop to the Col component
@@ -192,7 +192,7 @@ export default function HotelList() {
               </Col>
             );
           })}
-        </Row>
+        </div>
         <nav>
           <ul className="pagination">
             <li className={`page-item ${activePage === 1 ? "disabled" : ""}`}>

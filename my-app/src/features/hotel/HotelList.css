@@ -4,12 +4,26 @@
   object-fit: cover;
 }
 
+.hotel-row {
+  margin: 0 -15px;
+}
+
 .hotel-card {
-  margin-bottom: 10px;
+  margin-bottom: 10px; /* Adjust this value for the desired space between rows */
 }
 
 div.row {
   width: 100%;
+}
+
+.hotel-row {
+  display: flex;
+  justify-content: space-evenly;
+  flex-wrap: wrap;
+}
+
+div.card {
+  margin: 10px 10px;
 }
 
 .content-container {
@@ -50,6 +64,7 @@ div.row {
 h2 {
   text-align: center;
 }
+
 .rating {
   text-align: left;
 }

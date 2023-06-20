@@ -2,3 +2,7 @@ body {
   background: linear-gradient(to bottom, #ece9e6, #ffffff);
   background-repeat: no-repeat;
 }
+
+.main-content {
+  padding: 15px;
+}
