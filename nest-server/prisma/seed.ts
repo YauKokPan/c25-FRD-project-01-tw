@@ -113,7 +113,7 @@ const main = async () => {
   }
 
   const galleryResults = [];
-  fs.createReadStream(__dirname + '/../data/gallery.csv')
+  fs.createReadStream(join(process.cwd(), '/data/gallery.csv'))
     .pipe(csv())
     .on('data', (data) => galleryResults.push(data))
     .on('end', async () => {
