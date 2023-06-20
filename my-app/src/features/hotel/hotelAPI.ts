@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { get } from "../../api";
+import { API_ORIGIN, get } from "../../api";
 
 export interface GalleryKey {
   hotel_img: string | undefined;
@@ -20,7 +20,6 @@ export interface Hotel {
   total_rooms: number;
   hourly_rate: number;
   is_deleted: boolean;
-  is_favorite: boolean;
 }
 export interface CreateHotel {
   name: string;
@@ -84,6 +83,26 @@ export function useHotelDetail(id: number) {
       return hotel;
     },
   });
+}
+
+export async function softDeleteHotel(id: number, is_deleted: boolean) {
+  const res = await fetch(`${API_ORIGIN}/hotel/softDelete/${id}`, {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      is_deleted,
+    }),
+  });
+
+  if (res.ok) {
+    // If the status is 200 OK, return a default value (e.g., undefined or null)
+    return null;
+  } else {
+    // Handle errors as needed, for example, by throwing an error or returning a default error object
+    throw new Error(`Failed to soft delete hotel with id ${id}`);
+  }
 }
 
 // async function createHotel(hotelData: CreateHotel) {

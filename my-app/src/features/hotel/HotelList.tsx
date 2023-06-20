@@ -1,11 +1,11 @@
 import React, { useEffect, useMemo, useState } from "react";
 import "./HotelList.css";
-import Row from "react-bootstrap/Row";
+// import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Card from "react-bootstrap/Card";
 import { Link, useNavigate } from "react-router-dom";
 import Title from "../title/Title";
-import { Hotel, UseHotelInfo } from "../hotel/hotelAPI";
+import { Hotel, UseHotelInfo, softDeleteHotel } from "../hotel/hotelAPI";
 import {
   addToFavorites,
   fetchUserFavorites,
@@ -20,6 +20,8 @@ import { getIsAdmin, getUserId } from "../auth/authAPI";
 import { AuthGuard } from "../auth/AuthGuard";
 import FavoriteRoundedIcon from "@mui/icons-material/FavoriteRounded";
 import SearchBox from "../searchBox/SearchBox";
+import { useMutation } from "@tanstack/react-query";
+import { queryClient } from "../../query/client";
 
 export default function HotelList() {
   const hotelsPerPage = 9; // Change this to adjust the number of hotels per page
@@ -31,7 +33,13 @@ export default function HotelList() {
 
   const [userFavorites, setUserFavorites] = useState<Hotel[]>([]);
 
-  // const [favorites, setFavorites] = useState<Hotel[]>([]);
+  const onSoftDeleteHotel = useMutation(
+    async (data: { id: number; is_deleted: boolean }) =>
+      softDeleteHotel(data.id, data.is_deleted),
+    {
+      onSuccess: () => queryClient.invalidateQueries(["hotelInfo"]),
+    }
+  );
 
   const toggleFavorite = async (hotel: Hotel) => {
     const isCurrentlyFavorite = userFavorites.some(
@@ -60,7 +68,9 @@ export default function HotelList() {
   // const sortedHotelInfo = [...hotelInfo].sort((a, b) => a.id - b.id);
 
   // Slice the hotelInfo array to get the hotels for the current page
-  const currentHotels = hotelInfo.slice(firstIndex, lastIndex);
+  const currentHotels = hotelInfo
+    .filter((hotelInfoItem) => hotelInfoItem.is_deleted === false)
+    .slice(firstIndex, lastIndex);
 
   // Calculate the total number of pages based on the number of hotels and hotelsPerPage
   const totalPages = Math.ceil(hotelInfo.length / hotelsPerPage);
@@ -182,7 +192,15 @@ export default function HotelList() {
                         <IconButton aria-label="edit">
                           <EditRoundedIcon />
                         </IconButton>
-                        <IconButton aria-label="delete">
+                        <IconButton
+                          aria-label="delete"
+                          onClick={() => {
+                            onSoftDeleteHotel.mutate({
+                              id: hotel.id,
+                              is_deleted: true,
+                            });
+                          }}
+                        >
                           <DeleteIcon />
                         </IconButton>
                       </Stack>
@@ -201,7 +219,7 @@ export default function HotelList() {
                 onClick={handlePrevClick}
                 disabled={activePage === 1}
               >
-                Previous
+                上一頁
               </button>
             </li>
             {pageNumbers.map((pageNumber) => (
@@ -229,7 +247,7 @@ export default function HotelList() {
                 onClick={handleNextClick}
                 disabled={activePage === totalPages}
               >
-                Next
+                下一頁
               </button>
             </li>
           </ul>
