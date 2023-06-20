@@ -43,32 +43,10 @@ function showIOSInstallInstructions() {
 window.addEventListener("beforeinstallprompt", (e: Event) => {
   e.preventDefault();
   deferredPrompt = e as CustomBeforeInstallPromptEvent;
-  showInstallButton();
+
 });
 
-function showInstallButton() {
-  const installButton = document.createElement("button");
-  installButton.innerText = "Install App";
-  installButton.id = "install-button";
-  document.body.appendChild(installButton);
 
-  installButton.addEventListener("click", handleInstallClick);
-}
-
-function handleInstallClick() {
-  if (deferredPrompt) {
-    deferredPrompt.prompt();
-
-    deferredPrompt.userChoice.then((choiceResult: { outcome: string }) => {
-      if (choiceResult.outcome === "accepted") {
-        console.log("User accepted the install prompt");
-      } else {
-        console.log("User dismissed the install prompt");
-      }
-      deferredPrompt = null;
-    });
-  }
-}
 
 // Call the showIOSInstallInstructions() function outside of the event listener
 if (isIOS()) {
