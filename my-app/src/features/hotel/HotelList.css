@@ -1,11 +1,15 @@
 .hotel-img {
-  width: 100%;
+  width: 100vw;
   height: 500px;
   object-fit: cover;
 }
 
 .hotel-card {
   margin-bottom: 10px;
+}
+
+div.row {
+  width: 100%;
 }
 
 .content-container {
@@ -53,6 +57,7 @@ h2 {
 .title-container {
   display: flex;
   justify-content: center;
+  font-size: 1.5rem;
 }
 
 .fav-container {

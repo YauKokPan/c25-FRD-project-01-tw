@@ -1,13 +1,14 @@
-// import { useMutation } from "@tanstack/react-query";
-import { API_ORIGIN } from "../../api";
-
 export const createHotel = async (hotelData: FormData) => {
   try {
-    console.log("fetch hotelFormData", JSON.stringify(hotelData));
-    const response = await fetch(`${API_ORIGIN}/hotel/create`, {
-      method: "POST",
-      body: hotelData,
-    });
+    console.log("fetch hotelFormData", hotelData);
+
+    const response = await fetch(
+      `${process.env.REACT_APP_API_SERVER}/hotel/create`,
+      {
+        method: "POST",
+        body: hotelData,
+      }
+    );
 
     if (!response.ok) {
       throw new Error(`Failed to create hotel: ${response.statusText}`);

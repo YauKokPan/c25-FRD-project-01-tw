@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Nav, Navbar, Container } from "react-bootstrap";
+import { Nav, Navbar } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import "./MyNavbar.css";
 import { useAppDispatch } from "../../app/hook";
@@ -39,6 +39,13 @@ export default function MyNavbar() {
     setNavbarOpen(false);
   };
 
+  const style = {
+    navbar: {
+      paddingLeft: 0,
+      paddingRight: 0,
+    },
+  };
+
   return (
     <Navbar
       bg="bg"
@@ -47,6 +54,7 @@ export default function MyNavbar() {
       sticky="top"
       expand="lg"
       expanded={navbarOpen}
+      style={style.navbar}
     >
       <Nav.Link as={Link} to="/" onClick={closeNavbar} className="home-logo">
         <img

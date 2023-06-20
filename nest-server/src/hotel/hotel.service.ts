@@ -30,29 +30,25 @@ export class HotelService {
       description,
       total_rooms,
       hourly_rate,
-      is_deleted,
       user_id,
       gallery_key,
     } = createHotelDto;
 
     const postHotel = await this.prismaService.hotel.create({
       data: {
-        user_prisma: { connect: { id: user_id } },
+        user_prisma: { connect: { id: +user_id } },
         name,
         address,
         google_map_address,
         district,
         phone,
-        profile_pic,
+        profile_pic: profile_pic,
         description,
-        total_rooms,
-        hourly_rate,
-        is_deleted,
+        total_rooms: +total_rooms,
+        hourly_rate: +hourly_rate,
+        is_deleted: false,
         gallery_key: {
-          create: gallery_key?.map((image) => ({
-            hotel_img: image.hotel_img,
-            hotel_name: image.hotel_name,
-          })),
+          create: gallery_key,
         },
       },
     });

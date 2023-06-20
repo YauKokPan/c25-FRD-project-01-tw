@@ -21,18 +21,21 @@ export class KafkaMiddleware implements NestMiddleware {
   kafka: Kafka;
   producer: Producer;
   constructor() {
+    console.log('kafkabroker: ', process.env.KAFKA_BROKERS);
     this.kafka = new Kafka({
       clientId: 'nest-log-producer',
-      brokers: ['34.87.101.69:9092'],
+      brokers: [process.env.KAFKA_BROKERS],
     });
-    this.producer = this.kafka.producer();
+    this.producer = this.kafka.producer({
+      allowAutoTopicCreation: true,
+    });
     this.connect();
   }
   async connect() {
     try {
       await this.producer.connect();
     } catch (e) {
-      console.log(e);
+      // console.log(e);
     }
   }
   async use(req: Request, res: Response, next: NextFunction) {
@@ -68,7 +71,7 @@ export class KafkaMiddleware implements NestMiddleware {
         })
         .then(console.log);
     } catch (e) {
-      console.log('[error]', e);
+      // console.log('[error]', e);
     }
 
     next();
@@ -109,7 +112,7 @@ export class KafkaMiddleware implements NestMiddleware {
         })
         .then(console.log);
     } catch (e) {
-      console.log('[error]', e);
+      // console.log('[error]', e);
     }
   }
 }

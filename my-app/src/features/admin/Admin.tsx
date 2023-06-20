@@ -13,6 +13,8 @@ import {
   Container,
   Typography,
 } from "@material-ui/core";
+import Swal from "sweetalert2";
+import { useNavigate } from "react-router-dom";
 
 const hongKongIslandLocations = [
   "中環",
@@ -52,29 +54,63 @@ interface FormState {
   google_map_address: string;
   is_deleted: boolean;
   user_id: number;
-  gallery_pics: File[];
+  gallery_key: File[];
 }
 
 const HotelForm = () => {
+  const navigate = useNavigate();
   const { register, handleSubmit, watch, setValue, control } =
-    useForm<FormState>();
+    useForm<FormState>({
+      defaultValues: {
+        district: "",
+      },
+    });
 
   const onSubmit = async (data: FormState) => {
     const formData = new FormData();
+
+    // Append profile_pic and gallery_pics to formData
+    if (data.profile_pic) {
+      formData.append("profile_pic", data.profile_pic);
+    }
+
+    if (data.gallery_key && data.gallery_key.length > 0) {
+      data.gallery_key.forEach((file, index) => {
+        formData.append(`gallery_key[${index}]`, file);
+      });
+    }
+
+    // Append the rest of the form data
     Object.entries(data).forEach(([key, value]) => {
-      if (key === "profile_pic" && value) {
-        formData.append(key, value);
-      } else if (key === "gallery_pics") {
-        value.forEach((file: any, index: any) => {
-          formData.append(`gallery_key[${index}]`, file);
-        });
-      } else {
+      if (
+        key !== "profile_pic" &&
+        key !== "gallery_key" &&
+        key !== "is_deleted" &&
+        key !== "user_id"
+      ) {
         formData.append(key, value);
       }
     });
 
+    // Add user_id and is_deleted fields to formData
+    formData.append("user_id", userID.toString());
+    formData.append("is_deleted", "false");
+
     const res = await createHotel(formData);
-    alert(JSON.stringify(`${res.message}, status: ${res.status}`));
+    if (res) {
+      Swal.fire({
+        title: "酒店加入成功！",
+        timer: 2000,
+      });
+      setTimeout(() => {
+        navigate("/hotels");
+      }, 2000);
+    } else {
+      Swal.fire({
+        title: "酒店加入失敗！",
+        timer: 2000,
+      });
+    }
   };
 
   const handleFileChange = (
@@ -85,7 +121,7 @@ const HotelForm = () => {
     if (files) {
       if (fieldName === "profile_pic") {
         setValue(fieldName, files[0]);
-      } else if (fieldName === "gallery_pics") {
+      } else if (fieldName === "gallery_key") {
         setValue(fieldName, Array.from(files));
       }
     }
@@ -142,7 +178,6 @@ const HotelForm = () => {
             style={{ display: "none" }}
             id="raised-button-file"
             type="file"
-            {...register("profile_pic")}
             onChange={(event) => handleFileChange(event, "profile_pic")}
           />
           <label htmlFor="raised-button-file">
@@ -161,7 +196,7 @@ const HotelForm = () => {
             onChange={(event) => handleFileChange(event, "gallery_pics")}
           />
           <Controller
-            name="gallery_pics"
+            name="gallery_key"
             control={control}
             defaultValue={[]}
             render={({ field }) => (

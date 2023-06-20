@@ -8,6 +8,7 @@
   "scripts": {
     "migrate:dev": "dotenv -e .env -- prisma migrate dev",
     "seed:dev": "dotenv -e .env -- ts-node prisma/seed.ts",
+    "seed:prod": "node prisma/seed",
     "build": "nest build",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "start": "dotenv -e .env -- nest start --watch",
