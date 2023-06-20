@@ -34,7 +34,7 @@ export class AuthService {
       throw new UnauthorizedException();
     }
     // Log user login information to Kafka
-    this.kafkaMiddleware.logUserLogin(user.name, user.email, req);
+    this.kafkaMiddleware.logUserLogin(user.name, user.email, user.is_admin, req);
     return this.signToken(user);
   }
 
