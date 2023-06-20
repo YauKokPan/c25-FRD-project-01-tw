@@ -62,7 +62,7 @@ const Favorites: React.FC<{ userID: number }> = ({ userID }) => {
 
   return (
     <div className="favorites-container">
-      <h1 className="favourites-h1">我的收藏</h1>
+      <h1 className="favourites-h1">我的最愛</h1>
       {userFavorites === null ? (
         <p>Loading...</p>
       ) : userFavorites.length ? (
