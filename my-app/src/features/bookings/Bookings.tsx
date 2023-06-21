@@ -6,12 +6,13 @@ import {
 } from "@progress/kendo-react-dateinputs";
 import { useState } from "react";
 import { Hotel } from "../hotel/hotelAPI";
-import { getUserId } from "../auth/authAPI";
 import { bookingsAPI, findLatestBooking } from "./bookingsAPI";
 import { useNavigate } from "react-router-dom";
 // import CheckOutPage from "../payment/CheckOutPage";
 import emailjs from "@emailjs/browser";
 import { UserData } from "./BookingResult";
+import { AuthGuard } from "../auth/AuthGuard";
+import { getUserId } from "../auth/authAPI";
 
 interface TimeButtonProps {
   time: string;
@@ -45,7 +46,6 @@ const BookingSlot: React.FC<{ hotel: Hotel }> = (props) => {
   const [booking_email, setBookingEmail] = useState("");
   const [booking_phone, setBookingPhone] = useState("");
   const [remarks, setRemarks] = useState("");
-  // const [is_shown_up, setIsShownUp] = useState<boolean>(false);
 
   const [timeslots, setTimeslots] = useState([
     { slot: "07:00 - 08:00", clicked: false },
@@ -65,17 +65,13 @@ const BookingSlot: React.FC<{ hotel: Hotel }> = (props) => {
     { slot: "21:00 - 22:00", clicked: false },
     { slot: "22:00 - 23:00", clicked: false },
     { slot: "23:00 - 00:00", clicked: false },
-    // { slot: "00:00 - 01:00", clicked: false },
-    // { slot: "01:00 - 02:00", clicked: false },
-    // { slot: "03:00 - 04:00", clicked: false },
-    // { slot: "05:00 - 06:00", clicked: false },
-    // { slot: "06:00 - 07:00", clicked: false },
     { slot: "00:00 - 07:00", clicked: false, full: true, count: 7 },
   ]);
 
   const hotel = props.hotel;
   const userID = Number(getUserId());
   const navigate = useNavigate();
+  const isAuth = AuthGuard();
 
   function renderSelectedTime() {
     const slots = timeslots.filter((slot) => slot.clicked);
@@ -254,6 +250,16 @@ const BookingSlot: React.FC<{ hotel: Hotel }> = (props) => {
     }
   };
 
+  if (!isAuth) {
+    return (
+      <div className="k-my-8">
+        <div className="k-mb-4 k-font-weight-bold">
+          請先<a href="/login">登錄</a>後才能預約酒店
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="k-my-8">
       <div className="k-mb-4 k-font-weight-bold">預約酒店為：{hotel?.name}</div>
@@ -283,11 +289,11 @@ const BookingSlot: React.FC<{ hotel: Hotel }> = (props) => {
               ))}
             </div>
           </div>
+          <button className="reset-btn" onClick={handleResetClick}>
+            重置預約時間
+          </button>
         </>
       )}
-      <button className="reset-btn" onClick={handleResetClick}>
-        重置預約時間
-      </button>
 
       <div>可訂房間數目: {hotel.total_rooms} </div>
       <div>已選擇日期: {bookingDate?.toDateString()}</div>

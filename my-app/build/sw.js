@@ -1,4 +1,5 @@
 
+
 // Install event listener
 // eslint-disable-next-line no-restricted-globals
 self.addEventListener("install", (event) => {
