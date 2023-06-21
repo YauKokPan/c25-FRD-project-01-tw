@@ -143,7 +143,7 @@ export default function ContactUs() {
             </div>
 
             <div className="mb-3">
-              <label>Message</label>
+              <label>留言</label>
               <textarea
                 required
                 className="form-control"

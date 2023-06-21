@@ -55,4 +55,11 @@ export class HotelService {
 
     return postHotel;
   }
+
+  async softDeleteHotel(id: number): Promise<void> {
+    await this.prismaService.hotel.update({
+      where: { id },
+      data: { is_deleted: true },
+    });
+  }
 }

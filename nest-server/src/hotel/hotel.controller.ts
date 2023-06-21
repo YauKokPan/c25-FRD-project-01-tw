@@ -6,6 +6,8 @@ import {
   UseInterceptors,
   UploadedFile,
   UploadedFiles,
+  Param,
+  Patch,
 } from '@nestjs/common';
 import { HotelService } from './hotel.service';
 import {
@@ -17,10 +19,6 @@ import { s3, bucketName } from '../../s3upload';
 import * as fs from 'fs';
 import { CreateHotelDto } from './dto/create-hotel.dto';
 import { ManagedUpload } from 'aws-sdk/clients/s3';
-
-// type UploadedData = {
-//   Location: string;
-// };
 
 @Controller('hotel')
 export class HotelController {
@@ -37,23 +35,6 @@ export class HotelController {
       throw error;
     }
   }
-
-  // @Post('test')
-  // @UseInterceptors(
-  //   FileFieldsInterceptor([
-  //     { name: 'file', maxCount: 1 },
-  //     { name: 'profile_pic', maxCount: 1 },
-  //   ]),
-  // )
-  // uploadFile(
-  //   @UploadedFiles()
-  //   files: {
-  //     file?: Express.Multer.File[];
-  //     profile_pic?: Express.Multer.File[];
-  //   },
-  // ) {
-  //   console.log(files.file[0].originalname);
-  // }
 
   @Post('create')
   @UseInterceptors(
@@ -144,5 +125,10 @@ export class HotelController {
     );
 
     return uploadedFile;
+  }
+
+  @Patch('softDelete/:id')
+  async softDelete(@Param('id') id: number): Promise<void> {
+    return this.hotelService.softDeleteHotel(+id);
   }
 }

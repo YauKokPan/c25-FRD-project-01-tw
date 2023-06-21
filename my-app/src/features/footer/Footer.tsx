@@ -74,12 +74,13 @@ export default function Footer() {
               src={process.env.PUBLIC_URL + "/img/logo.png"}
               alt="Company Logo"
             />
-            {"Copyright © "}
-            <Link color="inherit" href="https://sweethour.com/">
-              https://sweethour.com/
-            </Link>{" "}
-            {new Date().getFullYear()}
-            {"."}
+            {"©  "}
+            {new Date().getFullYear()}{" "}
+            <Link underline="none" color="inherit" href="https://sweethour.me/">
+              {/* https://sweethour.com/ */}
+              SweetHour
+            </Link>
+            {/* {"."} */}
           </Typography>
         </Box>
       </Container>

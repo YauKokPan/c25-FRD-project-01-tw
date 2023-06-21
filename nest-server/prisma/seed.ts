@@ -39,14 +39,14 @@ const hotelSeedFile = join(process.cwd(), './data/hotels.csv');
 const prisma = new PrismaClient();
 const main = async () => {
   // delete table data first before seeding
-  await resetPostgresSequences();
+
   await prisma.favorite.deleteMany();
   await prisma.payment.deleteMany();
   await prisma.booking.deleteMany();
   await prisma.gallery.deleteMany();
   await prisma.comment.deleteMany();
   await prisma.hotel.deleteMany();
-
+  await resetPostgresSequences();
   const insertUsers = [
     {
       name: 'admin',

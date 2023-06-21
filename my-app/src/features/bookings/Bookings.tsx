@@ -286,8 +286,8 @@ const BookingSlot: React.FC<{ hotel: Hotel }> = (props) => {
       </button>
 
       <div>可訂房間數目: {hotel.total_rooms} </div>
-      <div>Selected Date: {bookingDate?.toDateString()}</div>
-      <div>Selected Timeslot: {renderSelectedTime()}</div>
+      <div>已選擇日期: {bookingDate?.toDateString()}</div>
+      <div>已選擇時段: {renderSelectedTime()}</div>
       <div>預約總時數為: {clickedCount} 小時</div>
 
       <div className="">酒店一小時的價錢為：{hotel.hourly_rate} 元</div>
