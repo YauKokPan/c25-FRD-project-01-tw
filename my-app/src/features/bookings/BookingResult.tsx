@@ -1,7 +1,9 @@
-import React, { useState, useEffect } from "react";
-import { fetchUserData } from "./bookingsAPI";
+import React, { useState, useEffect, useMemo } from "react";
+import { fetchUserData, removeBookingData } from "./bookingsAPI";
 import "./BookingResult.css";
 import "./Bookings.css";
+import Swal from "sweetalert2";
+import { getIsAdmin } from "../auth/authAPI";
 
 export interface UserKey {
   name: string | undefined;
@@ -29,6 +31,48 @@ export interface UserData {
 
 const BookingResult: React.FC<{ userID: number }> = ({ userID }) => {
   const [userData, setUserData] = useState<UserData[]>([]);
+
+  const isAdmin = getIsAdmin();
+
+  const canCancelBooking = (startTime: Date): boolean => {
+    const now = new Date();
+    const twoDaysBeforeStartTime = new Date(startTime);
+    twoDaysBeforeStartTime.setDate(twoDaysBeforeStartTime.getDate() - 2);
+
+    return now <= twoDaysBeforeStartTime;
+  };
+
+  const isBookingPast = (endTime: Date): boolean => {
+    const now = new Date();
+    return now > endTime;
+  };
+
+  const handleDelete = async (bookingId: number, startTime: Date) => {
+    if (!canCancelBooking(startTime)) {
+      Swal.fire(
+        "無法刪除！",
+        "距離預約開始時間只剩兩天或更短，無法取消預約。",
+        "error"
+      );
+      return;
+    }
+    const result = await Swal.fire({
+      title: "確定要刪除這個預約嗎？",
+      text: "此操作無法撤銷。",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "是的，刪除它！",
+      cancelButtonText: "取消",
+    });
+
+    if (result.isConfirmed) {
+      await removeBookingData(bookingId);
+      setUserData(userData.filter((booking) => booking.id !== bookingId));
+      Swal.fire("已刪除！", "您的預約已被刪除。", "success");
+    }
+  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -69,6 +113,16 @@ const BookingResult: React.FC<{ userID: number }> = ({ userID }) => {
               <p>合計: {booking.total_price} 元</p>
               <p>電郵: {booking.booking_email}</p>
               <p>電話: {booking.booking_phone}</p>
+              <div className="booking-result-buttons">
+                <button
+                  onClick={() =>
+                    handleDelete(booking.id, new Date(booking.start_time))
+                  }
+                  disabled={isBookingPast(new Date(booking.end_time))}
+                >
+                  刪除
+                </button>
+              </div>
             </li>
           ))}
         </div>

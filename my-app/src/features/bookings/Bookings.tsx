@@ -4,7 +4,7 @@ import {
   Calendar,
   CalendarChangeEvent,
 } from "@progress/kendo-react-dateinputs";
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import { Hotel } from "../hotel/hotelAPI";
 import { bookingsAPI, findLatestBooking } from "./bookingsAPI";
 import { useNavigate } from "react-router-dom";
@@ -65,11 +65,6 @@ const BookingSlot: React.FC<{ hotel: Hotel }> = (props) => {
     { slot: "21:00 - 22:00", clicked: false },
     { slot: "22:00 - 23:00", clicked: false },
     { slot: "23:00 - 00:00", clicked: false },
-    // { slot: "00:00 - 01:00", clicked: false },
-    // { slot: "01:00 - 02:00", clicked: false },
-    // { slot: "03:00 - 04:00", clicked: false },
-    // { slot: "05:00 - 06:00", clicked: false },
-    // { slot: "06:00 - 07:00", clicked: false },
     { slot: "00:00 - 07:00", clicked: false, full: true, count: 7 },
   ]);
 

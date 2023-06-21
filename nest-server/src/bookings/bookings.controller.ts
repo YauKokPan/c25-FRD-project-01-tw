@@ -45,7 +45,7 @@ export class BookingsController {
     return this.bookingsService.findUserLatestBooking();
   }
 
-  @Put('id')
+  @Put(':id')
   @UsePipes(new ValidationPipe())
   async updateBooking(
     @Param('id') id: number,
@@ -58,8 +58,8 @@ export class BookingsController {
     return { message: 'Booking updated successfully', booking: updatedBooking };
   }
 
-  @Delete('id')
-  remove(@Param('id') id: string) {
+  @Delete(':id')
+  remove(@Param('id') id: number) {
     return this.bookingsService.remove(+id);
   }
 }

@@ -59,3 +59,32 @@ div {
   width: 80vw;
   margin-top: 30px auto;
 }
+
+.booking-result-buttons {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 1rem;
+}
+
+.booking-result-buttons button {
+  padding: 0.5rem 1rem;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.booking-result-buttons button:hover {
+  background-color: #0056b3;
+}
+
+.booking-result-buttons button:not(:last-child) {
+  margin-right: 0.5rem;
+}
+
+.booking-result-buttons button:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+}
