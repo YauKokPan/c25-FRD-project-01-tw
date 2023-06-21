@@ -20,10 +20,14 @@
     background-size: contain;
   }
   .text-container > .caption-title {
-    font-size: 18px;
+    font-size: 16px;
   }
   .text-container > .s-title {
-    font-size: 12px;
+    font-size: 10px;
+  }
+  .text-container {
+    height: 23vh;
+    width: 50vw;
   }
 }
 
@@ -82,6 +86,7 @@
   border-top: solid 3px #fff;
   border-bottom: solid 1px rgba(255, 255, 255, 0.283);
   text-align: center;
+  white-space: nowrap;
 }
 
 .s-title {

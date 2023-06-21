@@ -1,5 +1,7 @@
+// FooterBar.tsx
 import React from "react";
-import { NavLink } from "react-router-dom";
+import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import "./FooterBar.css";
 import { AuthGuard } from "../auth/AuthGuard";
 import HomeIcon from "@mui/icons-material/Home";
@@ -14,24 +16,43 @@ interface FooterBarProps {
 
 const FooterBar: React.FC<FooterBarProps> = () => {
   const isAuth = AuthGuard();
+  const navigate = useNavigate();
+
+  const handleLinkClick = (path: string) => {
+    navigate(path);
+    window.scrollTo(0, 0);
+  };
+
   return (
     <div className="footer-bar">
-      <NavLink to="/" className="active-link">
+      <Link to="/" className="active-link" onClick={() => handleLinkClick("/")}>
         <HomeIcon className="icon-size" />
-      </NavLink>
-      <NavLink to="/hotels" className="active-link">
+      </Link>
+      <Link
+        to="/hotels"
+        className="active-link"
+        onClick={() => handleLinkClick("/hotels")}
+      >
         <SearchIcon className="icon-size" />
-      </NavLink>
-      <NavLink to="/contact-us" className="active-link">
+      </Link>
+      <Link
+        to="/contact-us"
+        className="active-link"
+        onClick={() => handleLinkClick("/contact-us")}
+      >
         <EmailIcon className="icon-size" />
-      </NavLink>
-      <NavLink to={isAuth ? "/user-profile" : "/login"} className="active-link">
+      </Link>
+      <Link
+        to={isAuth ? "/user-profile" : "/login"}
+        className="active-link"
+        onClick={() => handleLinkClick(isAuth ? "/user-profile" : "/login")}
+      >
         {isAuth ? (
           <PersonIcon className="icon-size" />
         ) : (
           <LoginIcon className="icon-size" />
         )}
-      </NavLink>
+      </Link>
     </div>
   );
 };

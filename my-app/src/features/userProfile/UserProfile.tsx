@@ -25,7 +25,7 @@ const UserProfile: React.FC = () => {
       maxWidth={false} // Remove the maxWidth restriction
       sx={{
         width: "100%",
-        height: "100%",
+        height: "70%",
         paddingBottom: 50,
         paddingLeft: 0,
         paddingRight: 0,

@@ -66,7 +66,7 @@ const Favorites: React.FC<{ userID: number }> = ({ userID }) => {
       {userFavorites === null ? (
         <p>Loading...</p>
       ) : userFavorites.length ? (
-        <Row>
+        <div className="favourites-row">
           {userFavorites.map((hotel: any) => (
             <Col md={4} className="hotel-card" key={hotel.id}>
               <Card>
@@ -113,7 +113,7 @@ const Favorites: React.FC<{ userID: number }> = ({ userID }) => {
               </Card>
             </Col>
           ))}
-        </Row>
+        </div>
       ) : (
         <h5 className="no-booking">暫無收藏</h5>
       )}

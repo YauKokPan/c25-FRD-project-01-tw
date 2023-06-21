@@ -55,7 +55,7 @@ const BookingResult: React.FC<{ userID: number }> = ({ userID }) => {
       {userData === null ? (
         <p>Loading...</p>
       ) : userData.length ? (
-        <ul className="booking-result-ul">
+        <div className="booking-result-div">
           {userData.map((booking) => (
             <li className="booking-result-li" key={booking.id}>
               <h3>{booking.hotel_booking_key.name}</h3>
@@ -71,7 +71,7 @@ const BookingResult: React.FC<{ userID: number }> = ({ userID }) => {
               <p>電話: {booking.booking_phone}</p>
             </li>
           ))}
-        </ul>
+        </div>
       ) : (
         <h5 className="no-booking">暫無預約紀錄</h5>
       )}
