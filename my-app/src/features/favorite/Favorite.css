@@ -9,7 +9,8 @@
 
 .favourites-row {
   display: flex;
-  justify-content: center;
+  justify-content: start;
+  flex-wrap: wrap;
 }
 
 @media screen and (max-width: 500px) {
