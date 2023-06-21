@@ -43,6 +43,14 @@ export default function HotelList() {
   const hotelsPerPage = 9; // Change this to adjust the number of hotels per page
   const hotelInfo = UseHotelInfo();
   // console.log("hotelInfo", hotelInfo);
+
+  const [sortedHotels, setSortedHotels] = useState(hotelInfo);
+
+  useEffect(() => {
+    const sorted = [...hotelInfo].sort((a, b) => a.id - b.id);
+    setSortedHotels(sorted);
+  }, [hotelInfo]);
+
   const [activePage, setActivePage] = useState(1);
 
   const [buttonState, setButtonState] = useState("");
@@ -84,6 +92,10 @@ export default function HotelList() {
     }
   );
 
+  useEffect(() => {
+    queryClient.invalidateQueries(["hotelInfo"]);
+  }, [onSoftDeleteHotel.isSuccess]);
+
   const onEditHotel = useMutation(
     async (data: {
       id: number;
@@ -123,7 +135,7 @@ export default function HotelList() {
   // const sortedHotelInfo = [...hotelInfo].sort((a, b) => a.id - b.id);
 
   // Slice the hotelInfo array to get the hotels for the current page
-  const currentHotels = hotelInfo
+  const currentHotels = sortedHotels
     .filter((hotelInfoItem) => hotelInfoItem.is_deleted === false)
     .slice(firstIndex, lastIndex);
 
@@ -242,64 +254,6 @@ export default function HotelList() {
                     </div>
                     <Card.Text>地址 : {hotel.address}</Card.Text>{" "}
                     <Card.Text>電話 : {hotel.phone}</Card.Text>
-                    <Dialog
-                      open={editDialogOpen}
-                      onClose={() => setEditDialogOpen(false)}
-                      aria-labelledby="edit-hotel-dialog-title"
-                    >
-                      <DialogTitle id="edit-hotel-dialog-title">
-                        更新酒店資料
-                      </DialogTitle>
-                      <DialogContent>
-                        <DialogContentText>酒店最新資料</DialogContentText>
-                        <TextField
-                          autoFocus
-                          margin="dense"
-                          id="name"
-                          label="名稱"
-                          type="text"
-                          fullWidth
-                          variant="standard"
-                          inputRef={nameInputRef}
-                        />
-                        <TextField
-                          margin="dense"
-                          id="address"
-                          label="地址"
-                          type="text"
-                          fullWidth
-                          variant="standard"
-                          inputRef={addressInputRef}
-                        />
-                        <TextField
-                          margin="dense"
-                          id="phone"
-                          label="電話"
-                          type="text"
-                          fullWidth
-                          variant="standard"
-                          inputRef={phoneInputRef}
-                        />
-                      </DialogContent>
-                      <DialogActions>
-                        <Button onClick={() => setEditDialogOpen(false)}>
-                          取消
-                        </Button>
-                        <Button
-                          onClick={() => {
-                            onEditHotel.mutate({
-                              id: selectedHotel!.id,
-                              name: nameInputRef.current?.value ?? "",
-                              address: addressInputRef.current?.value ?? "",
-                              phone: phoneInputRef.current?.value ?? "",
-                            });
-                            setEditDialogOpen(false);
-                          }}
-                        >
-                          確認
-                        </Button>
-                      </DialogActions>
-                    </Dialog>
                     {buttonState === "visible" && (
                       <Stack direction="row" spacing={1}>
                         <IconButton
@@ -381,6 +335,60 @@ export default function HotelList() {
             </li>
           </ul>
         </nav>
+        <Dialog
+          open={editDialogOpen}
+          onClose={() => setEditDialogOpen(false)}
+          aria-labelledby="edit-hotel-dialog-title"
+        >
+          <DialogTitle id="edit-hotel-dialog-title">更新酒店資料</DialogTitle>
+          <DialogContent>
+            <DialogContentText>酒店最新資料</DialogContentText>
+            <TextField
+              autoFocus
+              margin="dense"
+              id="name"
+              label="名稱"
+              type="text"
+              fullWidth
+              variant="standard"
+              inputRef={nameInputRef}
+            />
+            <TextField
+              margin="dense"
+              id="address"
+              label="地址"
+              type="text"
+              fullWidth
+              variant="standard"
+              inputRef={addressInputRef}
+            />
+            <TextField
+              margin="dense"
+              id="phone"
+              label="電話"
+              type="text"
+              fullWidth
+              variant="standard"
+              inputRef={phoneInputRef}
+            />
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={() => setEditDialogOpen(false)}>取消</Button>
+            <Button
+              onClick={() => {
+                onEditHotel.mutate({
+                  id: selectedHotel!.id,
+                  name: nameInputRef.current?.value ?? "",
+                  address: addressInputRef.current?.value ?? "",
+                  phone: phoneInputRef.current?.value ?? "",
+                });
+                setEditDialogOpen(false);
+              }}
+            >
+              確認
+            </Button>
+          </DialogActions>
+        </Dialog>
       </div>
     </>
   );

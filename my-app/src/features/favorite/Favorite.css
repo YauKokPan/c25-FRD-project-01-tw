@@ -9,7 +9,7 @@
 
 .favourites-row {
   display: flex;
-  justify-content: start;
+  flex: start;
   flex-wrap: wrap;
 }
 

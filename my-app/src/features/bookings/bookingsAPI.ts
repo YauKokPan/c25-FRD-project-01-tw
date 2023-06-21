@@ -4,7 +4,7 @@ export async function bookingsAPI(
   start_time: Date | null,
   end_time: Date | null,
   total_hours: number,
-  total_price: number,
+  total_prices: number,
   booking_email: string,
   booking_phone: string,
   remarks: string
@@ -20,7 +20,7 @@ export async function bookingsAPI(
       start_time,
       end_time,
       total_hours,
-      total_price,
+      total_prices,
       booking_email,
       booking_phone,
       remarks,

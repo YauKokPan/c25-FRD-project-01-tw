@@ -47,7 +47,7 @@ export default function Payment() {
               <strong>總時間:</strong> {bookingInfo.total_hours}小時
             </p>
             <p>
-              <strong>最後金額:</strong> {bookingInfo.total_price}元
+              <strong>最後金額:</strong> {bookingInfo.total_prices}元
             </p>
             <p>
               <strong>預訂人電郵:</strong> {bookingInfo.booking_email}
@@ -67,7 +67,7 @@ export default function Payment() {
                   purchase_units: [
                     {
                       amount: {
-                        value: bookingInfo.total_price.toString(),
+                        value: bookingInfo.total_prices.toString(),
                       },
                     },
                   ],

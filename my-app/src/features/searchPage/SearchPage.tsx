@@ -35,8 +35,16 @@ export default function SearchPage() {
   const queryParams = new URLSearchParams(location.search);
   const searchQuery = queryParams.get("query") || "";
   const allHotels: Hotel[] = UseHotelInfo();
+
+  const [sortedHotels, setSortedHotels] = useState(allHotels);
+
+  useEffect(() => {
+    const sorted = [...allHotels].sort((a, b) => a.id - b.id);
+    setSortedHotels(sorted);
+  }, [allHotels]);
+
   const filteredHotels = searchQuery
-    ? allHotels.filter(
+    ? sortedHotels.filter(
         (hotel) =>
           hotel.is_deleted === false &&
           (hotel.name.includes(searchQuery) ||

@@ -13,26 +13,25 @@ async function hashPassword(plainPassword: string) {
 }
 
 // reset  postgres id sequences
-async function resetPostgresSequences() {
-  await prisma.$executeRaw(
-    Prisma.sql`ALTER SEQUENCE "favorites_id_seq" RESTART WITH 1;`,
-  );
-  await prisma.$executeRaw(
-    Prisma.sql`ALTER SEQUENCE "payment_id_seq" RESTART WITH 1;`,
-  );
-  await prisma.$executeRaw(
-    Prisma.sql`ALTER SEQUENCE "bookings_id_seq" RESTART WITH 1;`,
+
+async function resetPostgresSequence(tableName, columnName) {
+  const maxIdResult = await prisma.$queryRawUnsafe(
+    `SELECT MAX(${columnName}) FROM ${tableName};`,
   );
 
-  await prisma.$executeRaw(
-    Prisma.sql`ALTER SEQUENCE "gallery_id_seq" RESTART WITH 1;`,
+  const maxId = maxIdResult[0].max || 0;
+
+  await prisma.$executeRawUnsafe(
+    `ALTER SEQUENCE ${tableName}_${columnName}_seq RESTART WITH ${maxId + 1};`,
   );
-  await prisma.$executeRaw(
-    Prisma.sql`ALTER SEQUENCE "comments_id_seq" RESTART WITH 1;`,
-  );
-  await prisma.$executeRaw(
-    Prisma.sql`ALTER SEQUENCE "hotels_id_seq" RESTART WITH 1;`,
-  );
+}
+async function resetPostgresSequences() {
+  await resetPostgresSequence('hotels', 'id');
+  await resetPostgresSequence('comments', 'id');
+  await resetPostgresSequence('gallery', 'id');
+  await resetPostgresSequence('bookings', 'id');
+  await resetPostgresSequence('payments', 'id');
+  await resetPostgresSequence('favorites', 'id');
 }
 
 const hotelSeedFile = join(process.cwd(), './data/hotels.csv');
@@ -47,6 +46,7 @@ const main = async () => {
   await prisma.comment.deleteMany();
   await prisma.hotel.deleteMany();
   await resetPostgresSequences();
+
   const insertUsers = [
     {
       name: 'admin',
@@ -93,6 +93,9 @@ const main = async () => {
   }
 
   const hotels: HotelRecord[] = parsedData.data;
+
+  // Sort the hotels data by ID before inserting
+  hotels.sort((a, b) => a.user_id - b.user_id);
 
   for (const hotelRecord of hotels) {
     await prisma.hotel.create({

@@ -32,7 +32,7 @@ export class CreateBookingDto {
 
   @IsNotEmpty()
   @IsNumber()
-  total_price: number;
+  total_prices: number;
 
   @IsNotEmpty()
   @IsString()
