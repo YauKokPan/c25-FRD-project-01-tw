@@ -46,6 +46,7 @@ const UserProfile: React.FC = () => {
             "width": "100%",
             "& .MuiTab-root": {
               fontSize: "1.2rem", // Set the font size for the tabs
+              marginBottom: "", // Remove the bottom margin for the tabs
             },
           }}
         >
@@ -55,7 +56,7 @@ const UserProfile: React.FC = () => {
           {/* Add more Tab components for other categories */}
         </Tabs>
         {selectedTab === 0 && (
-          <Box pb={3} sx={{}}>
+          <Box pb={3}>
             {" "}
             {/* Add Box wrapper with padding-bottom of 30px */}
             <div>

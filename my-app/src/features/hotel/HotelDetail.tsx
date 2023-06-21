@@ -11,6 +11,7 @@ import Gallery from "../gallery/Gallery";
 import { Container, Col, Row } from "react-bootstrap";
 import RatingForm from "../rating/RatingForm";
 import BookingSlot from "../bookings/Bookings";
+import { useAppSelector } from "../../app/hook";
 
 export default function HotelDetail() {
   let { hotelId } = useParams();
@@ -18,6 +19,8 @@ export default function HotelDetail() {
 
   // Find the specific hotel using the hotelId
   const { isLoading, error, data: hotel } = useHotelDetail(hotelIdNum);
+
+  const isAuth = useAppSelector((state) => state.auth.isAuth);
 
   if (isLoading) {
     return <div>Loading...</div>;
@@ -52,7 +55,7 @@ export default function HotelDetail() {
               />
             </div>
             <h2 className="rating">發表評論👍</h2>
-            <RatingForm hotel={hotel} />
+            <RatingForm hotel={hotel} isAuth={isAuth} />
           </Col>
           <Col xs={12} lg={6}>
             <h2>酒店預約😉</h2>

@@ -18,8 +18,10 @@ import IconButton from "@mui/joy/IconButton";
 import Textarea from "@mui/joy/Textarea";
 import Button from "@mui/joy/Button";
 import ReCAPTCHA from "react-google-recaptcha";
+// import { AuthGuard } from "../auth/AuthGuard";
 
 const recaptchaRef = React.createRef<ReCAPTCHA>();
+// const isAuth = AuthGuard();
 
 const labels: { [index: string]: string } = {
   1: "極差",
@@ -70,10 +72,12 @@ const StyledRating = styled(Rating)({
 });
 
 type RatingFormProps = {
+  isAuth: any;
   hotel: Hotel;
 };
 const RatingForm: React.FC<RatingFormProps> = (props) => {
   const hotel = props.hotel;
+  const isAuth = props.isAuth;
 
   const userID = Number(getUserId());
 
@@ -215,6 +219,16 @@ const RatingForm: React.FC<RatingFormProps> = (props) => {
   const addEmoji = (emoji: string) => () => {
     setComment((prevComment) => prevComment + emoji);
   };
+
+  if (!isAuth) {
+    return (
+      <div className="k-my-8">
+        <div className="k-mb-4 k-font-weight-bold">
+          請先<a href="/login">登錄</a>後才能預約酒店
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="rating-form">
