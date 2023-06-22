@@ -48,7 +48,15 @@ export class BookingsService {
   }
 
   async findAll(): Promise<Booking[]> {
-    return this.prisma.booking.findMany();
+    return await this.prisma.booking.findMany({
+      include: {
+        user_booking_key: true,
+        hotel_booking_key: true,
+      },
+      orderBy: {
+        id: 'desc',
+      },
+    });
   }
   async findLatestBooking(): Promise<Booking> {
     return this.prisma.booking.findFirst({
