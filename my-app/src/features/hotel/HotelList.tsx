@@ -1,18 +1,33 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState, useRef } from "react";
 import "./HotelList.css";
 // import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Card from "react-bootstrap/Card";
 import { Link, useNavigate } from "react-router-dom";
 import Title from "../title/Title";
-import { Hotel, UseHotelInfo, softDeleteHotel } from "../hotel/hotelAPI";
+import {
+  Hotel,
+  UseHotelInfo,
+  editHotelAPI,
+  softDeleteHotel,
+} from "../hotel/hotelAPI";
 import {
   addToFavorites,
   fetchUserFavorites,
   removeFromFavorites,
 } from "../favorite/favoriteAPI";
 
-import { IconButton, Stack } from "@mui/material";
+import {
+  IconButton,
+  Stack,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogContentText,
+  DialogActions,
+  TextField,
+  Button,
+} from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import AddCircleRoundedIcon from "@mui/icons-material/AddCircleRounded";
 import EditRoundedIcon from "@mui/icons-material/EditRounded";
@@ -22,20 +37,72 @@ import FavoriteRoundedIcon from "@mui/icons-material/FavoriteRounded";
 import SearchBox from "../searchBox/SearchBox";
 import { useMutation } from "@tanstack/react-query";
 import { queryClient } from "../../query/client";
+import Swal from "sweetalert2";
 
 export default function HotelList() {
   const hotelsPerPage = 9; // Change this to adjust the number of hotels per page
   const hotelInfo = UseHotelInfo();
   // console.log("hotelInfo", hotelInfo);
+
+  const [sortedHotels, setSortedHotels] = useState(hotelInfo);
+
+  useEffect(() => {
+    const sorted = [...hotelInfo].sort((a, b) => a.id - b.id);
+    setSortedHotels(sorted);
+  }, [hotelInfo]);
+
   const [activePage, setActivePage] = useState(1);
 
   const [buttonState, setButtonState] = useState("");
 
   const [userFavorites, setUserFavorites] = useState<Hotel[]>([]);
 
+  const nameInputRef = useRef<HTMLInputElement>(null);
+  const addressInputRef = useRef<HTMLInputElement>(null);
+  const phoneInputRef = useRef<HTMLInputElement>(null);
+
+  const [editDialogOpen, setEditDialogOpen] = useState(false);
+
+  const [selectedHotel, setSelectedHotel] = useState<Hotel | null>(null);
+
+  const openEditDialog = (hotel: Hotel) => {
+    setSelectedHotel(hotel);
+    setEditDialogOpen(true);
+  };
+
+  useEffect(() => {
+    if (selectedHotel) {
+      if (nameInputRef.current) {
+        nameInputRef.current.value = selectedHotel.name;
+      }
+      if (addressInputRef.current) {
+        addressInputRef.current.value = selectedHotel.address;
+      }
+      if (phoneInputRef.current) {
+        phoneInputRef.current.value = selectedHotel.phone;
+      }
+    }
+  }, [selectedHotel]);
+
   const onSoftDeleteHotel = useMutation(
     async (data: { id: number; is_deleted: boolean }) =>
       softDeleteHotel(data.id, data.is_deleted),
+    {
+      onSuccess: () => queryClient.invalidateQueries(["hotelInfo"]),
+    }
+  );
+
+  useEffect(() => {
+    queryClient.invalidateQueries(["hotelInfo"]);
+  }, [onSoftDeleteHotel.isSuccess]);
+
+  const onEditHotel = useMutation(
+    async (data: {
+      id: number;
+      name: string;
+      address: string;
+      phone: string;
+    }) => editHotelAPI(data.id, data.name, data.address, data.phone),
     {
       onSuccess: () => queryClient.invalidateQueries(["hotelInfo"]),
     }
@@ -68,7 +135,7 @@ export default function HotelList() {
   // const sortedHotelInfo = [...hotelInfo].sort((a, b) => a.id - b.id);
 
   // Slice the hotelInfo array to get the hotels for the current page
-  const currentHotels = hotelInfo
+  const currentHotels = sortedHotels
     .filter((hotelInfoItem) => hotelInfoItem.is_deleted === false)
     .slice(firstIndex, lastIndex);
 
@@ -189,15 +256,31 @@ export default function HotelList() {
                     <Card.Text>電話 : {hotel.phone}</Card.Text>
                     {buttonState === "visible" && (
                       <Stack direction="row" spacing={1}>
-                        <IconButton aria-label="edit">
+                        <IconButton
+                          aria-label="edit"
+                          onClick={() => openEditDialog(hotel)}
+                        >
                           <EditRoundedIcon />
                         </IconButton>
                         <IconButton
                           aria-label="delete"
                           onClick={() => {
-                            onSoftDeleteHotel.mutate({
-                              id: hotel.id,
-                              is_deleted: true,
+                            Swal.fire({
+                              title: "確認刪除？",
+                              showDenyButton: true,
+                              showCancelButton: true,
+                              confirmButtonText: "是",
+                              denyButtonText: "否",
+                            }).then((result) => {
+                              if (result.isConfirmed) {
+                                onSoftDeleteHotel.mutate({
+                                  id: hotel.id,
+                                  is_deleted: true,
+                                });
+                                Swal.fire("已刪除");
+                              } else if (result.isDenied) {
+                                Swal.fire("已取消");
+                              }
                             });
                           }}
                         >
@@ -252,6 +335,60 @@ export default function HotelList() {
             </li>
           </ul>
         </nav>
+        <Dialog
+          open={editDialogOpen}
+          onClose={() => setEditDialogOpen(false)}
+          aria-labelledby="edit-hotel-dialog-title"
+        >
+          <DialogTitle id="edit-hotel-dialog-title">更新酒店資料</DialogTitle>
+          <DialogContent>
+            <DialogContentText>酒店最新資料</DialogContentText>
+            <TextField
+              autoFocus
+              margin="dense"
+              id="name"
+              label="名稱"
+              type="text"
+              fullWidth
+              variant="standard"
+              inputRef={nameInputRef}
+            />
+            <TextField
+              margin="dense"
+              id="address"
+              label="地址"
+              type="text"
+              fullWidth
+              variant="standard"
+              inputRef={addressInputRef}
+            />
+            <TextField
+              margin="dense"
+              id="phone"
+              label="電話"
+              type="text"
+              fullWidth
+              variant="standard"
+              inputRef={phoneInputRef}
+            />
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={() => setEditDialogOpen(false)}>取消</Button>
+            <Button
+              onClick={() => {
+                onEditHotel.mutate({
+                  id: selectedHotel!.id,
+                  name: nameInputRef.current?.value ?? "",
+                  address: addressInputRef.current?.value ?? "",
+                  phone: phoneInputRef.current?.value ?? "",
+                });
+                setEditDialogOpen(false);
+              }}
+            >
+              確認
+            </Button>
+          </DialogActions>
+        </Dialog>
       </div>
     </>
   );

@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { CreateHotelDto } from './dto/create-hotel.dto';
+import { UpdateHotelDto } from './dto/update-hotel.dto';
 
 @Injectable()
 export class HotelService {
@@ -60,6 +61,17 @@ export class HotelService {
     await this.prismaService.hotel.update({
       where: { id },
       data: { is_deleted: true },
+    });
+  }
+
+  async editHotel(id: number, updateHotelDto: UpdateHotelDto): Promise<void> {
+    await this.prismaService.hotel.update({
+      where: { id },
+      data: {
+        name: updateHotelDto.name,
+        address: updateHotelDto.address,
+        phone: updateHotelDto.phone,
+      },
     });
   }
 }

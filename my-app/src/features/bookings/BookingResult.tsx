@@ -28,7 +28,7 @@ export interface UserData {
   start_time: Date;
   end_time: Date;
   total_hours: number;
-  total_price: number;
+  total_prices: number;
   booking_email: string;
   booking_phone: string;
   remarks: string;
@@ -163,7 +163,7 @@ const BookingResult: React.FC<{ userID: number }> = ({ userID }) => {
                 結束日期及時間: {new Date(booking.end_time).toLocaleString()}
               </p>
               <p>預約總時數: {booking.total_hours} 小時</p>
-              <p>合計: {booking.total_price} 元</p>
+              <p>合計: {booking.total_prices} 元</p>
               <p>電郵: {booking.booking_email}</p>
               <p>電話: {booking.booking_phone}</p>
               <div className="booking-result-buttons">

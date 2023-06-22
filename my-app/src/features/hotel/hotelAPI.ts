@@ -105,33 +105,29 @@ export async function softDeleteHotel(id: number, is_deleted: boolean) {
   }
 }
 
-// async function createHotel(hotelData: CreateHotel) {
-//   const total_rooms = Number(hotelData.total_rooms);
-//   const hourly_rate = Number(hotelData.hourly_rate);
-//   const response = await fetch(
-//     `${process.env.REACT_APP_API_SERVER}/hotel/create`,
-//     {
-//       method: "POST",
-//       headers: {
-//         "Content-Type": "application/json",
-//         "Authorization": `Bearer ${localStorage.getItem("token")}`,
-//       },
-//       body: JSON.stringify({
-//         ...hotelData,
-//         total_rooms,
-//         hourly_rate,
-//       }),
-//     }
-//   );
+export async function editHotelAPI(
+  id: number,
+  name: string,
+  address: string,
+  phone: string
+) {
+  const res = await fetch(`${API_ORIGIN}/hotel/editHotel/${id}`, {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      name,
+      address,
+      phone,
+    }),
+  });
 
-//   if (!response.ok) {
-//     console.error(
-//       "Error creating hotel:",
-//       response.status,
-//       response.statusText
-//     );
-//     throw new Error("Error creating hotel");
-//   }
-
-//   return response.json();
-// }
+  if (res.ok) {
+    // If the status is 200 OK, return a default value (e.g., undefined or null)
+    return null;
+  } else {
+    // Handle errors as needed, for example, by throwing an error or returning a default error object
+    throw new Error(`Failed to soft delete hotel with id ${id}`);
+  }
+}

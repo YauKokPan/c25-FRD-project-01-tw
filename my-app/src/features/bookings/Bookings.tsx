@@ -165,8 +165,8 @@ const BookingSlot: React.FC<{ hotel: Hotel }> = (props) => {
   const sendEmail = (bookingData: any) => {
     emailjs
       .send(
-        "service_ltoylm6",
-        "template_mc7iyif",
+        "service_xzwqjem",
+        "template_wli9xul",
         {
           hotel_name: bookingData.hotelname,
           user_name: bookingData.username,
@@ -174,8 +174,10 @@ const BookingSlot: React.FC<{ hotel: Hotel }> = (props) => {
           end_time: bookingData.endTime,
           total_price: bookingData.totalPrice,
           booking_email: bookingData.email,
+          remarks: bookingData.remarks,
+          booking_phone: bookingData.booking_phone,
         },
-        "R0o3xZuCwgV901zHG"
+        "zR05TDXinfYiQDcCP"
       )
       .then(
         (result) => {
@@ -237,6 +239,8 @@ const BookingSlot: React.FC<{ hotel: Hotel }> = (props) => {
           startTime: startTime?.toLocaleString(),
           endTime: endTime?.toLocaleString(),
           totalPrice: totalPrice,
+          remarks: remarks,
+          booking_phone: booking_phone,
         };
         sendEmail(bookingData);
         navigate("/payment");

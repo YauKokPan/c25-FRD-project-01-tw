@@ -59,7 +59,7 @@ payment_key Payment?
 start_time DateTime
 end_time DateTime
 total_hours Int
-total_price Int
+total_prices Int
 booking_phone String
 booking_email String
 remarks String
@@ -115,7 +115,7 @@ model Payment {
         booking_payment_key Booking @relation(fields:[booking_id], references: [id])
         booking_id Int @unique
 
-    @@map("payment")
+    @@map("payments")
 }
 
 model Favorite {

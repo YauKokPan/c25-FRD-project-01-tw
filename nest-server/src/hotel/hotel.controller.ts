@@ -19,6 +19,7 @@ import { s3, bucketName } from '../../s3upload';
 import * as fs from 'fs';
 import { CreateHotelDto } from './dto/create-hotel.dto';
 import { ManagedUpload } from 'aws-sdk/clients/s3';
+import { UpdateHotelDto } from './dto/update-hotel.dto';
 
 @Controller('hotel')
 export class HotelController {
@@ -130,5 +131,13 @@ export class HotelController {
   @Patch('softDelete/:id')
   async softDelete(@Param('id') id: number): Promise<void> {
     return this.hotelService.softDeleteHotel(+id);
+  }
+
+  @Patch('editHotel/:id')
+  async editHotel(
+    @Param('id') id: number,
+    @Body() updateHotelDto: UpdateHotelDto,
+  ): Promise<void> {
+    return this.hotelService.editHotel(+id, updateHotelDto);
   }
 }
