@@ -156,6 +156,8 @@ hotel_id,hotel_name,hotel_img
 36,荷李活酒店,https://c25-frd-bucket.s3.ap-southeast-1.amazonaws.com/214_1632885036_7c94ac662c9037cd84318a224e4103da.png
 37,京都酒店,https://c25-frd-bucket.s3.ap-southeast-1.amazonaws.com/1632819416_11dd0f2646bccf1a1bab9ca3f21a56b9.jpg
 37,京都酒店,https://c25-frd-bucket.s3.ap-southeast-1.amazonaws.com/216_1632819682_d4cf7fb496e2ba163c3029cff36de3c2.jpg
+38,香港住宿2,https://c25-frd-bucket.s3.ap-southeast-1.amazonaws.com/1665261971_1a4e8196b0e16a63f6584ecf89a82219.jpeg
+38,香港住宿2,https://c25-frd-bucket.s3.ap-southeast-1.amazonaws.com/1665261962_1d4823ff6d47d58771fc1aeb81a8faf8.jpeg
 39,oneroom,https://c25-frd-bucket.s3.ap-southeast-1.amazonaws.com/1667967200_d67d30718f56d9e2f5dbab35f8ab24f9.jpg
 39,oneroom,https://c25-frd-bucket.s3.ap-southeast-1.amazonaws.com/340_1667967209_e60c3e6a882bc61133b33eb7e54c1693.jpg
 39,oneroom,https://c25-frd-bucket.s3.ap-southeast-1.amazonaws.com/340_1667967217_5c15043a7b7d5aae6543c71a9410c523.jpg
@@ -303,6 +305,9 @@ hotel_id,hotel_name,hotel_img
 65,西班牙賓館,https://c25-frd-bucket.s3.ap-southeast-1.amazonaws.com/310_1634886922_de93584b5354c3a78b319ba5e31a8031.jpg
 65,西班牙賓館,https://c25-frd-bucket.s3.ap-southeast-1.amazonaws.com/310_1634886931_4664d44b7c4313e60ac95b2976f5f0f1.jpg
 65,西班牙賓館,https://c25-frd-bucket.s3.ap-southeast-1.amazonaws.com/310_1634886936_9e0b1d5645e722e218e7f8ecd302e460.jpg
+66,維珍尼亞賓館,https://c25-frd-bucket.s3.ap-southeast-1.amazonaws.com/virginia_hotel.jpg
+66,維珍尼亞賓館,https://c25-frd-bucket.s3.ap-southeast-1.amazonaws.com/virginia_2.jpg
+66,維珍尼亞賓館,https://c25-frd-bucket.s3.ap-southeast-1.amazonaws.com/virginia_3.jpg
 67,輝煌小築,https://c25-frd-bucket.s3.ap-southeast-1.amazonaws.com/1634902318_849eb77c120e30e8ccc35d34821fc317.jpg
 67,輝煌小築,https://c25-frd-bucket.s3.ap-southeast-1.amazonaws.com/313_1634902363_a7901626b60127a8b739b402a84d8156.jpeg
 67,輝煌小築,https://c25-frd-bucket.s3.ap-southeast-1.amazonaws.com/313_1634902372_65ac6b362cf62e733ee5ae1e50c2fde0.jpeg
