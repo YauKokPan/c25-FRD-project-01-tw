@@ -191,64 +191,6 @@ export default function SearchPage() {
                     </div>
                     <Card.Text>地址 : {hotel.address}</Card.Text>
                     <Card.Text>電話 : {hotel.phone}</Card.Text>
-                    <Dialog
-                      open={editDialogOpen}
-                      onClose={() => setEditDialogOpen(false)}
-                      aria-labelledby="edit-hotel-dialog-title"
-                    >
-                      <DialogTitle id="edit-hotel-dialog-title">
-                        更新酒店資料
-                      </DialogTitle>
-                      <DialogContent>
-                        <DialogContentText>酒店最新資料</DialogContentText>
-                        <TextField
-                          autoFocus
-                          margin="dense"
-                          id="name"
-                          label="名稱"
-                          type="text"
-                          fullWidth
-                          variant="standard"
-                          inputRef={nameInputRef}
-                        />
-                        <TextField
-                          margin="dense"
-                          id="address"
-                          label="地址"
-                          type="text"
-                          fullWidth
-                          variant="standard"
-                          inputRef={addressInputRef}
-                        />
-                        <TextField
-                          margin="dense"
-                          id="phone"
-                          label="電話"
-                          type="text"
-                          fullWidth
-                          variant="standard"
-                          inputRef={phoneInputRef}
-                        />
-                      </DialogContent>
-                      <DialogActions>
-                        <Button onClick={() => setEditDialogOpen(false)}>
-                          取消
-                        </Button>
-                        <Button
-                          onClick={() => {
-                            onEditHotel.mutate({
-                              id: selectedHotel!.id,
-                              name: nameInputRef.current?.value ?? "",
-                              address: addressInputRef.current?.value ?? "",
-                              phone: phoneInputRef.current?.value ?? "",
-                            });
-                            setEditDialogOpen(false);
-                          }}
-                        >
-                          確認
-                        </Button>
-                      </DialogActions>
-                    </Dialog>
 
                     {buttonState === "visible" && (
                       <Stack direction="row" spacing={1}>
@@ -293,6 +235,63 @@ export default function SearchPage() {
       ) : (
         <h3>沒有符合「{searchQuery}」的搜尋結果</h3>
       )}
+      <Dialog
+        open={editDialogOpen}
+        onClose={() => setEditDialogOpen(false)}
+        aria-labelledby="edit-hotel-dialog-title"
+      >
+        <DialogTitle id="edit-hotel-dialog-title">更新酒店資料</DialogTitle>
+        <DialogContent>
+          <DialogContentText>酒店最新資料</DialogContentText>
+          <TextField
+            autoFocus
+            margin="dense"
+            id="name"
+            label="名稱"
+            type="text"
+            fullWidth
+            variant="standard"
+            inputRef={nameInputRef}
+            defaultValue={selectedHotel?.name}
+          />
+          <TextField
+            margin="dense"
+            id="address"
+            label="地址"
+            type="text"
+            fullWidth
+            variant="standard"
+            inputRef={addressInputRef}
+            defaultValue={selectedHotel?.address}
+          />
+          <TextField
+            margin="dense"
+            id="phone"
+            label="電話"
+            type="text"
+            fullWidth
+            variant="standard"
+            inputRef={phoneInputRef}
+            defaultValue={selectedHotel?.phone}
+          />
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={() => setEditDialogOpen(false)}>取消</Button>
+          <Button
+            onClick={() => {
+              onEditHotel.mutate({
+                id: selectedHotel!.id,
+                name: nameInputRef.current?.value ?? "",
+                address: addressInputRef.current?.value ?? "",
+                phone: phoneInputRef.current?.value ?? "",
+              });
+              setEditDialogOpen(false);
+            }}
+          >
+            確認
+          </Button>
+        </DialogActions>
+      </Dialog>
     </div>
   );
 }

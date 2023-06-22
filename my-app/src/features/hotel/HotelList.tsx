@@ -204,192 +204,193 @@ export default function HotelList() {
   }, [userID, isAdmin]);
 
   return (
-    <>
-      <div className="hotel-list-container">
-        <div className="title-container">
-          <Title mainTitle="酒店一覽🏩" />
-          {buttonState === "visible" && (
-            <IconButton
-              aria-label="add"
-              size="large"
-              onClick={() => navigate("/admin")}
-            >
-              <AddCircleRoundedIcon fontSize="inherit" />
-            </IconButton>
-          )}
-        </div>
-        <SearchBox />
-        <div className="hotel-row">
-          {currentHotels.map((hotel) => {
-            return (
-              // Add the key prop to the Col component
-              <Col md={4} className="hotel-card" key={hotel.id}>
-                <Card>
-                  <Link to={"/hotel-detail/" + hotel.id}>
-                    <Card.Img
-                      variant="top"
-                      src={hotel.profile_pic}
-                      className="hotel-img"
-                    />
-                  </Link>
+    <div className="hotel-list-container">
+      <div className="title-container">
+        <Title mainTitle="酒店一覽🏩" />
+        {buttonState === "visible" && (
+          <IconButton
+            aria-label="add"
+            size="large"
+            onClick={() => navigate("/admin")}
+          >
+            <AddCircleRoundedIcon fontSize="inherit" />
+          </IconButton>
+        )}
+      </div>
+      <SearchBox />
+      <div className="hotel-row">
+        {currentHotels.map((hotel) => {
+          return (
+            // Add the key prop to the Col component
+            <Col md={4} className="hotel-card" key={hotel.id}>
+              <Card>
+                <Link to={"/hotel-detail/" + hotel.id}>
+                  <Card.Img
+                    variant="top"
+                    src={hotel.profile_pic}
+                    className="hotel-img"
+                  />
+                </Link>
 
-                  <Card.Body>
-                    <div className="fav-container">
-                      <Card.Title>{hotel.name}</Card.Title>
-                      {is_auth && (
-                        <IconButton
-                          aria-label="fav"
-                          onClick={() => toggleFavorite(hotel)}
-                          style={{
-                            color: userFavorites.some(
-                              (fav) => fav.id === hotel.id
-                            )
-                              ? "red"
-                              : "inherit",
-                          }}
-                        >
-                          <FavoriteRoundedIcon />
-                        </IconButton>
-                      )}
-                    </div>
-                    <Card.Text>地址 : {hotel.address}</Card.Text>{" "}
-                    <Card.Text>電話 : {hotel.phone}</Card.Text>
-                    {buttonState === "visible" && (
-                      <Stack direction="row" spacing={1}>
-                        <IconButton
-                          aria-label="edit"
-                          onClick={() => openEditDialog(hotel)}
-                        >
-                          <EditRoundedIcon />
-                        </IconButton>
-                        <IconButton
-                          aria-label="delete"
-                          onClick={() => {
-                            Swal.fire({
-                              title: "確認刪除？",
-                              showDenyButton: true,
-                              showCancelButton: true,
-                              confirmButtonText: "是",
-                              denyButtonText: "否",
-                            }).then((result) => {
-                              if (result.isConfirmed) {
-                                onSoftDeleteHotel.mutate({
-                                  id: hotel.id,
-                                  is_deleted: true,
-                                });
-                                Swal.fire("已刪除");
-                              } else if (result.isDenied) {
-                                Swal.fire("已取消");
-                              }
-                            });
-                          }}
-                        >
-                          <DeleteIcon />
-                        </IconButton>
-                      </Stack>
+                <Card.Body>
+                  <div className="fav-container">
+                    <Card.Title>{hotel.name}</Card.Title>
+                    {is_auth && (
+                      <IconButton
+                        aria-label="fav"
+                        onClick={() => toggleFavorite(hotel)}
+                        style={{
+                          color: userFavorites.some(
+                            (fav) => fav.id === hotel.id
+                          )
+                            ? "#FF6D75"
+                            : "inherit",
+                        }}
+                      >
+                        <FavoriteRoundedIcon />
+                      </IconButton>
                     )}
-                  </Card.Body>
-                </Card>
-              </Col>
-            );
-          })}
-        </div>
-        <nav>
-          <ul className="pagination">
-            <li className={`page-item ${activePage === 1 ? "disabled" : ""}`}>
-              <button
-                className="page-link"
-                onClick={handlePrevClick}
-                disabled={activePage === 1}
-              >
-                上一頁
-              </button>
-            </li>
-            {pageNumbers.map((pageNumber) => (
-              <li
-                key={pageNumber}
-                className={`page-item ${
-                  activePage === pageNumber ? "active" : ""
-                }`}
-              >
-                <button
-                  className="page-link"
-                  onClick={() => handlePageChange(pageNumber)}
-                >
-                  {pageNumber}
-                </button>
-              </li>
-            ))}
+                  </div>
+                  <Card.Text>地址 : {hotel.address}</Card.Text>{" "}
+                  <Card.Text>電話 : {hotel.phone}</Card.Text>
+                  {buttonState === "visible" && (
+                    <Stack direction="row" spacing={1}>
+                      <IconButton
+                        aria-label="edit"
+                        onClick={() => openEditDialog(hotel)}
+                      >
+                        <EditRoundedIcon />
+                      </IconButton>
+                      <IconButton
+                        aria-label="delete"
+                        onClick={() => {
+                          Swal.fire({
+                            title: "確認刪除？",
+                            showDenyButton: true,
+                            showCancelButton: true,
+                            confirmButtonText: "是",
+                            denyButtonText: "否",
+                          }).then((result) => {
+                            if (result.isConfirmed) {
+                              onSoftDeleteHotel.mutate({
+                                id: hotel.id,
+                                is_deleted: true,
+                              });
+                              Swal.fire("已刪除");
+                            } else if (result.isDenied) {
+                              Swal.fire("已取消");
+                            }
+                          });
+                        }}
+                      >
+                        <DeleteIcon />
+                      </IconButton>
+                    </Stack>
+                  )}
+                </Card.Body>
+              </Card>
+            </Col>
+          );
+        })}
+      </div>
+      <nav>
+        <ul className="pagination">
+          <li className={`page-item ${activePage === 1 ? "disabled" : ""}`}>
+            <button
+              className="page-link"
+              onClick={handlePrevClick}
+              disabled={activePage === 1}
+            >
+              上一頁
+            </button>
+          </li>
+          {pageNumbers.map((pageNumber) => (
             <li
+              key={pageNumber}
               className={`page-item ${
-                activePage === totalPages ? "disabled" : ""
+                activePage === pageNumber ? "active" : ""
               }`}
             >
               <button
                 className="page-link"
-                onClick={handleNextClick}
-                disabled={activePage === totalPages}
+                onClick={() => handlePageChange(pageNumber)}
               >
-                下一頁
+                {pageNumber}
               </button>
             </li>
-          </ul>
-        </nav>
-        <Dialog
-          open={editDialogOpen}
-          onClose={() => setEditDialogOpen(false)}
-          aria-labelledby="edit-hotel-dialog-title"
-        >
-          <DialogTitle id="edit-hotel-dialog-title">更新酒店資料</DialogTitle>
-          <DialogContent>
-            <DialogContentText>酒店最新資料</DialogContentText>
-            <TextField
-              autoFocus
-              margin="dense"
-              id="name"
-              label="名稱"
-              type="text"
-              fullWidth
-              variant="standard"
-              inputRef={nameInputRef}
-            />
-            <TextField
-              margin="dense"
-              id="address"
-              label="地址"
-              type="text"
-              fullWidth
-              variant="standard"
-              inputRef={addressInputRef}
-            />
-            <TextField
-              margin="dense"
-              id="phone"
-              label="電話"
-              type="text"
-              fullWidth
-              variant="standard"
-              inputRef={phoneInputRef}
-            />
-          </DialogContent>
-          <DialogActions>
-            <Button onClick={() => setEditDialogOpen(false)}>取消</Button>
-            <Button
-              onClick={() => {
-                onEditHotel.mutate({
-                  id: selectedHotel!.id,
-                  name: nameInputRef.current?.value ?? "",
-                  address: addressInputRef.current?.value ?? "",
-                  phone: phoneInputRef.current?.value ?? "",
-                });
-                setEditDialogOpen(false);
-              }}
+          ))}
+          <li
+            className={`page-item ${
+              activePage === totalPages ? "disabled" : ""
+            }`}
+          >
+            <button
+              className="page-link"
+              onClick={handleNextClick}
+              disabled={activePage === totalPages}
             >
-              確認
-            </Button>
-          </DialogActions>
-        </Dialog>
-      </div>
-    </>
+              下一頁
+            </button>
+          </li>
+        </ul>
+      </nav>
+      <Dialog
+        open={editDialogOpen}
+        onClose={() => setEditDialogOpen(false)}
+        aria-labelledby="edit-hotel-dialog-title"
+      >
+        <DialogTitle id="edit-hotel-dialog-title">更新酒店資料</DialogTitle>
+        <DialogContent>
+          <DialogContentText>酒店最新資料</DialogContentText>
+          <TextField
+            autoFocus
+            margin="dense"
+            id="name"
+            label="名稱"
+            type="text"
+            fullWidth
+            variant="standard"
+            inputRef={nameInputRef}
+            defaultValue={selectedHotel?.name}
+          />
+          <TextField
+            margin="dense"
+            id="address"
+            label="地址"
+            type="text"
+            fullWidth
+            variant="standard"
+            inputRef={addressInputRef}
+            defaultValue={selectedHotel?.address}
+          />
+          <TextField
+            margin="dense"
+            id="phone"
+            label="電話"
+            type="text"
+            fullWidth
+            variant="standard"
+            inputRef={phoneInputRef}
+            defaultValue={selectedHotel?.phone}
+          />
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={() => setEditDialogOpen(false)}>取消</Button>
+          <Button
+            onClick={() => {
+              onEditHotel.mutate({
+                id: selectedHotel!.id,
+                name: nameInputRef.current?.value ?? "",
+                address: addressInputRef.current?.value ?? "",
+                phone: phoneInputRef.current?.value ?? "",
+              });
+              setEditDialogOpen(false);
+            }}
+          >
+            確認
+          </Button>
+        </DialogActions>
+      </Dialog>
+    </div>
   );
 }

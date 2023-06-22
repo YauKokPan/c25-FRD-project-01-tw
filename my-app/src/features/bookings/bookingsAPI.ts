@@ -56,6 +56,13 @@ export async function findLatestBooking() {
   return res;
 }
 
+export async function findOccupancyRate(hotelID: number) {
+  const res = await fetch(
+    `${process.env.REACT_APP_API_SERVER}/hotel/occupied/${hotelID}`
+  );
+  return res;
+}
+
 // not configure yet for controller and service
 export async function fetchHotelData(hotel_id: number): Promise<any> {
   const res = await fetch(

@@ -83,6 +83,17 @@ const RatingForm: React.FC<RatingFormProps> = (props) => {
   const [name, setName] = React.useState("");
   const [comment, setComment] = React.useState("");
 
+  const getInitialDailyCommentCount = () => {
+    const storedCount = localStorage.getItem("dailyCommentCount");
+    return storedCount ? parseInt(storedCount, 10) : 0;
+  };
+
+  const [dailyCommentCount, setDailyCommentCount] = React.useState<number>(
+    getInitialDailyCommentCount()
+  );
+
+  const checkDailyCommentLimitReached = () => dailyCommentCount >= 5;
+
   const [displayComments, setDisplayComments] = React.useState<
     Array<{
       nick_name: string;
@@ -125,6 +136,11 @@ const RatingForm: React.FC<RatingFormProps> = (props) => {
 
       // Check the recaptchaValue and proceed with the handleSubmit if it's valid
       if (recaptchaValue) {
+        if (checkDailyCommentLimitReached()) {
+          setIsSubmitting(false);
+          Swal.fire("你每天只能發表5條評論。");
+          return;
+        }
         handleSubmit();
         Swal.fire("發表評論成功！");
       } else {
@@ -175,6 +191,13 @@ const RatingForm: React.FC<RatingFormProps> = (props) => {
           ...prevDisplayComments,
           parsedNewComment,
         ]);
+
+        const updatedDailyCommentCount = dailyCommentCount + 1;
+        setDailyCommentCount(updatedDailyCommentCount);
+        localStorage.setItem(
+          "dailyCommentCount",
+          updatedDailyCommentCount.toString()
+        );
       } else {
         setApiError(
           response.statusText ||
@@ -216,6 +239,31 @@ const RatingForm: React.FC<RatingFormProps> = (props) => {
 
     fetchAndSetComments();
   }, [hotel.id]);
+
+  // Reset the dailyCommentCount after 24 hours
+  React.useEffect(() => {
+    const resetDailyCommentCount = () => {
+      setDailyCommentCount(0);
+      localStorage.removeItem("dailyCommentCount");
+    };
+
+    const now = new Date().getTime();
+    const storedResetTime = localStorage.getItem("resetTime");
+
+    // If there's no stored reset time, set it to 24 hours from now
+    if (!storedResetTime) {
+      const resetTime = now + 24 * 60 * 60 * 1000;
+      localStorage.setItem("resetTime", resetTime.toString());
+    }
+
+    const timeUntilReset =
+      parseInt(localStorage.getItem("resetTime") as string, 10) - now;
+    const resetTimer = setTimeout(resetDailyCommentCount, timeUntilReset);
+
+    return () => {
+      clearTimeout(resetTimer);
+    };
+  }, []);
 
   const addEmoji = (emoji: string) => () => {
     setComment((prevComment) => prevComment + emoji);

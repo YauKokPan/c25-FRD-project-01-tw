@@ -3,9 +3,7 @@ import "./Favorite.css";
 import Col from "react-bootstrap/Col";
 import Card from "react-bootstrap/Card";
 import { Link } from "react-router-dom";
-import { IconButton, Stack } from "@mui/material";
-import DeleteIcon from "@mui/icons-material/Delete";
-import EditRoundedIcon from "@mui/icons-material/EditRounded";
+import { IconButton } from "@mui/material";
 import { getIsAdmin, getUserId } from "../auth/authAPI";
 import { AuthGuard } from "../auth/AuthGuard";
 import FavoriteRoundedIcon from "@mui/icons-material/FavoriteRounded";
@@ -19,7 +17,6 @@ import { Hotel } from "../hotel/hotelAPI";
 const Favorites: React.FC<{ userID: number }> = ({ userID }) => {
   const [userFavorites, setUserFavorites] = useState<Hotel[]>([]);
 
-  const [buttonState, setButtonState] = useState("");
   //   const [favorites, setFavorites] = useState<Hotel[]>([]);
 
   const is_auth = AuthGuard();
@@ -48,15 +45,6 @@ const Favorites: React.FC<{ userID: number }> = ({ userID }) => {
     };
 
     fetchFavorites();
-
-    const updateButtonState = () => {
-      if (isAdmin) {
-        setButtonState("visible");
-      } else {
-        setButtonState("hidden");
-      }
-    };
-    updateButtonState();
   }, [userID, isAdmin]); // Use the memoized value in the dependency array
 
   return (
@@ -88,7 +76,7 @@ const Favorites: React.FC<{ userID: number }> = ({ userID }) => {
                           color: userFavorites.some(
                             (fav) => fav.id === hotel.id
                           )
-                            ? "red"
+                            ? "#FF6D75"
                             : "inherit",
                         }}
                       >
@@ -98,16 +86,6 @@ const Favorites: React.FC<{ userID: number }> = ({ userID }) => {
                   </div>
                   <Card.Text>地址 : {hotel.address}</Card.Text>{" "}
                   <Card.Text>電話 : {hotel.phone}</Card.Text>
-                  {buttonState === "visible" && (
-                    <Stack direction="row" spacing={1}>
-                      <IconButton aria-label="edit">
-                        <EditRoundedIcon />
-                      </IconButton>
-                      <IconButton aria-label="delete">
-                        <DeleteIcon />
-                      </IconButton>
-                    </Stack>
-                  )}
                 </Card.Body>
               </Card>
             </Col>

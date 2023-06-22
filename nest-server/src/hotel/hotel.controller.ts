@@ -140,4 +140,14 @@ export class HotelController {
   ): Promise<void> {
     return this.hotelService.editHotel(+id, updateHotelDto);
   }
+
+  @Get('occupied/:id')
+  async getOccupancyRates(@Param('id') id: number) {
+    return await this.hotelService.getOccupancyRates(+id);
+  }
+
+  // @Get('averageRating/:id')
+  // async getAverageRatings(@Param('id') id: number) {
+  //   return await this.hotelService.getAverageRatings(+id);
+  // }
 }

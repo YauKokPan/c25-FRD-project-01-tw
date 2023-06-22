@@ -8,13 +8,19 @@ import { getIsAdmin, getUserId, localLogin } from "./authAPI";
 import { login } from "./authSlice";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
+import { Checkbox, FormControlLabel } from "@mui/material";
 
 export default function Login() {
-  const [email, setEmail] = useState("");
+  const getRememberedEmail = () => {
+    const rememberedEmail = localStorage.getItem("rememberedEmail");
+    return rememberedEmail !== null ? rememberedEmail : "";
+  };
+
+  const [email, setEmail] = useState(getRememberedEmail());
+
   const [name] = useState("");
   const [password, setPassword] = useState("");
-  //   const [errorMessage, setErrorMessage] = useState("");
-  // const [successMessage, setSuccessMessage] = useState("");
+  const [rememberMe, setRememberMe] = useState(false);
 
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
@@ -32,6 +38,9 @@ export default function Login() {
       password,
       adminCheck
     );
+    if (email !== getRememberedEmail()) {
+      localStorage.removeItem("rememberedEmail");
+    }
     if (result) {
       dispatch(login(getUserId()));
       Swal.fire({
@@ -53,9 +62,21 @@ export default function Login() {
   const handleEmailChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setEmail(event.target.value);
   };
-
   const handlePasswordChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setPassword(event.target.value);
+  };
+
+  const handleRememberMeChange = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    const isChecked = event.target.checked;
+    setRememberMe(isChecked);
+
+    if (isChecked) {
+      localStorage.setItem("rememberedEmail", email);
+    } else {
+      localStorage.removeItem("rememberedEmail");
+    }
   };
 
   return (
@@ -63,8 +84,6 @@ export default function Login() {
       <div className="login-form">
         <form onSubmit={handleSubmit}>
           <Title mainTitle="💁‍♀️登入" />
-          {/* {errorMessage && <p className="text-danger">{errorMessage}</p>}
-          {successMessage && <p className="text-success">{successMessage}</p>} */}
           <div className="mb-3">
             <label>電郵</label>
             <input
@@ -86,16 +105,16 @@ export default function Login() {
             />
           </div>
           <div className="mb-3">
-            <div className="custom-control custom-checkbox">
-              <input
-                type="checkbox"
-                className="custom-control-input"
-                id="customCheck1"
-              />
-              <label className="custom-control-label" htmlFor="customCheck1">
-                Remember me
-              </label>
-            </div>
+            <FormControlLabel
+              control={
+                <Checkbox
+                  color="primary"
+                  checked={rememberMe}
+                  onChange={handleRememberMeChange}
+                />
+              }
+              label="記住登入電郵"
+            />
           </div>
           <div className="d-grid">
             <button type="submit" className="btn btn-primary">
@@ -103,8 +122,8 @@ export default function Login() {
             </button>
           </div>
           {/* <p className="forgot-password text-right">
-            Forgot <a href="#">password?</a>
-          </p> */}
+              Forgot <a href="#">password?</a>
+            </p> */}
         </form>
       </div>
     </div>

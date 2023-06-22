@@ -6,8 +6,10 @@ import { getUserId } from "../auth/authAPI";
 import { UserData } from "../bookings/BookingResult";
 import "./Payment.css";
 import Button from "@mui/joy/Button";
+import { useNavigate } from "react-router-dom";
 
 export default function Payment() {
+  const navigate = useNavigate();
   const [bookingInfo, setBookingInfo] = useState<UserData | null>(null);
   const userID = Number(getUserId());
 
@@ -83,7 +85,7 @@ export default function Payment() {
                     timer: 3000,
                   });
                   setTimeout(() => {
-                    window.location.replace("/");
+                    navigate("/");
                   }, 3000);
                 }
                 return Promise.resolve();
@@ -99,7 +101,7 @@ export default function Payment() {
                 timer: 3000,
               });
               setTimeout(() => {
-                window.location.replace("/");
+                navigate("/");
               }, 1000);
             }}
             size="lg"

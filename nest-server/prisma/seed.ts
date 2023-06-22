@@ -1,9 +1,10 @@
-import { PrismaClient, Prisma } from '@prisma/client';
+import { PrismaClient } from '@prisma/client';
 import * as bcrypt from 'bcryptjs';
 import { join } from 'path';
 import * as fs from 'fs';
 import * as Papa from 'papaparse';
 import * as csv from 'csv-parser';
+import { faker } from '@faker-js/faker';
 
 const SALT_ROUNDS = 10;
 
@@ -26,6 +27,7 @@ async function resetPostgresSequence(tableName, columnName) {
   );
 }
 async function resetPostgresSequences() {
+  await resetPostgresSequence('users', 'id');
   await resetPostgresSequence('hotels', 'id');
   await resetPostgresSequence('comments', 'id');
   await resetPostgresSequence('gallery', 'id');
@@ -45,6 +47,7 @@ const main = async () => {
   await prisma.gallery.deleteMany();
   await prisma.comment.deleteMany();
   await prisma.hotel.deleteMany();
+  await prisma.user.deleteMany();
   await resetPostgresSequences();
 
   const insertUsers = [
@@ -58,8 +61,22 @@ const main = async () => {
     {
       name: 'Jason',
       email: 'jason@sweethour.io',
-      password: await hashPassword('5678'),
+      password: await hashPassword('tecky'),
       phone: '87456789',
+      is_admin: false,
+    },
+    {
+      name: 'Alex',
+      email: 'alex@tecky.io',
+      password: await hashPassword('tecky'),
+      phone: '87456100',
+      is_admin: false,
+    },
+    {
+      name: 'Gordon',
+      email: 'gordon@tecky.io',
+      password: await hashPassword('tecky'),
+      phone: '87456112',
       is_admin: false,
     },
   ];
@@ -69,6 +86,20 @@ const main = async () => {
       where: { name: user.name },
       update: {},
       create: { ...user },
+    });
+  }
+
+  const numberOfUsers = 46;
+
+  for (let i = 0; i < numberOfUsers; i++) {
+    const user = await prisma.user.create({
+      data: {
+        name: faker.person.fullName(),
+        email: faker.internet.email(),
+        password: await hashPassword(faker.internet.password()),
+        phone: faker.phone.number('61######'),
+        is_admin: false,
+      },
     });
   }
 
@@ -122,9 +153,74 @@ const main = async () => {
         await prisma.gallery.create({ data: row });
       }
     });
+
+  // fakerjs to populate comment table
+  const numComments = 500;
+
+  // Generate comments
+  for (let i = 0; i < numComments; i++) {
+    const userId = faker.datatype.boolean() ? 1 : 2;
+    const hotelId = faker.number.int({ min: 1, max: 147 });
+    const nickName = faker.internet.userName();
+    const commentText = faker.lorem.sentence();
+    const rating = faker.number.int({ min: 1, max: 5 });
+    const is_deleted = false;
+
+    await prisma.comment.create({
+      data: {
+        user_id: userId,
+        hotel_id: hotelId,
+        nick_name: nickName,
+        comment_text: commentText,
+        rating: rating,
+        is_deleted: is_deleted,
+      },
+    });
+  }
+
+  // populate bookings
+  const numberOfBookings = 1000;
+  const numberOfHotels = 147;
+
+  for (let i = 0; i < numberOfBookings; i++) {
+    const startDate = faker.date.between({
+      from: '2022-01-01',
+      to: '2023-12-31',
+    });
+    const durationHours = faker.number.int({ min: 1, max: 7 });
+    const endDate = new Date(
+      startDate.getTime() + durationHours * 60 * 60 * 1000,
+    );
+
+    const pricePerHour = faker.number.int({ min: 100, max: 500 });
+    const total_prices = durationHours * pricePerHour;
+
+    await prisma.booking.create({
+      data: {
+        user_id: faker.number.int({ min: 1, max: 50 }),
+        hotel_id: faker.number.int({ min: 1, max: numberOfHotels }),
+        start_time: startDate,
+        end_time: endDate,
+        total_hours: durationHours,
+        total_prices,
+        booking_phone: faker.phone.number('61######'),
+        booking_email: faker.internet.email(),
+        remarks: faker.lorem.sentences(3),
+      },
+    });
+  }
 };
 
-main()
-  .then(() => console.log('seed done'))
-  .catch((err) => console.error(err))
-  .finally(() => prisma.$disconnect());
+const callFuncTwice = (func: any, n: number) => {
+  for (let i = 1; i <= n; i++) {
+    func;
+  }
+};
+
+callFuncTwice(
+  main()
+    .then(() => console.log('seed done'))
+    .catch((err) => console.error(err))
+    .finally(() => prisma.$disconnect()),
+  2,
+);

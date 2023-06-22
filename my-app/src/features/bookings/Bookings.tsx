@@ -6,7 +6,11 @@ import {
 } from "@progress/kendo-react-dateinputs";
 import { useState } from "react";
 import { Hotel } from "../hotel/hotelAPI";
-import { bookingsAPI, findLatestBooking } from "./bookingsAPI";
+import {
+  bookingsAPI,
+  findLatestBooking,
+  findOccupancyRate,
+} from "./bookingsAPI";
 import { useNavigate } from "react-router-dom";
 // import CheckOutPage from "../payment/CheckOutPage";
 import emailjs from "@emailjs/browser";
@@ -14,6 +18,7 @@ import { UserData } from "./BookingResult";
 import { AuthGuard } from "../auth/AuthGuard";
 import { getUserId } from "../auth/authAPI";
 import Button from "@mui/joy/Button";
+import { Box, Grid, LinearProgress } from "@mui/material";
 
 interface TimeButtonProps {
   time: string;
@@ -47,6 +52,22 @@ const BookingSlot: React.FC<{ hotel: Hotel }> = (props) => {
   const [booking_email, setBookingEmail] = useState("");
   const [booking_phone, setBookingPhone] = useState("");
   const [remarks, setRemarks] = useState("");
+  const [occupancyRate, setOccupancyRate] = useState(Number);
+  const [bookedRooms, setBookedRooms] = useState(Number);
+
+  const fetchOccupancyRate = async (hotelId: any) => {
+    const response = await findOccupancyRate(hotelId);
+    const occupancyRateData = await response.json();
+
+    setOccupancyRate(occupancyRateData[0].occupancyRate);
+    setBookedRooms(occupancyRateData[0].bookedRooms);
+  };
+
+  const hotel = props.hotel;
+
+  React.useEffect(() => {
+    fetchOccupancyRate(hotel.id);
+  }, [hotel.id]);
 
   const [timeslots, setTimeslots] = useState([
     { slot: "07:00 - 08:00", clicked: false },
@@ -69,7 +90,6 @@ const BookingSlot: React.FC<{ hotel: Hotel }> = (props) => {
     { slot: "00:00 - 07:00", clicked: false, full: true, count: 7 },
   ]);
 
-  const hotel = props.hotel;
   const userID = Number(getUserId());
   const navigate = useNavigate();
   const isAuth = AuthGuard();
@@ -303,7 +323,29 @@ const BookingSlot: React.FC<{ hotel: Hotel }> = (props) => {
         </>
       )}
 
-      <div>可訂房間數目: {hotel.total_rooms} </div>
+      {/* <div>房間總數: {hotel.total_rooms - bookedRooms} </div>
+      <div>
+        現時入住率:{" "}
+        {occupancyRate !== null ? Math.round(occupancyRate) : "Loading..."}%
+      </div> */}
+
+      <Grid container spacing={1}>
+        <Grid item xs={12}>
+          可訂房間數目: {hotel.total_rooms - bookedRooms}
+        </Grid>
+        <Grid item xs={12}>
+          現時入住率: {Math.round(occupancyRate)}%
+        </Grid>
+        <Grid item xs={12}>
+          <Box width="100%">
+            <LinearProgress
+              color="inherit"
+              variant="determinate"
+              value={Math.round(occupancyRate)}
+            />
+          </Box>
+        </Grid>
+      </Grid>
       <div>已選擇日期: {bookingDate?.toDateString()}</div>
       <div>已選擇時段: {renderSelectedTime()}</div>
       <div>預約總時數為: {clickedCount} 小時</div>

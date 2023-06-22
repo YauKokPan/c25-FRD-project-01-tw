@@ -5,6 +5,7 @@ import Title from "../title/Title";
 import { useNavigate } from "react-router-dom";
 import { registerAPI } from "./registerAPI";
 import Swal from "sweetalert2";
+import Button from "@mui/joy/Button";
 
 export default function Register() {
   const navigate = useNavigate();
@@ -104,7 +105,14 @@ export default function Register() {
           </div>
 
           <h5 className="forgot-password text-right">
-            已有帳戶？<a href="/login">立即登入</a>
+            已有帳戶？
+            <Button
+              variant="solid"
+              size="sm"
+              onClick={() => navigate("/login")}
+            >
+              立即登入
+            </Button>
           </h5>
         </form>
       </div>
