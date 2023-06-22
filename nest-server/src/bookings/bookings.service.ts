@@ -105,6 +105,12 @@ export class BookingsService {
   }
 
   async remove(id: number): Promise<Booking> {
-    return this.prisma.booking.delete({ where: { id } });
+    return this.prisma.booking.delete({
+      where: { id },
+      include: {
+        user_booking_key: true,
+        hotel_booking_key: true,
+      },
+    });
   }
 }

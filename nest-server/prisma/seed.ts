@@ -94,9 +94,6 @@ const main = async () => {
 
   const hotels: HotelRecord[] = parsedData.data;
 
-  // Sort the hotels data by ID before inserting
-  hotels.sort((a, b) => a.user_id - b.user_id);
-
   for (const hotelRecord of hotels) {
     await prisma.hotel.create({
       data: {

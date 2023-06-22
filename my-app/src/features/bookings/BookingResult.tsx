@@ -7,9 +7,9 @@ import {
 import "./BookingResult.css";
 import "./Bookings.css";
 import Swal from "sweetalert2";
-import { getIsAdmin, getUserId } from "../auth/authAPI";
-import { Hotel } from "../hotel/hotelAPI";
+import { getIsAdmin } from "../auth/authAPI";
 import emailjs from "@emailjs/browser";
+import Button from "@mui/joy/Button";
 
 export interface UserKey {
   name: string | undefined;
@@ -40,7 +40,7 @@ const BookingResult: React.FC<{ userID: number }> = ({ userID }) => {
   const [userData, setUserData] = useState<UserData[]>([]);
 
   const isAdmin = getIsAdmin();
-  const userId = Number(getUserId());
+  // const userId = Number(getUserId());
   const canCancelBooking = (startTime: Date): boolean => {
     const now = new Date();
     const twoDaysBeforeStartTime = new Date(startTime);
@@ -57,8 +57,8 @@ const BookingResult: React.FC<{ userID: number }> = ({ userID }) => {
   const sendEmail = (bookingData: any) => {
     emailjs
       .send(
-        "service_0oq4smr",
-        "template_oqws9wv",
+        "service_xzwqjem",
+        "template_mo8dwss",
         {
           hotel_name: bookingData.hotel_name,
           user_name: bookingData.user_name,
@@ -67,7 +67,7 @@ const BookingResult: React.FC<{ userID: number }> = ({ userID }) => {
           total_price: bookingData.total_price,
           booking_email: bookingData.booking_email,
         },
-        "ziPj-ay71jNqfVPJz"
+        "zR05TDXinfYiQDcCP"
       )
       .then(
         (result) => {
@@ -81,27 +81,22 @@ const BookingResult: React.FC<{ userID: number }> = ({ userID }) => {
 
   const handleDelete = async (bookingId: number, startTime: Date) => {
     if (!canCancelBooking(startTime)) {
-      Swal.fire(
-        "無法刪除！",
-        "距離預約開始時間只剩兩天或更短，無法取消預約。",
-        "error"
-      );
+      Swal.fire("無法取消！", "距離預約開始時間只剩兩天或更短，無法取消預約。");
       return;
     }
     const result = await Swal.fire({
-      title: "確定要刪除這個預約嗎？",
-      text: "請注意：刪除了就無法回復，客服將會聯絡。",
-      icon: "warning",
+      title: "確定要取消這個預約嗎？",
+      text: "請注意：刪除後無法還原",
       showCancelButton: true,
       confirmButtonColor: "#3085d6",
       cancelButtonColor: "#d33",
-      confirmButtonText: "是的，刪除它！",
+      confirmButtonText: "確認",
       cancelButtonText: "取消",
     });
 
     if (result.isConfirmed) {
       setUserData(userData.filter((booking) => booking.id !== bookingId));
-      Swal.fire("已刪除！", "您的預約已被刪除。", "success");
+      Swal.fire("已取消！", "已取消預約");
     }
     const response = await removeBookingData(bookingId);
     const cancelledBookingData: UserData = await response.json();
@@ -167,14 +162,14 @@ const BookingResult: React.FC<{ userID: number }> = ({ userID }) => {
               <p>電郵: {booking.booking_email}</p>
               <p>電話: {booking.booking_phone}</p>
               <div className="booking-result-buttons">
-                <button
+                <Button
                   onClick={() =>
                     handleDelete(booking.id, new Date(booking.start_time))
                   }
                   disabled={isBookingPast(new Date(booking.end_time))}
                 >
-                  刪除
-                </button>
+                  取消預約
+                </Button>
               </div>
             </li>
           ))}

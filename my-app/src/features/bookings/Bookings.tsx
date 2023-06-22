@@ -13,6 +13,7 @@ import emailjs from "@emailjs/browser";
 import { UserData } from "./BookingResult";
 import { AuthGuard } from "../auth/AuthGuard";
 import { getUserId } from "../auth/authAPI";
+import Button from "@mui/joy/Button";
 
 interface TimeButtonProps {
   time: string;
@@ -252,10 +253,17 @@ const BookingSlot: React.FC<{ hotel: Hotel }> = (props) => {
 
   if (!isAuth) {
     return (
-      <div className="k-my-8">
-        <div className="k-mb-4 k-font-weight-bold">
-          請先<a href="/login">登錄</a>後才能預約酒店
-        </div>
+      <div className="btn-position">
+        <Button
+          color="warning"
+          size="lg"
+          onClick={function () {
+            navigate("/login");
+          }}
+          variant="soft"
+        >
+          請先登錄以預約酒店
+        </Button>
       </div>
     );
   }

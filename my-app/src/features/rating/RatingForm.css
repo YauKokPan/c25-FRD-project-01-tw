@@ -9,3 +9,8 @@
   flex-direction: column;
   align-items: center; */
 }
+
+.btn-center {
+  display: flex;
+  justify-content: center;
+}

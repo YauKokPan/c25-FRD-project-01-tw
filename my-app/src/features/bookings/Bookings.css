@@ -52,7 +52,7 @@ div {
 .booking-result-li {
   list-style: none;
   background-color: #f0f0f0;
-  padding: 20px 30px 50px 30px;
+  padding: 20px 30px 20px 30px;
   border-radius: 10px;
   box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.5);
   max-width: 500px;
@@ -68,7 +68,7 @@ div {
 
 .booking-result-buttons button {
   padding: 0.5rem 1rem;
-  background-color: #007bff;
+  background-color: #e6c350;
   color: white;
   border: none;
   border-radius: 5px;
@@ -77,7 +77,7 @@ div {
 }
 
 .booking-result-buttons button:hover {
-  background-color: #0056b3;
+  background-color: #b58c05;
 }
 
 .booking-result-buttons button:not(:last-child) {
@@ -87,4 +87,10 @@ div {
 .booking-result-buttons button:disabled {
   background-color: #cccccc;
   cursor: not-allowed;
+}
+
+.btn-position {
+  display: flex;
+  margin-top: 20px;
+  justify-content: center;
 }

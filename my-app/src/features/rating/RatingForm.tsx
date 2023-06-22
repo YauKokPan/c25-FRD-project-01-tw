@@ -1,15 +1,10 @@
 import * as React from "react";
 import Rating from "@mui/material/Rating";
 import Box from "@mui/material/Box";
-import { useTheme } from "@mui/material/styles";
-import useMediaQuery from "@mui/material/useMediaQuery";
-// import StarIcon from "@mui/icons-material/Star";
 import "./RatingForm.css";
 import { Hotel } from "../hotel/hotelAPI";
 import { getUserId } from "../auth/authAPI";
 import { fetchComments, ratingAPI } from "./ratingAPI";
-import Alert from "@mui/material/Alert";
-import AlertTitle from "@mui/material/AlertTitle";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import { styled } from "@mui/material/styles";
@@ -18,10 +13,10 @@ import IconButton from "@mui/joy/IconButton";
 import Textarea from "@mui/joy/Textarea";
 import Button from "@mui/joy/Button";
 import ReCAPTCHA from "react-google-recaptcha";
-// import { AuthGuard } from "../auth/AuthGuard";
+import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 
 const recaptchaRef = React.createRef<ReCAPTCHA>();
-// const isAuth = AuthGuard();
 
 const labels: { [index: string]: string } = {
   1: "極差",
@@ -76,6 +71,7 @@ type RatingFormProps = {
   hotel: Hotel;
 };
 const RatingForm: React.FC<RatingFormProps> = (props) => {
+  const navigate = useNavigate();
   const hotel = props.hotel;
   const isAuth = props.isAuth;
 
@@ -130,10 +126,13 @@ const RatingForm: React.FC<RatingFormProps> = (props) => {
       // Check the recaptchaValue and proceed with the handleSubmit if it's valid
       if (recaptchaValue) {
         handleSubmit();
+        Swal.fire("發表評論成功！");
       } else {
+        Swal.fire("recaptcha驗證失敗，請重試");
         setError("reCAPTCHA verification failed. Please try again.");
       }
     } else {
+      Swal.fire("recaptcha驗證失敗，請重試");
       setError("reCAPTCHA verification failed. Please try again.");
     }
   };
@@ -142,6 +141,8 @@ const RatingForm: React.FC<RatingFormProps> = (props) => {
     if (event) {
       event.preventDefault();
       setIsSubmitting(true);
+    } else {
+      Swal.fire("發表評論失敗！");
     }
 
     try {
@@ -222,217 +223,271 @@ const RatingForm: React.FC<RatingFormProps> = (props) => {
 
   if (!isAuth) {
     return (
-      <div className="k-my-8">
-        <div className="k-mb-4 k-font-weight-bold">
-          請先<a href="/login">登錄</a>後才能預約酒店
+      <>
+        <div className="btn-center">
+          <Button
+            color="warning"
+            size="lg"
+            onClick={function () {
+              navigate("/login");
+            }}
+            variant="soft"
+          >
+            請先登錄以發表評論
+          </Button>
         </div>
-      </div>
-    );
-  }
+        <CommentSectionBox
+          className={`comment-section ${
+            displayComments.length > 0 ? "commentSectionBackground" : ""
+          }`}
+          sx={{
+            backgroundColor:
+              displayComments.length > 0 ? "#f5f0f0" : "transparent",
+          }}
+        >
+          {displayComments.map((comment, index) => (
+            <Box
+              key={index}
+              className="comment"
+              sx={{
+                marginBottom: 2,
+                borderBottom:
+                  index !== displayComments.length - 1
+                    ? "1px solid #ccc"
+                    : "none",
+                paddingBottom: 2,
+              }}
+            >
+              <Typography variant="h5" gutterBottom>
+                {comment.nick_name}
+              </Typography>
+              <Box>
+                <Typography
+                  variant="body1"
+                  component="span"
+                  gutterBottom
+                ></Typography>
+                <Rating
+                  value={comment.rating}
+                  precision={0.5}
+                  readOnly
+                  icon={<FavoriteIcon style={{ color: "#ff6d75" }} />}
+                  emptyIcon={
+                    <FavoriteIcon style={{ opacity: 0.2, color: "#ff3d47" }} />
+                  }
+                  sx={{ marginLeft: 0 }}
+                />
+              </Box>
+              <Typography variant="body1" gutterBottom>
+                {comment.comment_text}
+              </Typography>
 
-  return (
-    <div className="rating-form">
-      <form onSubmit={handleRecaptchaVerification}>
-        <label htmlFor="name">
-          <div className="sub-title">暱稱🙆‍♀️</div>
-          {/* <input
+              <Typography variant="body2">
+                {formatDate(new Date(comment.createdAt))}
+              </Typography>
+            </Box>
+          ))}
+        </CommentSectionBox>
+      </>
+    );
+  } else {
+    return (
+      <div className="rating-form">
+        <form onSubmit={handleRecaptchaVerification}>
+          <label htmlFor="name">
+            <div className="sub-title">暱稱🙆‍♀️</div>
+            {/* <input
             type="text"
             id="name"
             value={name}
             onChange={(event) => setName(event.target.value)}
           /> */}
-          <Textarea
-            color="warning"
-            className="comment-input"
-            value={name}
-            onChange={(event) => setName(event.target.value)}
+            <Textarea
+              color="warning"
+              className="comment-input"
+              value={name}
+              onChange={(event) => setName(event.target.value)}
+              sx={{
+                width: {
+                  xs: "100%",
+                  sm: "130%",
+                  md: "170%",
+                  lg: "230%",
+                  xl: "270%",
+                },
+              }}
+              required
+            />
+          </label>
+          <div className="sub-title">評分💯</div>
+          <Box
             sx={{
-              width: {
-                xs: "100%",
-                sm: "130%",
-                md: "170%",
-                lg: "230%",
-                xl: "270%",
-              },
+              width: 200,
+              display: "flex",
+              justifyContent: "center",
             }}
-            required
-          />
-        </label>
-        <div className="sub-title">評分💯</div>
-        <Box
-          sx={{
-            width: 200,
-            display: "flex",
-            justifyContent: "center",
-          }}
-        >
-          <StyledRating
-            name="customized-color"
-            defaultValue={0}
-            size="large"
-            value={value}
-            precision={1}
-            icon={<FavoriteIcon fontSize="inherit" />}
-            getLabelText={getLabelText}
-            onChange={(event, newValue) => {
-              setValue(newValue);
-            }}
-            onChangeActive={(event, newHover) => {
-              setHover(newHover);
-            }}
-            emptyIcon={<FavoriteBorderIcon fontSize="inherit" />}
-          />
-          {value !== null && (
-            <Box sx={{ ml: 2 }}>{labels[hover !== -1 ? hover : value!]}</Box>
-          )}
-        </Box>
-        <label htmlFor="comment">
-          <div className="sub-title">留言🗣️</div>
-          <Textarea
-            color="warning"
-            required
-            className="comment-input"
-            value={comment}
-            onChange={(event) => setComment(event.target.value)}
-            minRows={2}
-            maxRows={4}
-            sx={{
-              width: {
-                xs: "100%",
-                sm: "130%",
-                md: "170%",
-                lg: "230%",
-                xl: "270%",
-              },
-              minHeight: { xs: "60px", sm: "80px" },
-            }}
-            startDecorator={
-              <Box sx={{ display: "flex", gap: { xs: 0.5, sm: 1 } }}>
-                <IconButton
-                  variant="outlined"
-                  color="neutral"
-                  onClick={addEmoji("👍")}
-                >
-                  👍
-                </IconButton>
-                <IconButton
-                  variant="outlined"
-                  color="neutral"
-                  onClick={addEmoji("😂")}
-                >
-                  😂
-                </IconButton>
-                <IconButton
-                  variant="outlined"
-                  color="neutral"
-                  onClick={addEmoji("😍")}
-                >
-                  😍
-                </IconButton>
-                <IconButton
-                  variant="outlined"
-                  color="neutral"
-                  onClick={addEmoji("☹️")}
-                >
-                  ☹️
-                </IconButton>
-                <IconButton
-                  variant="outlined"
-                  color="neutral"
-                  onClick={addEmoji("😓")}
-                >
-                  😓
-                </IconButton>
-              </Box>
-            }
-          />
-          {/* <textarea
+          >
+            <StyledRating
+              name="customized-color"
+              defaultValue={0}
+              size="large"
+              value={value}
+              precision={1}
+              icon={<FavoriteIcon fontSize="inherit" />}
+              getLabelText={getLabelText}
+              onChange={(event, newValue) => {
+                setValue(newValue);
+              }}
+              onChangeActive={(event, newHover) => {
+                setHover(newHover);
+              }}
+              emptyIcon={<FavoriteBorderIcon fontSize="inherit" />}
+            />
+            {value !== null && (
+              <Box sx={{ ml: 2 }}>{labels[hover !== -1 ? hover : value!]}</Box>
+            )}
+          </Box>
+          <label htmlFor="comment">
+            <div className="sub-title">留言🗣️</div>
+            <Textarea
+              color="warning"
+              required
+              className="comment-input"
+              value={comment}
+              onChange={(event) => setComment(event.target.value)}
+              minRows={2}
+              maxRows={4}
+              sx={{
+                width: {
+                  xs: "100%",
+                  sm: "130%",
+                  md: "170%",
+                  lg: "230%",
+                  xl: "270%",
+                },
+                minHeight: { xs: "60px", sm: "80px" },
+              }}
+              startDecorator={
+                <Box sx={{ display: "flex", gap: { xs: 0.5, sm: 1 } }}>
+                  <IconButton
+                    variant="outlined"
+                    color="neutral"
+                    onClick={addEmoji("👍")}
+                  >
+                    👍
+                  </IconButton>
+                  <IconButton
+                    variant="outlined"
+                    color="neutral"
+                    onClick={addEmoji("😂")}
+                  >
+                    😂
+                  </IconButton>
+                  <IconButton
+                    variant="outlined"
+                    color="neutral"
+                    onClick={addEmoji("😍")}
+                  >
+                    😍
+                  </IconButton>
+                  <IconButton
+                    variant="outlined"
+                    color="neutral"
+                    onClick={addEmoji("☹️")}
+                  >
+                    ☹️
+                  </IconButton>
+                  <IconButton
+                    variant="outlined"
+                    color="neutral"
+                    onClick={addEmoji("😓")}
+                  >
+                    😓
+                  </IconButton>
+                </Box>
+              }
+            />
+            {/* <textarea
             id="comment"
             rows={5}
             cols={40}
             value={comment}
             onChange={(event) => setComment(event.target.value)}
           /> */}
-        </label>
-        <ReCAPTCHA
-          ref={recaptchaRef}
-          sitekey="6LdF9owmAAAAAIil4OgvbkKJQwW-0yY5UAr-PcVE"
-          onChange={handleChange}
-          // asyncScriptOnLoad={asyncScriptOnLoad}
-        />
-        <div>
-          {/* <button type="submit">Submit</button> */}
-          <Button
-            type="submit"
-            disabled={isSubmitting}
-            color="warning"
-            size="md"
-          >
-            提交
-          </Button>
-        </div>
-      </form>
-      {apiError && (
-        <Alert severity="warning">
-          <AlertTitle>注意</AlertTitle>
-          <strong>請先登入以發佈評論！</strong>
-        </Alert>
-      )}
+          </label>
+          <ReCAPTCHA
+            ref={recaptchaRef}
+            sitekey="6LdF9owmAAAAAIil4OgvbkKJQwW-0yY5UAr-PcVE"
+            onChange={handleChange}
+            // asyncScriptOnLoad={asyncScriptOnLoad}
+          />
+          <div>
+            {/* <button type="submit">Submit</button> */}
+            <Button
+              type="submit"
+              disabled={isSubmitting}
+              color="warning"
+              size="md"
+            >
+              提交
+            </Button>
+          </div>
+        </form>
+        <CommentSectionBox
+          className={`comment-section ${
+            displayComments.length > 0 ? "commentSectionBackground" : ""
+          }`}
+          sx={{
+            backgroundColor:
+              displayComments.length > 0 ? "#f5f0f0" : "transparent",
+          }}
+        >
+          {displayComments.map((comment, index) => (
+            <Box
+              key={index}
+              className="comment"
+              sx={{
+                marginBottom: 2,
+                borderBottom:
+                  index !== displayComments.length - 1
+                    ? "1px solid #ccc"
+                    : "none",
+                paddingBottom: 2,
+              }}
+            >
+              <Typography variant="h5" gutterBottom>
+                {comment.nick_name}
+              </Typography>
+              <Box>
+                <Typography
+                  variant="body1"
+                  component="span"
+                  gutterBottom
+                ></Typography>
+                <Rating
+                  value={comment.rating}
+                  precision={0.5}
+                  readOnly
+                  icon={<FavoriteIcon style={{ color: "#ff6d75" }} />}
+                  emptyIcon={
+                    <FavoriteIcon style={{ opacity: 0.2, color: "#ff3d47" }} />
+                  }
+                  sx={{ marginLeft: 0 }}
+                />
+              </Box>
+              <Typography variant="body1" gutterBottom>
+                {comment.comment_text}
+              </Typography>
 
-      <CommentSectionBox
-        className={`comment-section ${
-          displayComments.length > 0 ? "commentSectionBackground" : ""
-        }`}
-        sx={{
-          backgroundColor:
-            displayComments.length > 0 ? "#f5f0f0" : "transparent",
-        }}
-      >
-        {displayComments.map((comment, index) => (
-          <Box
-            key={index}
-            className="comment"
-            sx={{
-              marginBottom: 2,
-              borderBottom:
-                index !== displayComments.length - 1
-                  ? "1px solid #ccc"
-                  : "none",
-              paddingBottom: 2,
-            }}
-          >
-            <Typography variant="h5" gutterBottom>
-              {comment.nick_name}
-            </Typography>
-            <Box>
-              <Typography
-                variant="body1"
-                component="span"
-                gutterBottom
-              ></Typography>
-              <Rating
-                value={comment.rating}
-                precision={0.5}
-                readOnly
-                icon={<FavoriteIcon style={{ color: "#ff6d75" }} />}
-                emptyIcon={
-                  <FavoriteIcon style={{ opacity: 0.2, color: "#ff3d47" }} />
-                }
-                sx={{ marginLeft: 0 }}
-              />
+              <Typography variant="body2">
+                {formatDate(new Date(comment.createdAt))}
+              </Typography>
             </Box>
-            <Typography variant="body1" gutterBottom>
-              {comment.comment_text}
-            </Typography>
-
-            <Typography variant="body2">
-              {formatDate(new Date(comment.createdAt))}
-            </Typography>
-          </Box>
-        ))}
-      </CommentSectionBox>
-    </div>
-  );
+          ))}
+        </CommentSectionBox>
+      </div>
+    );
+  }
 };
 
 export default RatingForm;

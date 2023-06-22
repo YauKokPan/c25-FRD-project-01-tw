@@ -5,6 +5,7 @@ import Swal from "sweetalert2";
 import { getUserId } from "../auth/authAPI";
 import { UserData } from "../bookings/BookingResult";
 import "./Payment.css";
+import Button from "@mui/joy/Button";
 
 export default function Payment() {
   const [bookingInfo, setBookingInfo] = useState<UserData | null>(null);
@@ -89,6 +90,23 @@ export default function Payment() {
               }}
             />
           </PayPalScriptProvider>
+          <Button
+            color="warning"
+            onClick={function () {
+              Swal.fire({
+                title: "預訂成功！",
+                text: "謝謝使用本平台預訂🤗",
+                timer: 3000,
+              });
+              setTimeout(() => {
+                window.location.replace("/");
+              }, 1000);
+            }}
+            size="lg"
+            variant="solid"
+          >
+            到埗後直接付款給酒店
+          </Button>
         </div>
       ) : (
         <p>No bookings available</p>
