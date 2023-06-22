@@ -41,18 +41,18 @@ const BookingResult: React.FC<{ userID: number }> = ({ userID }) => {
 
   const isAdmin = getIsAdmin();
   const userId = Number(getUserId());
-  // const canCancelBooking = (startTime: Date): boolean => {
-  //   const now = new Date();
-  //   const twoDaysBeforeStartTime = new Date(startTime);
-  //   twoDaysBeforeStartTime.setDate(twoDaysBeforeStartTime.getDate() - 2);
+  const canCancelBooking = (startTime: Date): boolean => {
+    const now = new Date();
+    const twoDaysBeforeStartTime = new Date(startTime);
+    twoDaysBeforeStartTime.setDate(twoDaysBeforeStartTime.getDate() - 2);
 
-  //   return now <= twoDaysBeforeStartTime;
-  // };
+    return now <= twoDaysBeforeStartTime;
+  };
 
-  // const isBookingPast = (endTime: Date): boolean => {
-  //   const now = new Date();
-  //   return now > endTime;
-  // };
+  const isBookingPast = (endTime: Date): boolean => {
+    const now = new Date();
+    return now > endTime;
+  };
 
   const sendEmail = (bookingData: any) => {
     emailjs
@@ -80,14 +80,14 @@ const BookingResult: React.FC<{ userID: number }> = ({ userID }) => {
   };
 
   const handleDelete = async (bookingId: number, startTime: Date) => {
-    // if (!canCancelBooking(startTime)) {
-    //   Swal.fire(
-    //     "無法刪除！",
-    //     "距離預約開始時間只剩兩天或更短，無法取消預約。",
-    //     "error"
-    //   );
-    //   return;
-    // }
+    if (!canCancelBooking(startTime)) {
+      Swal.fire(
+        "無法刪除！",
+        "距離預約開始時間只剩兩天或更短，無法取消預約。",
+        "error"
+      );
+      return;
+    }
     const result = await Swal.fire({
       title: "確定要刪除這個預約嗎？",
       text: "請注意：刪除了就無法回復，客服將會聯絡。",
@@ -114,7 +114,7 @@ const BookingResult: React.FC<{ userID: number }> = ({ userID }) => {
       phone: cancelledBookingData.booking_phone,
       start_time: cancelledBookingData.start_time,
       end_time: cancelledBookingData.end_time,
-      total_price: cancelledBookingData.total_price,
+      total_price: cancelledBookingData.total_prices,
     };
     console.log(bookingData);
     sendEmail(bookingData);
@@ -171,7 +171,7 @@ const BookingResult: React.FC<{ userID: number }> = ({ userID }) => {
                   onClick={() =>
                     handleDelete(booking.id, new Date(booking.start_time))
                   }
-                  // disabled={isBookingPast(new Date(booking.end_time))}
+                  disabled={isBookingPast(new Date(booking.end_time))}
                 >
                   刪除
                 </button>
