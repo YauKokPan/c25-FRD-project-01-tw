@@ -179,7 +179,7 @@ const main = async () => {
   }
 
   // populate bookings
-  const numberOfBookings = 1000;
+  const numberOfBookings = 500;
   const numberOfHotels = 147;
 
   for (let i = 0; i < numberOfBookings; i++) {
