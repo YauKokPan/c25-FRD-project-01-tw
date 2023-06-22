@@ -3,14 +3,14 @@
   justify-content: space-around;
   align-items: center;
   background-color: #f8f9fa;
-  padding: 10px 0;
+  padding: 11px 0;
   position: fixed;
   bottom: 0;
   left: 0;
   right: 0;
   margin-bottom: 0;
   border-top: 1px solid #dee2e6;
-  z-index: 1001;
+  z-index: 1002;
 }
 
 .footer-bar a {
@@ -19,12 +19,41 @@
 }
 
 .footer-bar a.active-link {
-  color: #4e4e4e;
+  color: #242424;
   font-size: 1.2rem;
 }
 
-.icon-size {
-  font-size: 2rem;
+.footer-bar a.active-link .icon-size {
+  font-size: 2.1rem;
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0.2;
+  }
+}
+
+@keyframes fadeOut {
+  0% {
+    opacity: 0.2;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+/* Apply the animations to the .active-link on hover */
+.footer-bar a.active-link:hover {
+  content: "";
+  opacity: 0;
+  animation: fadeOut 0.8s forwards;
+}
+
+.footer-bar a.active-link:hover::after {
+  animation: fadeIn 0.6s forwards;
 }
 
 @media (max-width: 767px) {
