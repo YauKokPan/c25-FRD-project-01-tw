@@ -60,12 +60,12 @@ const BookingResult: React.FC<{ userID: number }> = ({ userID }) => {
         "service_0oq4smr",
         "template_oqws9wv",
         {
-          hotel_name: bookingData.hotelname,
-          user_name: bookingData.username,
-          start_time: bookingData.startTime,
-          end_time: bookingData.endTime,
-          total_price: bookingData.totalPrice,
-          booking_email: bookingData.email,
+          hotel_name: bookingData.hotel_name,
+          user_name: bookingData.user_name,
+          start_time: bookingData.start_time,
+          end_time: bookingData.end_time,
+          total_price: bookingData.total_price,
+          booking_email: bookingData.booking_email,
         },
         "ziPj-ay71jNqfVPJz"
       )
