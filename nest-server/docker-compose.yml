@@ -15,7 +15,7 @@ services:
     build:
       context: ./
       dockerfile: ./Dockerfile
-    image: 'paninsula/sweethour-server:latest'
+    image: 'skchar/api-sweethour:latest'
     ports:
       - '8080:8070'
 
