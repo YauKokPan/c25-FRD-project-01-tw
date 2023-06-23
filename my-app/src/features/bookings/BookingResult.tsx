@@ -43,10 +43,10 @@ const BookingResult: React.FC<{ userID: number }> = ({ userID }) => {
   // const userId = Number(getUserId());
   const canCancelBooking = (startTime: Date): boolean => {
     const now = new Date();
-    const twoDaysBeforeStartTime = new Date(startTime);
-    twoDaysBeforeStartTime.setDate(twoDaysBeforeStartTime.getDate() - 2);
+    const twoHoursBeforeStartTime = new Date(startTime);
+    twoHoursBeforeStartTime.setHours(twoHoursBeforeStartTime.getHours() - 2);
 
-    return now <= twoDaysBeforeStartTime;
+    return now <= twoHoursBeforeStartTime;
   };
 
   const isBookingPast = (endTime: Date): boolean => {
@@ -81,7 +81,10 @@ const BookingResult: React.FC<{ userID: number }> = ({ userID }) => {
 
   const handleDelete = async (bookingId: number, startTime: Date) => {
     if (!canCancelBooking(startTime)) {
-      Swal.fire("無法取消！", "距離預約開始時間只剩兩天或更短，無法取消預約。");
+      Swal.fire(
+        "無法取消！",
+        "距離預約開始時間只剩兩小時或更短，無法取消預約。"
+      );
       return;
     }
     const result = await Swal.fire({
