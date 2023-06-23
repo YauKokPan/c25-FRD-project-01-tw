@@ -25,14 +25,26 @@ export class HotelService {
             comment_key: true,
           },
         },
+        booking_key: true,
       },
     });
 
+    const occupancyRates = allHotels.map((hotel) => {
+      const bookedRooms = hotel.booking_key.length;
+      const totalRooms = hotel.total_rooms;
+      const occupancyRate = (bookedRooms / totalRooms) * 100;
+
+      return {
+        occupancyRate,
+      };
+    });
+
     // Map the results to include totalComments and averageRating in the return value
-    const hotelsWithTotalComments = allHotels.map((hotel) => ({
+    const hotelsWithTotalComments = allHotels.map((hotel, index) => ({
       ...hotel,
       totalRating: hotel._count.comment_key,
       averageRatingArray: hotel.comment_key,
+      occupancyRates: occupancyRates[index]?.occupancyRate,
     }));
 
     return hotelsWithTotalComments;

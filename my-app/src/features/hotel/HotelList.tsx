@@ -38,6 +38,7 @@ import SearchBox from "../searchBox/SearchBox";
 import { useMutation } from "@tanstack/react-query";
 import { queryClient } from "../../query/client";
 import Swal from "sweetalert2";
+import Badge from "react-bootstrap/Badge";
 
 export default function HotelList() {
   const hotelsPerPage = 9; // Change this to adjust the number of hotels per page
@@ -220,6 +221,12 @@ export default function HotelList() {
       <SearchBox />
       <div className="hotel-row">
         {currentHotels.map((hotel) => {
+          const occupancyRate = parseFloat(
+            hotel.occupancyRates as unknown as string
+          );
+          const displayRate = !isNaN(occupancyRate)
+            ? `${occupancyRate.toFixed(1)}`
+            : "N/A";
           return (
             // Add the key prop to the Col component
             <Col md={4} className="hotel-card" key={hotel.id}>
@@ -251,7 +258,14 @@ export default function HotelList() {
                       </IconButton>
                     )}
                   </div>
-                  <Card.Text>地址 : {hotel.address}</Card.Text>{" "}
+                  <h5>
+                    <Badge bg="secondary">{hotel.totalRating}則評價</Badge>
+                  </h5>
+
+                  <h5>
+                    <Badge bg="info">入住率：{displayRate}%</Badge>
+                  </h5>
+                  <Card.Text>地址 : {hotel.address}</Card.Text>
                   <Card.Text>電話 : {hotel.phone}</Card.Text>
                   {buttonState === "visible" && (
                     <Stack direction="row" spacing={1}>

@@ -323,12 +323,6 @@ const BookingSlot: React.FC<{ hotel: Hotel }> = (props) => {
         </>
       )}
 
-      {/* <div>房間總數: {hotel.total_rooms - bookedRooms} </div>
-      <div>
-        現時入住率:{" "}
-        {occupancyRate !== null ? Math.round(occupancyRate) : "Loading..."}%
-      </div> */}
-
       <Grid container spacing={1}>
         <Grid item xs={12}>
           可訂房間數目: {hotel.total_rooms - bookedRooms}

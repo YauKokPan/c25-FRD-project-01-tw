@@ -20,6 +20,8 @@ export interface Hotel {
   total_rooms: number;
   hourly_rate: number;
   is_deleted: boolean;
+  totalRating: number;
+  occupancyRates: number;
 }
 export interface CreateHotel {
   name: string;

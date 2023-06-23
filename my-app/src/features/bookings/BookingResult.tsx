@@ -81,7 +81,10 @@ const BookingResult: React.FC<{ userID: number }> = ({ userID }) => {
 
   const handleDelete = async (bookingId: number, startTime: Date) => {
     if (!canCancelBooking(startTime)) {
-      Swal.fire("無法取消！", "距離預約開始時間只剩兩天或更短，無法取消預約。");
+      Swal.fire(
+        "無法取消！",
+        "距離預約開始時間只剩兩小時或更短，無法取消預約。"
+      );
       return;
     }
     const result = await Swal.fire({
