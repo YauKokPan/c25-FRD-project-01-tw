@@ -15,6 +15,13 @@ import {
 } from "@material-ui/core";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
+import { makeStyles } from "@material-ui/core/styles";
+
+const useStyles = makeStyles((theme) => ({
+  adminUploadBtn: {
+    marginBottom: theme.spacing(0.85),
+  },
+}));
 
 const hongKongIslandLocations = [
   "中環",
@@ -58,6 +65,7 @@ interface FormState {
 }
 
 const HotelForm = () => {
+  const classes = useStyles();
   const navigate = useNavigate();
   const { register, handleSubmit, watch, setValue, control } =
     useForm<FormState>({
@@ -181,7 +189,11 @@ const HotelForm = () => {
             onChange={(event) => handleFileChange(event, "profile_pic")}
           />
           <label htmlFor="raised-button-file">
-            <Button variant="contained" component="span">
+            <Button
+              variant="contained"
+              component="span"
+              className={classes.adminUploadBtn}
+            >
               上傳酒店封面圖片
             </Button>
           </label>
@@ -201,7 +213,11 @@ const HotelForm = () => {
             defaultValue={[]}
             render={({ field }) => (
               <label htmlFor="raised-button-gallery">
-                <Button variant="contained" component="span">
+                <Button
+                  variant="contained"
+                  component="span"
+                  className={classes.adminUploadBtn}
+                >
                   上傳酒店圖庫
                 </Button>
               </label>

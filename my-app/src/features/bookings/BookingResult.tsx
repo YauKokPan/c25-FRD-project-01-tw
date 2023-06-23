@@ -43,10 +43,10 @@ const BookingResult: React.FC<{ userID: number }> = ({ userID }) => {
   // const userId = Number(getUserId());
   const canCancelBooking = (startTime: Date): boolean => {
     const now = new Date();
-    const twoDaysBeforeStartTime = new Date(startTime);
-    twoDaysBeforeStartTime.setDate(twoDaysBeforeStartTime.getDate() - 2);
+    const twoHoursBeforeStartTime = new Date(startTime);
+    twoHoursBeforeStartTime.setHours(twoHoursBeforeStartTime.getHours() - 2);
 
-    return now <= twoDaysBeforeStartTime;
+    return now <= twoHoursBeforeStartTime;
   };
 
   const isBookingPast = (endTime: Date): boolean => {
