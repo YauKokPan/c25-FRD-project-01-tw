@@ -1,17 +1,17 @@
 {
   "files": {
-    "main.css": "https://sweethour.me/static/css/main.8cf40004.css",
-    "main.js": "https://sweethour.me/static/js/main.9dcf9a61.js",
+    "main.css": "https://sweethour.me/static/css/main.52aec2b0.css",
+    "main.js": "https://sweethour.me/static/js/main.cd6c2c0a.js",
     "static/media/contactus-background.jpg": "https://sweethour.me/static/media/contactus-background.b168c52bedcff4ee4588.jpg",
     "static/media/heart-fabric.jpg": "https://sweethour.me/static/media/heart-fabric.6d967f1b8f948b7f34ee.jpg",
     "static/media/hot-choice.jpg": "https://sweethour.me/static/media/hot-choice.0ed5c6a03eaeaae7e69c.jpg",
     "static/media/background-img.jpg": "https://sweethour.me/static/media/background-img.a30cc304516f1a8cee35.jpg",
     "index.html": "https://sweethour.me/index.html",
-    "main.8cf40004.css.map": "https://sweethour.me/static/css/main.8cf40004.css.map",
-    "main.9dcf9a61.js.map": "https://sweethour.me/static/js/main.9dcf9a61.js.map"
+    "main.52aec2b0.css.map": "https://sweethour.me/static/css/main.52aec2b0.css.map",
+    "main.cd6c2c0a.js.map": "https://sweethour.me/static/js/main.cd6c2c0a.js.map"
   },
   "entrypoints": [
-    "static/css/main.8cf40004.css",
-    "static/js/main.9dcf9a61.js"
+    "static/css/main.52aec2b0.css",
+    "static/js/main.cd6c2c0a.js"
   ]
 }

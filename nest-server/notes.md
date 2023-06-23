@@ -17,7 +17,9 @@ docker buildx build --platform linux/amd64 --push -t paninsula/sweethour-server:
 
 aws ec2 (ubuntu)
 
-0. ssh
+```
+0. ssh c25-capstone
+```
 
 1. stop nest server
 
