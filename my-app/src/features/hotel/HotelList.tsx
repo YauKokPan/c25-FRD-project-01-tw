@@ -27,6 +27,12 @@ import {
   DialogActions,
   TextField,
   Button,
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Select,
+  SelectChangeEvent,
+  Box,
 } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import AddCircleRoundedIcon from "@mui/icons-material/AddCircleRounded";
@@ -124,6 +130,73 @@ export default function HotelList() {
     }
   };
 
+  const [selectedFilter, setSelectedFilter] = useState<string>("");
+
+  function handleFilterChange(event: SelectChangeEvent<string>) {
+    setSelectedFilter(event.target.value);
+  }
+
+  function sortHotels(a: any, b: any) {
+    const parseAverageRating = (hotel: any) => {
+      const sumOfRatings = hotel.averageRatingArray.reduce(
+        (accumulator: number, currentRatingObj: { rating: number }) =>
+          accumulator + currentRatingObj.rating,
+        0
+      );
+      const totalRatings = hotel.averageRatingArray.length;
+      const averageRating = sumOfRatings / totalRatings;
+      return parseFloat(averageRating as unknown as string);
+    };
+
+    const parseOccupancyRate = (hotel: any) =>
+      parseFloat(hotel.occupancyRates as unknown as string);
+
+    switch (selectedFilter) {
+      case "averageRatingDescend":
+        const aAverageRating = parseAverageRating(a);
+        const bAverageRating = parseAverageRating(b);
+
+        if (isNaN(aAverageRating) && isNaN(bAverageRating)) {
+          return 0;
+        }
+
+        if (isNaN(aAverageRating)) {
+          return 1;
+        }
+
+        if (isNaN(bAverageRating)) {
+          return -1;
+        }
+
+        return bAverageRating - aAverageRating;
+      case "averageRatingAscend":
+        const cAverageRating = parseAverageRating(a);
+        const dAverageRating = parseAverageRating(b);
+
+        if (isNaN(cAverageRating) && isNaN(dAverageRating)) {
+          return 0;
+        }
+
+        if (isNaN(cAverageRating)) {
+          return 1;
+        }
+
+        if (isNaN(dAverageRating)) {
+          return -1;
+        }
+
+        return cAverageRating - dAverageRating;
+      case "totalRatings":
+        return b.averageRatingArray.length - a.averageRatingArray.length;
+      case "occupancyRateAscend":
+        return parseOccupancyRate(a) - parseOccupancyRate(b);
+      case "occupancyRateDescend":
+        return parseOccupancyRate(b) - parseOccupancyRate(a);
+      default:
+        return 0;
+    }
+  }
+
   const is_auth = AuthGuard();
 
   const navigate = useNavigate();
@@ -138,6 +211,7 @@ export default function HotelList() {
   // Slice the hotelInfo array to get the hotels for the current page
   const currentHotels = sortedHotels
     .filter((hotelInfoItem) => hotelInfoItem.is_deleted === false)
+    .sort(sortHotels)
     .slice(firstIndex, lastIndex);
 
   // Calculate the total number of pages based on the number of hotels and hotelsPerPage
@@ -218,15 +292,68 @@ export default function HotelList() {
           </IconButton>
         )}
       </div>
+      <Box
+        sx={{
+          display: "flex",
+          alignItems: "center",
+          flexDirection: "column",
+          minWidth: 200,
+        }}
+      >
+        <FormControl fullWidth sx={{ width: "50%" }} variant="outlined">
+          <InputLabel htmlFor="filter">排序方式</InputLabel>
+          <Select
+            value={selectedFilter}
+            onChange={handleFilterChange}
+            label="排序方式"
+            inputProps={{
+              id: "filter",
+            }}
+          >
+            <MenuItem value="">
+              <em>預設</em>
+            </MenuItem>
+            <MenuItem value="averageRatingDescend">
+              平均客戶評分（高至低）
+            </MenuItem>
+            <MenuItem value="averageRatingAscend">
+              平均客戶評分（低至高）
+            </MenuItem>
+            <MenuItem value="totalRatings">評價數量（高至低）</MenuItem>
+            <MenuItem value="occupancyRateAscend">入住率（低至高）</MenuItem>
+            <MenuItem value="occupancyRateDescend">入住率（高至低）</MenuItem>
+          </Select>
+        </FormControl>
+      </Box>
       <SearchBox />
       <div className="hotel-row">
-        {currentHotels.map((hotel) => {
+        {currentHotels.sort(sortHotels).map((hotel) => {
+          const averageRatingArray = hotel.averageRatingArray;
+          const totalRatings = averageRatingArray.length;
+
+          const sumOfRatings = averageRatingArray.reduce(
+            (accumulator, currentRatingObj) => {
+              return accumulator + currentRatingObj.rating;
+            },
+            0
+          );
+
+          const averageRating = sumOfRatings / totalRatings;
+          const parsedAverageRating = parseFloat(
+            averageRating as unknown as string
+          );
+
+          const displayedAverageRating = !isNaN(parsedAverageRating)
+            ? `${parsedAverageRating.toFixed(1)}/5`
+            : null;
+
           const occupancyRate = parseFloat(
             hotel.occupancyRates as unknown as string
           );
           const displayRate = !isNaN(occupancyRate)
             ? `${occupancyRate.toFixed(1)}`
-            : "N/A";
+            : null;
+
           return (
             // Add the key prop to the Col component
             <Col md={4} className="hotel-card" key={hotel.id}>
@@ -258,9 +385,16 @@ export default function HotelList() {
                       </IconButton>
                     )}
                   </div>
-                  <h5>
-                    <Badge bg="secondary">{hotel.totalRating}則評價</Badge>
-                  </h5>
+
+                  <div className="rating-center">
+                    <h5>
+                      <Badge bg="success">{displayedAverageRating}</Badge>
+                    </h5>
+
+                    <h5>
+                      <Badge bg="secondary">{totalRatings}則評價</Badge>
+                    </h5>
+                  </div>
 
                   <h5>
                     <Badge bg="info">入住率：{displayRate}%</Badge>

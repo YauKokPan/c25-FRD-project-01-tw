@@ -22,6 +22,7 @@ export interface Hotel {
   is_deleted: boolean;
   totalRating: number;
   occupancyRates: number;
+  averageRatingArray: [{ rating: number }];
 }
 export interface CreateHotel {
   name: string;

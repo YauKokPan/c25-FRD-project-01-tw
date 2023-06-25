@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { UseHotelInfo, editHotelAPI, softDeleteHotel } from "../hotel/hotelAPI";
-import { Col, Card } from "react-bootstrap";
+import { Col, Card, Badge } from "react-bootstrap";
 import "./SearchPage.css";
 import { Hotel } from "../hotel/hotelAPI";
 import SearchBox from "../searchBox/SearchBox";
@@ -159,77 +159,120 @@ export default function SearchPage() {
         <>
           <h3>共有{filteredHotels.length}筆紀錄</h3>
           <div className="search-results">
-            {filteredHotels.map((hotel) => (
-              <Col md={4} className="hotel-card" key={hotel.id}>
-                <Card>
-                  <Link to={"/hotel-detail/" + hotel.id}>
-                    <Card.Img
-                      variant="top"
-                      src={hotel.profile_pic}
-                      className="hotel-img"
-                    />
-                  </Link>
+            {filteredHotels.map((hotel) => {
+              const averageRatingArray = hotel.averageRatingArray;
+              const totalRatings = averageRatingArray.length;
 
-                  <Card.Body>
-                    <div className="fav-container">
-                      <Card.Title>{hotel.name}</Card.Title>
-                      {is_auth && (
-                        <IconButton
-                          aria-label="fav"
-                          onClick={() => toggleFavorite(hotel)}
-                          style={{
-                            color: userFavorites.some(
-                              (fav) => fav.id === hotel.id
-                            )
-                              ? "red"
-                              : "inherit",
-                          }}
-                        >
-                          <FavoriteRoundedIcon />
-                        </IconButton>
+              const sumOfRatings = averageRatingArray.reduce(
+                (accumulator, currentRatingObj) => {
+                  return accumulator + currentRatingObj.rating;
+                },
+                0
+              );
+
+              const averageRating = sumOfRatings / totalRatings;
+              const parsedAverageRating = parseFloat(
+                averageRating as unknown as string
+              );
+
+              const displayedAverageRating = !isNaN(parsedAverageRating)
+                ? `${parsedAverageRating.toFixed(1)}/5`
+                : null;
+
+              const occupancyRate = parseFloat(
+                hotel.occupancyRates as unknown as string
+              );
+              const displayRate = !isNaN(occupancyRate)
+                ? `${occupancyRate.toFixed(1)}`
+                : null;
+
+              return (
+                <Col md={4} className="hotel-card" key={hotel.id}>
+                  <Card>
+                    <Link to={"/hotel-detail/" + hotel.id}>
+                      <Card.Img
+                        variant="top"
+                        src={hotel.profile_pic}
+                        className="hotel-img"
+                      />
+                    </Link>
+
+                    <Card.Body>
+                      <div className="fav-container">
+                        <Card.Title>{hotel.name}</Card.Title>
+                        {is_auth && (
+                          <IconButton
+                            aria-label="fav"
+                            onClick={() => toggleFavorite(hotel)}
+                            style={{
+                              color: userFavorites.some(
+                                (fav) => fav.id === hotel.id
+                              )
+                                ? "#FF6D75"
+                                : "inherit",
+                            }}
+                          >
+                            <FavoriteRoundedIcon />
+                          </IconButton>
+                        )}
+                      </div>
+                      <div className="rating-center">
+                        <h5>
+                          <Badge bg="success">{displayedAverageRating}</Badge>
+                        </h5>
+
+                        <h5>
+                          <Badge bg="secondary">
+                            {hotel.totalRating}則評價
+                          </Badge>
+                        </h5>
+                      </div>
+
+                      <h5>
+                        <Badge bg="info">入住率：{displayRate}%</Badge>
+                      </h5>
+                      <Card.Text>地址 : {hotel.address}</Card.Text>
+                      <Card.Text>電話 : {hotel.phone}</Card.Text>
+
+                      {buttonState === "visible" && (
+                        <Stack direction="row" spacing={1}>
+                          <IconButton
+                            aria-label="edit"
+                            onClick={() => openEditDialog(hotel)}
+                          >
+                            <EditRoundedIcon />
+                          </IconButton>
+                          <IconButton
+                            aria-label="delete"
+                            onClick={() => {
+                              Swal.fire({
+                                title: "確認刪除？",
+                                showDenyButton: true,
+                                showCancelButton: true,
+                                confirmButtonText: "是",
+                                denyButtonText: "否",
+                              }).then((result) => {
+                                if (result.isConfirmed) {
+                                  onSoftDeleteHotel.mutate({
+                                    id: hotel.id,
+                                    is_deleted: true,
+                                  });
+                                  Swal.fire("已刪除");
+                                } else if (result.isDenied) {
+                                  Swal.fire("已取消");
+                                }
+                              });
+                            }}
+                          >
+                            <DeleteIcon />
+                          </IconButton>
+                        </Stack>
                       )}
-                    </div>
-                    <Card.Text>地址 : {hotel.address}</Card.Text>
-                    <Card.Text>電話 : {hotel.phone}</Card.Text>
-
-                    {buttonState === "visible" && (
-                      <Stack direction="row" spacing={1}>
-                        <IconButton
-                          aria-label="edit"
-                          onClick={() => openEditDialog(hotel)}
-                        >
-                          <EditRoundedIcon />
-                        </IconButton>
-                        <IconButton
-                          aria-label="delete"
-                          onClick={() => {
-                            Swal.fire({
-                              title: "確認刪除？",
-                              showDenyButton: true,
-                              showCancelButton: true,
-                              confirmButtonText: "是",
-                              denyButtonText: "否",
-                            }).then((result) => {
-                              if (result.isConfirmed) {
-                                onSoftDeleteHotel.mutate({
-                                  id: hotel.id,
-                                  is_deleted: true,
-                                });
-                                Swal.fire("已刪除");
-                              } else if (result.isDenied) {
-                                Swal.fire("已取消");
-                              }
-                            });
-                          }}
-                        >
-                          <DeleteIcon />
-                        </IconButton>
-                      </Stack>
-                    )}
-                  </Card.Body>
-                </Card>
-              </Col>
-            ))}
+                    </Card.Body>
+                  </Card>
+                </Col>
+              );
+            })}
           </div>
         </>
       ) : (

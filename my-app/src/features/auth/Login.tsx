@@ -9,6 +9,9 @@ import { login } from "./authSlice";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import { Checkbox, FormControlLabel } from "@mui/material";
+import ReCAPTCHA from "react-google-recaptcha";
+
+const recaptchaRef = React.createRef<ReCAPTCHA>();
 
 export default function Login() {
   const getRememberedEmail = () => {
@@ -22,11 +25,54 @@ export default function Login() {
   const [password, setPassword] = useState("");
   const [rememberMe, setRememberMe] = useState(false);
 
+  const [googleValue, setGoogleValue] = React.useState<string | null>("");
+  const [captchaValue, captchaSetValue] = React.useState<string | null>(null);
+  const [expired, setExpired] = React.useState<string | null>(null);
+  const [isSubmitting, setIsSubmitting] = React.useState(false);
+  const [error, setError] = React.useState<string | null>(null);
+
+  // google reCAPTCHA
+  const handleGoogleChange = (googleValue: string | null) => {
+    console.log("Captcha value:", captchaValue);
+    setGoogleValue(googleValue);
+
+    // if value is null, recaptcha expired
+    if (googleValue === null) {
+      setExpired("true");
+    }
+  };
+
+  const handleRecaptchaVerification = async (
+    event: React.FormEvent<HTMLFormElement>
+  ) => {
+    event.preventDefault();
+    if (recaptchaRef.current) {
+      const recaptchaValue = recaptchaRef.current.getValue();
+
+      // Check the recaptchaValue and proceed with the handleSubmit if it's valid
+      if (recaptchaValue) {
+        handleSubmit();
+        Swal.fire("登入成功！");
+      } else {
+        Swal.fire("recaptcha驗證失敗，請重試");
+        setError("reCAPTCHA verification failed. Please try again.");
+      }
+    } else {
+      Swal.fire("recaptcha驗證失敗，請重試");
+      setError("reCAPTCHA verification failed. Please try again.");
+    }
+  };
+
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
 
-  const handleSubmit = async (e: FormEvent) => {
-    e.preventDefault();
+  const handleSubmit = async (e?: FormEvent) => {
+    if (e) {
+      e.preventDefault();
+      setIsSubmitting(true);
+    } else {
+      Swal.fire("登入失敗！");
+    }
 
     const userIdNum = Number(getUserId());
     const adminCheck = getIsAdmin();
@@ -82,7 +128,7 @@ export default function Login() {
   return (
     <div className="wrapper">
       <div className="login-form">
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleRecaptchaVerification}>
           <Title mainTitle="💁‍♀️登入" />
           <div className="mb-3">
             <label>電郵</label>
@@ -104,6 +150,7 @@ export default function Login() {
               onChange={handlePasswordChange}
             />
           </div>
+
           <div className="mb-3">
             <FormControlLabel
               control={
@@ -116,8 +163,20 @@ export default function Login() {
               label="記住登入電郵"
             />
           </div>
+
+          <ReCAPTCHA
+            ref={recaptchaRef}
+            sitekey="6LdF9owmAAAAAIil4OgvbkKJQwW-0yY5UAr-PcVE"
+            onChange={handleGoogleChange}
+            className="responsive-recaptcha"
+          />
+
           <div className="d-grid">
-            <button type="submit" className="btn btn-primary">
+            <button
+              type="submit"
+              disabled={isSubmitting}
+              className="btn btn-primary"
+            >
               登入
             </button>
           </div>

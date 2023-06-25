@@ -110,8 +110,8 @@ const BookingResult: React.FC<{ userID: number }> = ({ userID }) => {
       user_name: cancelledBookingData.user_booking_key?.name ?? "Unknown user",
       booking_email: cancelledBookingData.booking_email,
       phone: cancelledBookingData.booking_phone,
-      start_time: cancelledBookingData.start_time,
-      end_time: cancelledBookingData.end_time,
+      start_time: new Date(cancelledBookingData.start_time).toLocaleString(),
+      end_time: new Date(cancelledBookingData.end_time).toLocaleString(),
       total_price: cancelledBookingData.total_prices,
     };
     console.log(bookingData);

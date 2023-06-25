@@ -137,7 +137,7 @@ const BookingSlot: React.FC<{ hotel: Hotel }> = (props) => {
       const startSlot = selectedSlots[0];
       const endSlot = selectedSlots[selectedSlots.length - 1];
       const startHour = Number(startSlot.slot.split(":")[0]);
-      const endHour = Number(endSlot.slot.split(":")[0]) + 1;
+      const endHour = Number(endSlot.slot.split(":")[1].substring(5, 8));
       const startMinute = 0;
       const endMinute = 0;
       const startDate = new Date(

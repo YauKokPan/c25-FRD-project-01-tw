@@ -105,3 +105,9 @@ h2 {
     margin: 16px 0; /* Add some margin around the horizontal rule */
   }
 }
+
+.rating-center {
+  display: flex;
+  flex: start;
+  gap: 5px;
+}

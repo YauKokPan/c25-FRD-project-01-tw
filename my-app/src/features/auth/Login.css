@@ -21,3 +21,23 @@
 .mb-3 {
   font-size: 24px;
 }
+
+.responsive-recaptcha {
+  width: 1vw;
+}
+
+@media (max-width: 380px) {
+  .responsive-recaptcha {
+    /* transform: scale(0.9);
+    transform-origin: center; */
+    transform: scale(0.6);
+  }
+}
+
+@media (max-width: 360px) {
+  .responsive-recaptcha {
+    /* transform: scale(0.85);
+    transform-origin: center; */
+    transform: scale(0.5);
+  }
+}
