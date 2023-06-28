@@ -50,30 +50,21 @@ export function UseHotelInfo() {
             },
           }
         );
-        // console.log("API response:", res);
 
         if (!res.ok) {
           throw new Error("Error fetching hotel data");
         }
 
         const result = await res.json();
-        // console.log("Parsed JSON:", result);
 
         return result || [];
       } catch (error) {
-        // console.error("Error fetching hotel data:", error);
         return [];
       }
     },
   });
 
   return data || [];
-
-  // if (isLoading || isFetching || error || !data) {
-  //   return [];
-  // }
-  // console.log("Data:", data);`
-  // return data;
 }
 
 export function useHotelDetail(id: number) {

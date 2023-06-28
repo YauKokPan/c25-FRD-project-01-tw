@@ -30,11 +30,3 @@ export async function fetchComments(hotelId: number) {
   }
   return await response.json();
 }
-
-// export const fetchAverageRatings = async (hotelID: number) => {
-//   const response = await fetch(`${API_ORIGIN}/hotel/averageRating/${hotelID}`);
-//   if (!response.ok) {
-//     throw new Error(`Error fetching comments: ${response.statusText}`);
-//   }
-//   return await response.json();
-// };

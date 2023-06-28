@@ -40,7 +40,7 @@ const BookingResult: React.FC<{ userID: number }> = ({ userID }) => {
   const [userData, setUserData] = useState<UserData[]>([]);
 
   const isAdmin = getIsAdmin();
-  // const userId = Number(getUserId());
+
   const canCancelBooking = (startTime: Date): boolean => {
     const now = new Date();
     const twoHoursBeforeStartTime = new Date(startTime);

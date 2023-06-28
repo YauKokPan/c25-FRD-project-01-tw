@@ -258,12 +258,6 @@ const HotelForm = () => {
       </Container>
     </form>
   );
-
-  // <form onSubmit={reactHookFormSubmit(onSubmit)}>
-  //   <input type="file" {...register("profile_pic")} />
-
-  //   <input type="submit" />
-  // </form>
 };
 
 export default HotelForm;

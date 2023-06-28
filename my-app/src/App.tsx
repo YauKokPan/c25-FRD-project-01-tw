@@ -16,9 +16,6 @@ import Admin from "./features/admin/Admin";
 import Footer from "./features/footer/Footer";
 import FooterBar from "./features/footerBar/FooterBar";
 
-// import BookingResults from "./features/bookings/BookingResult";
-// import CheckOutPage from "./features/payment/CheckOutPage";
-
 export default function App() {
   const isAuth = true;
   return (
@@ -34,14 +31,10 @@ export default function App() {
           <Route path="/contact-us" element={<ContactUs />} />
           <Route path="/hotel-detail/:hotelId" element={<HotelDetail />} />
           <Route path="/user-profile" element={<UserProfile />} />
-          {/* <Route path="/bookings" element={<Bookings />} /> */}
           <Route path="/search" element={<SearchPage />} />
-          {/* <Route path="/payment" element={<CheckOutPage />} /> */}
-          {/* <Route path="/booking-results" element={<BookingResult />} /> */}
           <Route path="/admin" element={<Admin />} />
           <Route path="/payment" element={<Payment />} />
           <Route path="*" element={<h1>404 NOT FOUND!!!!</h1>} />
-          {/* <Route path=":id" element={<HotelDetail />} /> */}
         </Routes>
         <Footer />
       </div>

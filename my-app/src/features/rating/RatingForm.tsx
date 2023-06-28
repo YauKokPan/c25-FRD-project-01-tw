@@ -122,11 +122,6 @@ const RatingForm: React.FC<RatingFormProps> = (props) => {
     }
   };
 
-  // const asyncScriptOnLoad = () => {
-  //   setCallback("called!");
-  //   console.log("scriptLoad - reCaptcha Ref-", recaptchaRef);
-  // };
-
   const handleRecaptchaVerification = async (
     event: React.FormEvent<HTMLFormElement>
   ) => {
@@ -344,12 +339,6 @@ const RatingForm: React.FC<RatingFormProps> = (props) => {
         <form onSubmit={handleRecaptchaVerification}>
           <label htmlFor="name">
             <div className="sub-title">暱稱🙆‍♀️</div>
-            {/* <input
-            type="text"
-            id="name"
-            value={name}
-            onChange={(event) => setName(event.target.value)}
-          /> */}
             <Textarea
               color="warning"
               className="comment-input"
@@ -455,13 +444,6 @@ const RatingForm: React.FC<RatingFormProps> = (props) => {
                 </Box>
               }
             />
-            {/* <textarea
-            id="comment"
-            rows={5}
-            cols={40}
-            value={comment}
-            onChange={(event) => setComment(event.target.value)}
-          /> */}
           </label>
           <ReCAPTCHA
             ref={recaptchaRef}

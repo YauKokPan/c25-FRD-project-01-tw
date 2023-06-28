@@ -49,7 +49,6 @@ import Badge from "react-bootstrap/Badge";
 export default function HotelList() {
   const hotelsPerPage = 9; // Change this to adjust the number of hotels per page
   const hotelInfo = UseHotelInfo();
-  // console.log("hotelInfo", hotelInfo);
 
   const [sortedHotels, setSortedHotels] = useState(hotelInfo);
 
@@ -204,9 +203,6 @@ export default function HotelList() {
   // Calculate the index of the first and last hotel to display on the current page
   const lastIndex = activePage * hotelsPerPage;
   const firstIndex = lastIndex - hotelsPerPage;
-
-  // arrange in ascending hotel id order
-  // const sortedHotelInfo = [...hotelInfo].sort((a, b) => a.id - b.id);
 
   // Slice the hotelInfo array to get the hotels for the current page
   const currentHotels = sortedHotels

@@ -91,7 +91,6 @@ export async function updateBookingData(userID: number) {
   return res;
 }
 
-//may be change in future
 export async function removeBookingData(userID: number) {
   const res = await fetch(
     `${process.env.REACT_APP_API_SERVER}/bookings/${userID}`,

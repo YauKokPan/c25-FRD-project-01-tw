@@ -17,8 +17,6 @@ import { Hotel } from "../hotel/hotelAPI";
 const Favorites: React.FC<{ userID: number }> = ({ userID }) => {
   const [userFavorites, setUserFavorites] = useState<Hotel[]>([]);
 
-  //   const [favorites, setFavorites] = useState<Hotel[]>([]);
-
   const is_auth = AuthGuard();
 
   const toggleFavorite = async (hotel: Hotel) => {

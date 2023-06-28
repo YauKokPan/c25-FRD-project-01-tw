@@ -28,16 +28,12 @@
 
 @media (max-width: 420px) {
   .responsive-recaptcha {
-    /* transform: scale(0.9);
-    transform-origin: center; */
     transform: scale(0.63);
   }
 }
 
 @media (max-width: 400px) {
   .responsive-recaptcha {
-    /* transform: scale(0.85);
-    transform-origin: center; */
     transform: scale(0.5);
   }
 }

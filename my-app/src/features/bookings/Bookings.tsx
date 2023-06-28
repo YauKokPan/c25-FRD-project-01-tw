@@ -12,7 +12,6 @@ import {
   findOccupancyRate,
 } from "./bookingsAPI";
 import { useNavigate } from "react-router-dom";
-// import CheckOutPage from "../payment/CheckOutPage";
 import emailjs from "@emailjs/browser";
 import { UserData } from "./BookingResult";
 import { AuthGuard } from "../auth/AuthGuard";

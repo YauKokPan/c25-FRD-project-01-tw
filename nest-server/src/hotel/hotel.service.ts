@@ -2,7 +2,6 @@ import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { CreateHotelDto } from './dto/create-hotel.dto';
 import { UpdateHotelDto } from './dto/update-hotel.dto';
-import { Hotel } from '@prisma/client';
 
 @Injectable()
 export class HotelService {
@@ -126,31 +125,4 @@ export class HotelService {
 
     return occupancyRates;
   }
-
-  // async getAverageRatings(id: number) {
-  //   const hotels = await this.prismaService.hotel.findMany({
-  //     where: { id },
-  //     include: {
-  //       comment_key: true,
-  //     },
-  //   });
-
-  //   const averageRatings = hotels.map((hotel) => {
-  //     const totalRatings = hotel.comment_key.reduce((sum, comment) => {
-  //       return sum + comment.rating;
-  //     }, 0);
-
-  //     const averageRating =
-  //       hotel.comment_key.length > 0
-  //         ? totalRatings / hotel.comment_key.length
-  //         : 0;
-
-  //     return {
-  //       averageRating: parseFloat(averageRating.toFixed(1)),
-  //       totalComments: hotel.comment_key.length,
-  //     };
-  //   });
-
-  //   return averageRatings;
-  // }
 }

@@ -12,7 +12,6 @@ import { getUserName } from "../auth/authAPI";
 export default function MyNavbar() {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  // const username = useAppSelector((state: IRootState) => state.auth.username);
   const guardPage = AuthGuard();
   const [username, setUsername] = useState<string | null>("");
 

@@ -4,17 +4,12 @@ import {
   Get,
   Post,
   UseInterceptors,
-  UploadedFile,
   UploadedFiles,
   Param,
   Patch,
 } from '@nestjs/common';
 import { HotelService } from './hotel.service';
-import {
-  FileFieldsInterceptor,
-  FileInterceptor,
-  FilesInterceptor,
-} from '@nestjs/platform-express';
+import { FileFieldsInterceptor } from '@nestjs/platform-express';
 import { s3, bucketName } from '../../s3upload';
 import * as fs from 'fs';
 import { CreateHotelDto } from './dto/create-hotel.dto';
@@ -145,9 +140,4 @@ export class HotelController {
   async getOccupancyRates(@Param('id') id: number) {
     return await this.hotelService.getOccupancyRates(+id);
   }
-
-  // @Get('averageRating/:id')
-  // async getAverageRatings(@Param('id') id: number) {
-  //   return await this.hotelService.getAverageRatings(+id);
-  // }
 }

@@ -52,7 +52,7 @@ export default function Login() {
       // Check the recaptchaValue and proceed with the handleSubmit if it's valid
       if (recaptchaValue) {
         handleSubmit();
-        Swal.fire("登入成功！");
+        // Swal.fire("登入成功！");
       } else {
         Swal.fire("recaptcha驗證失敗，請重試");
         setError("reCAPTCHA verification failed. Please try again.");

@@ -12,7 +12,6 @@ import { BookingsModule } from './bookings/bookings.module';
 import { GalleryModule } from './gallery/gallery.module';
 import { ContactUsModule } from './contactUs/contactUs.module';
 import { CommentsModule } from './comments/comments.module';
-import { PaymentModule } from './payment/payment.module';
 import { UserModule } from './user/user.module';
 import { PaypalModule } from './paypal/paypal.module';
 import { FavoriteModule } from './favorite/favorite.module';
@@ -30,7 +29,6 @@ import { KafkaMiddleware } from './kafka/kafka.middleware';
     ContactUsModule,
     CommentsModule,
     CommentsModule,
-    PaymentModule,
     PaypalModule,
     FavoriteModule,
   ],
