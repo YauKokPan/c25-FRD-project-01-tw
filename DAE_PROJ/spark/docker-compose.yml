@@ -1,0 +1,40 @@
+version: "3"
+
+services:
+  spark:
+    image: docker.io/bitnami/spark
+    user: root
+    networks:
+      - dae_proj_sparknetwork
+    environment:
+      - PYTHONIOENCODING=utf8
+      - SPARK_MODE=master
+      - SPARK_RPC_AUTHENTICATION_ENABLED=no
+      - SPARK_RPC_ENCRYPTION_ENABLED=no
+      - SPARK_LOCAL_STORAGE_ENCRYPTION_ENABLED=no
+      - SPARK_SSL_ENABLED=no
+    ports:
+      - "8081:8080"
+      - "7077:7077"
+    volumes:
+      - ./src:/src
+  spark-worker-1:
+    image: docker.io/bitnami/spark
+    user: root
+    networks:
+      - dae_proj_sparknetwork
+    environment:
+      - SPARK_MODE=worker
+      - SPARK_MASTER_URL=spark://spark:7077
+      - SPARK_WORKER_MEMORY=1G
+      - SPARK_WORKER_CORES=1
+      - SPARK_RPC_AUTHENTICATION_ENABLED=no
+      - SPARK_RPC_ENCRYPTION_ENABLED=no
+      - SPARK_LOCAL_STORAGE_ENCRYPTION_ENABLED=no
+      - SPARK_SSL_ENABLED=no
+    volumes:
+      - ./src:/src
+
+networks:
+  dae_proj_sparknetwork:
+    external: true
