@@ -15,7 +15,6 @@ import { CommentsModule } from './comments/comments.module';
 import { UserModule } from './user/user.module';
 import { PaypalModule } from './paypal/paypal.module';
 import { FavoriteModule } from './favorite/favorite.module';
-import { KafkaMiddleware } from './kafka/kafka.middleware';
 
 @Module({
   imports: [
@@ -37,9 +36,7 @@ import { KafkaMiddleware } from './kafka/kafka.middleware';
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
-    consumer
-      .apply(KafkaMiddleware)
-      .forRoutes({ path: '*', method: RequestMethod.ALL });
+    consumer.apply().forRoutes({ path: '*', method: RequestMethod.ALL });
   }
 }
 // export class AppModule {}

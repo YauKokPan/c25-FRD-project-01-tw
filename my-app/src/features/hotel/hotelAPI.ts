@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { API_ORIGIN, get } from "../../api";
+import { API_ORIGIN, fetchJson, get } from "../../api";
 
 export interface GalleryKey {
   hotel_img: string | undefined;
@@ -24,6 +24,7 @@ export interface Hotel {
   occupancyRates: number;
   averageRatingArray: [{ rating: number }];
 }
+
 export interface CreateHotel {
   name: string;
   address: string;
@@ -34,6 +35,11 @@ export interface CreateHotel {
   google_map_address: string;
   total_rooms: number;
   hourly_rate: number;
+}
+
+export async function getHotelData() {
+  const data = await fetchJson<Hotel[]>("/hotel/allHotels", {}, true);
+  return data;
 }
 
 export function UseHotelInfo() {
@@ -56,7 +62,6 @@ export function UseHotelInfo() {
         }
 
         const result = await res.json();
-
         return result || [];
       } catch (error) {
         return [];

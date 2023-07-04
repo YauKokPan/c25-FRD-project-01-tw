@@ -302,9 +302,7 @@ export default function HotelList() {
             value={selectedFilter}
             onChange={handleFilterChange}
             label="排序方式"
-            inputProps={{
-              id: "filter",
-            }}
+            inputProps={{ id: "filter" }}
           >
             <MenuItem value="">
               <em>預設</em>

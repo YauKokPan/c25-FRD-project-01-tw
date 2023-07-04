@@ -1,11 +1,16 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { UseHotelInfo, editHotelAPI, softDeleteHotel } from "../hotel/hotelAPI";
+import {
+  UseHotelInfo,
+  editHotelAPI,
+  softDeleteHotel,
+  Hotel,
+  getHotelData,
+} from "../hotel/hotelAPI";
 import { Col, Card, Badge } from "react-bootstrap";
 import "./SearchPage.css";
-import { Hotel } from "../hotel/hotelAPI";
 import SearchBox from "../searchBox/SearchBox";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { queryClient } from "../../query/client";
 import { getIsAdmin, getUserId } from "../auth/authAPI";
 import {
@@ -33,24 +38,47 @@ import Swal from "sweetalert2";
 export default function SearchPage() {
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
-  const searchQuery = queryParams.get("query") || "";
+  const searchQuery = queryParams.get("query");
   const allHotels: Hotel[] = UseHotelInfo();
 
-  const [sortedHotels, setSortedHotels] = useState(allHotels);
+  // const {
+  //   data: allHotels,
+  //   error,
+  //   isLoading,
+  // } = useQuery({
+  //   queryKey: ["hotelInfo"],
+  //   queryFn: getHotelData,
+  // });
 
-  useEffect(() => {
-    const sorted = [...allHotels].sort((a, b) => a.id - b.id);
-    setSortedHotels(sorted);
-  }, [allHotels]);
+  // const [sortedHotels, setSortedHotels] = useState(allHotels);
 
-  const filteredHotels = searchQuery
-    ? sortedHotels.filter(
-        (hotel) =>
-          hotel.is_deleted === false &&
-          (hotel.name.includes(searchQuery) ||
-            hotel.district.includes(searchQuery))
-      )
-    : [];
+  // useEffect(() => {
+  //   const sorted = [...allHotels].sort((a, b) => a.id - b.id);
+  //   setSortedHotels(sorted);
+  // }, [allHotels]);
+
+  const filteredHotels = useMemo(
+    () =>
+      [...allHotels]
+        .sort((a, b) => a.id - b.id)
+        .filter(
+          (hotel) =>
+            !hotel.is_deleted &&
+            searchQuery &&
+            (hotel.name.includes(searchQuery) ||
+              hotel.district.includes(searchQuery))
+        ),
+    [searchQuery, allHotels]
+  );
+
+  // const filteredHotels = searchQuery
+  //   ? sortedHotels.filter(
+  //       (hotel) =>
+  //         hotel.is_deleted === false &&
+  //         (hotel.name.includes(searchQuery) ||
+  //           hotel.district.includes(searchQuery))
+  //     )
+  //   : [];
 
   const [buttonState, setButtonState] = useState("");
   const [userFavorites, setUserFavorites] = useState<Hotel[]>([]);

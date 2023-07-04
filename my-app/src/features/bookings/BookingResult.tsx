@@ -38,6 +38,8 @@ export interface UserData {
 
 const BookingResult: React.FC<{ userID: number }> = ({ userID }) => {
   const [userData, setUserData] = useState<UserData[]>([]);
+  // isLoading...
+  // error...
 
   const isAdmin = getIsAdmin();
 
@@ -150,9 +152,7 @@ const BookingResult: React.FC<{ userID: number }> = ({ userID }) => {
   return (
     <div className="bookingResult-container">
       <h1 className="bookingResult-title">預約紀錄</h1>
-      {userData === null ? (
-        <p>Loading...</p>
-      ) : userData.length ? (
+      {userData.length ? (
         <div className="booking-result-div">
           {userData.map((booking) => (
             <li className="booking-result-li" key={booking.id}>

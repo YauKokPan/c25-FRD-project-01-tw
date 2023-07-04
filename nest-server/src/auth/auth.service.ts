@@ -4,8 +4,6 @@ import { LoginDto, CreateUserDto } from './dto';
 import { checkPassword, hashPassword } from './hash';
 import { JwtService } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
-import { KafkaMiddleware } from 'src/kafka/kafka.middleware';
-import { Request } from 'express';
 
 @Injectable()
 export class AuthService {
@@ -13,10 +11,9 @@ export class AuthService {
     private readonly prisma: PrismaService,
     private readonly jwt: JwtService,
     private readonly config: ConfigService,
-    private readonly kafkaMiddleware: KafkaMiddleware,
   ) {}
 
-  async login(@Req() req: Request, loginDto: LoginDto) {
+  async login(loginDto: LoginDto) {
     const user = await this.prisma.user.findFirst({
       where: {
         OR: [{ name: loginDto.name }, { email: loginDto.email }],
@@ -33,8 +30,7 @@ export class AuthService {
     if (!user || !(await checkPassword(loginDto.password, user.password))) {
       throw new UnauthorizedException();
     }
-    // Log user login information to Kafka
-    this.kafkaMiddleware.logUserLogin(user.name, user.email, user.is_admin, req);
+
     return this.signToken(user);
   }
 

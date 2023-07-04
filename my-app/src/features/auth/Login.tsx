@@ -1,6 +1,6 @@
-import React from "react";
-import { useState, FormEvent } from "react";
 import "./Login.css";
+
+import React, { useState, FormEvent } from "react";
 import Title from "../title/Title";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "../../app/store";
@@ -11,36 +11,27 @@ import Swal from "sweetalert2";
 import { Checkbox, FormControlLabel } from "@mui/material";
 import ReCAPTCHA from "react-google-recaptcha";
 
-const recaptchaRef = React.createRef<ReCAPTCHA>();
+const getRememberedEmail = () => {
+  const rememberedEmail = localStorage.getItem("rememberedEmail");
+  return rememberedEmail ?? "";
+};
+
+interface LoginError {
+  email: string | null;
+  password: string | null;
+}
 
 export default function Login() {
-  const getRememberedEmail = () => {
-    const rememberedEmail = localStorage.getItem("rememberedEmail");
-    return rememberedEmail !== null ? rememberedEmail : "";
-  };
-
+  const recaptchaRef = React.createRef<ReCAPTCHA>();
   const [email, setEmail] = useState(getRememberedEmail());
-
-  const [name] = useState("");
   const [password, setPassword] = useState("");
   const [rememberMe, setRememberMe] = useState(false);
 
-  const [googleValue, setGoogleValue] = React.useState<string | null>("");
-  const [captchaValue, captchaSetValue] = React.useState<string | null>(null);
-  const [expired, setExpired] = React.useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = React.useState(false);
-  const [error, setError] = React.useState<string | null>(null);
-
-  // google reCAPTCHA
-  const handleGoogleChange = (googleValue: string | null) => {
-    console.log("Captcha value:", captchaValue);
-    setGoogleValue(googleValue);
-
-    // if value is null, recaptcha expired
-    if (googleValue === null) {
-      setExpired("true");
-    }
-  };
+  const [error, setError] = React.useState<LoginError>({
+    email: null,
+    password: null,
+  });
 
   const handleRecaptchaVerification = async (
     event: React.FormEvent<HTMLFormElement>
@@ -52,20 +43,11 @@ export default function Login() {
       // Check the recaptchaValue and proceed with the handleSubmit if it's valid
       if (recaptchaValue) {
         handleSubmit();
-        Swal.fire({
-          title: "登入成功！",
-          timer: 2000,
-        });
-        setTimeout(() => {
-          navigate("/");
-        }, 2000);
       } else {
         Swal.fire("recaptcha驗證失敗，請重試");
-        setError("reCAPTCHA verification failed. Please try again.");
       }
     } else {
       Swal.fire("recaptcha驗證失敗，請重試");
-      setError("reCAPTCHA verification failed. Please try again.");
     }
   };
 
@@ -80,21 +62,23 @@ export default function Login() {
       Swal.fire("登入失敗！");
     }
 
-    const userIdNum = Number(getUserId());
-    const adminCheck = getIsAdmin();
-
-    const result = await localLogin(
-      userIdNum,
-      name,
-      email,
-      password,
-      adminCheck
-    );
-    if (email !== getRememberedEmail()) {
-      localStorage.removeItem("rememberedEmail");
+    if (email === "") {
+      setError((state) => ({ ...state, email: "invalid email" }));
+      return;
+    } else if (password === "") {
+      setError((state) => ({ ...state, password: "invalid password" }));
+      return;
     }
+
+    const result = await localLogin("", email, password);
+    if (email !== getRememberedEmail()) {
+      localStorage.setItem("rememberedEmail", email);
+    }
+
     if (result) {
       dispatch(login(getUserId()));
+      Swal.fire({ title: "登入成功！", timer: 2000 });
+      setTimeout(() => navigate("/"), 2000);
     } else {
       Swal.fire({
         title: "登入失敗！",
@@ -138,6 +122,7 @@ export default function Login() {
               value={email}
               onChange={handleEmailChange}
             />
+            {error.email && <p>{error.email}</p>}
           </div>
           <div className="mb-3">
             <label>密碼</label>
@@ -148,6 +133,7 @@ export default function Login() {
               value={password}
               onChange={handlePasswordChange}
             />
+            {error.password && <p>{error.password}</p>}
           </div>
 
           <div className="mb-3">
@@ -166,7 +152,6 @@ export default function Login() {
           <ReCAPTCHA
             ref={recaptchaRef}
             sitekey="6LdF9owmAAAAAIil4OgvbkKJQwW-0yY5UAr-PcVE"
-            onChange={handleGoogleChange}
             className="responsive-recaptcha"
           />
 

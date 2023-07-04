@@ -15,9 +15,9 @@ import Payment from "./features/payment/Payment";
 import Admin from "./features/admin/Admin";
 import Footer from "./features/footer/Footer";
 import FooterBar from "./features/footerBar/FooterBar";
+import Demo from "./features/demo/Demo";
 
 export default function App() {
-  const isAuth = true;
   return (
     <>
       <MyNavbar />
@@ -26,6 +26,7 @@ export default function App() {
           <Route path="/login" element={<Login />} />
 
           <Route path="/" element={<HomePage />} />
+          <Route path="/demo" element={<Demo />} />
           <Route path="/hotels" element={<HotelList />} />
           <Route path="/register" element={<Register />} />
           <Route path="/contact-us" element={<ContactUs />} />
@@ -38,7 +39,7 @@ export default function App() {
         </Routes>
         <Footer />
       </div>
-      <FooterBar isAuth={isAuth} />
+      <FooterBar />
     </>
   );
 }
