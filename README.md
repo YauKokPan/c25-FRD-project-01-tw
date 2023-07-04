@@ -1,5 +1,9 @@
 # TOPIC: C25-FRD Project Group 1 - SweetHour
 
+https://github.com/YauKokPan/c25-FRD-project-01-tw
+
+https://task.tecky.io/share/sYTDcudcwaGwUqJSOcSQhfIktTlentROCFMndGtR/auth?view=kanban
+
 ## Features
 
 1. Progressive Web App (PWA): Accessible on any device with no need to install an app, providing a seamless booking experience.
