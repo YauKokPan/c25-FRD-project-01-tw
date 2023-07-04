@@ -87,6 +87,7 @@ const BookingResult: React.FC<{ userID: number }> = ({ userID }) => {
       );
       return;
     }
+
     const result = await Swal.fire({
       title: "確定要取消這個預約嗎？",
       text: "請注意：刪除後無法還原",
@@ -100,7 +101,10 @@ const BookingResult: React.FC<{ userID: number }> = ({ userID }) => {
     if (result.isConfirmed) {
       setUserData(userData.filter((booking) => booking.id !== bookingId));
       Swal.fire("已取消！", "已取消預約");
+    } else if (result.isDismissed) {
+      return;
     }
+
     const response = await removeBookingData(bookingId);
     const cancelledBookingData: UserData = await response.json();
     console.log(cancelledBookingData);

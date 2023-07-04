@@ -94,3 +94,7 @@ div {
   margin-top: 20px;
   justify-content: center;
 }
+
+.font-weight-bold {
+  font-weight: bold;
+}

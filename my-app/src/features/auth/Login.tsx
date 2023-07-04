@@ -52,7 +52,13 @@ export default function Login() {
       // Check the recaptchaValue and proceed with the handleSubmit if it's valid
       if (recaptchaValue) {
         handleSubmit();
-        // Swal.fire("登入成功！");
+        Swal.fire({
+          title: "登入成功！",
+          timer: 2000,
+        });
+        setTimeout(() => {
+          navigate("/");
+        }, 2000);
       } else {
         Swal.fire("recaptcha驗證失敗，請重試");
         setError("reCAPTCHA verification failed. Please try again.");
@@ -89,13 +95,6 @@ export default function Login() {
     }
     if (result) {
       dispatch(login(getUserId()));
-      Swal.fire({
-        title: "登入成功！",
-        timer: 2000,
-      });
-      setTimeout(() => {
-        navigate("/");
-      }, 2000);
     } else {
       Swal.fire({
         title: "登入失敗！",

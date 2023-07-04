@@ -9,7 +9,6 @@ import { BrowserRouter } from "react-router-dom";
 import { queryClient } from "./query/client";
 import { Provider } from "react-redux";
 import { store } from "./app/store";
-import "@progress/kendo-theme-default/dist/all.css";
 import "./installApp"; // Import the installApp.ts file
 
 const root = ReactDOM.createRoot(

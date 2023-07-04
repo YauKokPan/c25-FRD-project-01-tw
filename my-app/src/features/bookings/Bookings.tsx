@@ -1,9 +1,7 @@
 import * as React from "react";
 import "./Bookings.css";
-import {
-  Calendar,
-  CalendarChangeEvent,
-} from "@progress/kendo-react-dateinputs";
+import Calendar, { CalendarProps } from "react-calendar";
+import "react-calendar/dist/Calendar.css";
 import { useState } from "react";
 import { Hotel } from "../hotel/hotelAPI";
 import {
@@ -27,21 +25,14 @@ interface TimeButtonProps {
 }
 
 const TimeButton: React.FC<TimeButtonProps> = ({ time, clicked, onClick }) => (
-  <button
+  <Button
     key={time}
-    className={`k-button k-mb-4 ${
-      clicked ? "k-button-solid k-button-solid-primary" : ""
-    }`}
-    style={{
-      width: "6rem",
-      height: "3rem",
-      fontSize: "0.8rem",
-      marginRight: "0.5rem",
-    }}
+    variant={clicked ? "solid" : "outlined"}
+    color="warning"
     onClick={onClick}
   >
     {time}
-  </button>
+  </Button>
 );
 
 const BookingSlot: React.FC<{ hotel: Hotel }> = (props) => {
@@ -120,9 +111,18 @@ const BookingSlot: React.FC<{ hotel: Hotel }> = (props) => {
     setRemarks(event.target.value);
   };
 
-  const onDateChange = (e: CalendarChangeEvent) => {
-    setBookingDate(e.value);
+  const onDateChange: CalendarProps["onChange"] = (value, _event) => {
+    if (value) {
+      setBookingDate(value as Date);
+    }
   };
+
+  interface Timeslot {
+    slot: string;
+    clicked: boolean;
+    full?: boolean;
+    count?: number;
+  }
 
   const currentDateTime = new Date();
 
@@ -288,37 +288,41 @@ const BookingSlot: React.FC<{ hotel: Hotel }> = (props) => {
   }
 
   return (
-    <div className="k-my-8">
-      <div className="k-mb-4 k-font-weight-bold">預約酒店為：{hotel?.name}</div>
+    <div className="my-8">
+      <div className="mb-4 font-weight-bold">預約酒店為：{hotel?.name}</div>
 
-      <div className="k-mb-4 k-font-weight-bold">
+      <div className="mb-4 font-weight-bold">
         <div className="calendar-container">請選擇預約日期：</div>
         <Calendar
           value={bookingDate}
           onChange={onDateChange}
-          className="k-mb-4 calendar-width"
-          min={currentDateTime}
+          className="mb-4 calendar-width"
+          minDate={currentDateTime}
         />
       </div>
       {bookingDate && (
         <>
-          <div className="k-mb-4 k-font-weight-bold">請選擇預約時間：</div>
-          <div className="k-mb-4">
-            <div className="timeslots-container">
-              {timeslots.map((timeslot, index) => (
+          <div className="mb-4 font-weight-bold">請選擇預約時間：</div>
+          <Grid container spacing={1}>
+            {timeslots.map((timeslot: Timeslot, index) => (
+              <Grid item xs={6} md={4} key={timeslot.slot}>
                 <TimeButton
-                  key={timeslot.slot}
                   time={timeslot.slot}
                   clicked={timeslot.clicked}
                   onClick={() => handleTimeClick(index)}
                   index={index}
                 />
-              ))}
-            </div>
-          </div>
-          <button className="reset-btn" onClick={handleResetClick}>
+              </Grid>
+            ))}
+          </Grid>
+          <Button
+            className="reset-btn"
+            onClick={handleResetClick}
+            variant="soft"
+            color="warning"
+          >
             重置預約時間
-          </button>
+          </Button>
         </>
       )}
 
