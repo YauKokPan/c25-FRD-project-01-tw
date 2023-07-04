@@ -4,7 +4,6 @@ import { AuthController } from './auth.controller';
 import { JwtModule } from '@nestjs/jwt';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { PrismaModule } from '../prisma/prisma.module';
-import { KafkaMiddleware } from '../kafka/kafka.middleware';
 
 @Module({
   imports: [
@@ -22,6 +21,6 @@ import { KafkaMiddleware } from '../kafka/kafka.middleware';
     }),
   ],
   controllers: [AuthController],
-  providers: [AuthService, KafkaMiddleware],
+  providers: [AuthService],
 })
 export class AuthModule {}
