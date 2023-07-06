@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { API_ORIGIN, get } from "../../api";
+import { API_ORIGIN, fetchJson, get } from "../../api";
 
 export interface GalleryKey {
   hotel_img: string | undefined;
@@ -24,6 +24,7 @@ export interface Hotel {
   occupancyRates: number;
   averageRatingArray: [{ rating: number }];
 }
+
 export interface CreateHotel {
   name: string;
   address: string;
@@ -36,35 +37,9 @@ export interface CreateHotel {
   hourly_rate: number;
 }
 
-export function UseHotelInfo() {
-  const { data } = useQuery<Hotel[], Error>({
-    queryKey: ["hotelInfo"],
-    queryFn: async () => {
-      try {
-        const res = await fetch(
-          `${process.env.REACT_APP_API_SERVER}/hotel/allHotels`,
-          {
-            method: "GET",
-            headers: {
-              Authorization: `Bearer ${localStorage.getItem("token")}`,
-            },
-          }
-        );
-
-        if (!res.ok) {
-          throw new Error("Error fetching hotel data");
-        }
-
-        const result = await res.json();
-
-        return result || [];
-      } catch (error) {
-        return [];
-      }
-    },
-  });
-
-  return data || [];
+export async function getAllHotels(): Promise<Hotel[]> {
+  const data = await fetchJson<Hotel[]>("/hotel/allHotels", {}, true);
+  return data;
 }
 
 export function useHotelDetail(id: number) {

@@ -1,34 +1,32 @@
+import { fetchJson } from "../../api";
+
 export async function localLogin(
-  id: number,
   name: string,
   email: string,
-  password: string,
-  is_admin: boolean
+  password: string
 ) {
-  const res = await fetch(`${process.env.REACT_APP_API_SERVER}/auth/login`, {
+  type Response = {
+    id: number;
+    access_token: string;
+    name: string;
+    email: string;
+    is_admin: boolean;
+  };
+  const result = await fetchJson<Response>("/auth/login", {
     method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      id,
-      name,
-      email,
-      password,
-      is_admin,
-    }),
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ name, email, password }),
   });
 
-  const result = await res.json();
-  if (res.status === 200) {
-    localStorage.setItem("id", result.id);
+  try {
+    // token, user
+    localStorage.setItem("id", String(result.id));
     localStorage.setItem("token", result.access_token);
     localStorage.setItem("name", result.name);
     localStorage.setItem("email", result.email);
-    localStorage.setItem("is_admin", result.is_admin);
-
+    localStorage.setItem("is_admin", String(result.is_admin));
     return true;
-  } else {
+  } catch (err) {
     return false;
   }
 }
@@ -37,8 +35,8 @@ export function getUserName() {
   return localStorage.getItem("name");
 }
 
-export function getUserId(): string {
-  return String(localStorage.getItem("id"));
+export function getUserId(): number {
+  return +(localStorage.getItem("id") ?? "");
 }
 
 export function getIsAdmin(): boolean {

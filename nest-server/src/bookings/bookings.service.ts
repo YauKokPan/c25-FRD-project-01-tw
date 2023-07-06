@@ -9,17 +9,7 @@ export class BookingsService {
   constructor(private readonly prisma: PrismaService) {}
 
   async createBooking(data: CreateBookingDto): Promise<Booking> {
-    const {
-      user_id,
-      hotel_id,
-      start_time,
-      end_time,
-      total_hours,
-      total_prices,
-      booking_phone,
-      booking_email,
-      remarks,
-    } = data;
+    const { user_id, hotel_id, ...others } = data;
 
     // Check if the User record exists
     const user = await this.prisma.user.findUnique({
@@ -34,13 +24,7 @@ export class BookingsService {
       data: {
         user_booking_key: { connect: { id: user_id } },
         hotel_booking_key: { connect: { id: hotel_id } },
-        start_time,
-        end_time,
-        total_hours,
-        total_prices,
-        booking_phone,
-        booking_email,
-        remarks,
+        ...others,
       },
     });
 
@@ -53,9 +37,7 @@ export class BookingsService {
         user_booking_key: true,
         hotel_booking_key: true,
       },
-      orderBy: {
-        id: 'desc',
-      },
+      orderBy: { id: 'desc' },
     });
   }
   async findLatestBooking(): Promise<Booking> {
@@ -87,9 +69,7 @@ export class BookingsService {
 
   async findUserLatestBooking(): Promise<Booking[]> {
     return await this.prisma.booking.findMany({
-      orderBy: {
-        id: 'desc',
-      },
+      orderBy: { id: 'desc' },
       take: 1,
     });
   }

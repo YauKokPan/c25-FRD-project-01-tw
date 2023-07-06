@@ -7,7 +7,7 @@ import { Link, useNavigate } from "react-router-dom";
 import Title from "../title/Title";
 import {
   Hotel,
-  UseHotelInfo,
+  getAllHotels,
   editHotelAPI,
   softDeleteHotel,
 } from "../hotel/hotelAPI";
@@ -48,7 +48,15 @@ import Badge from "react-bootstrap/Badge";
 
 export default function HotelList() {
   const hotelsPerPage = 9; // Change this to adjust the number of hotels per page
-  const hotelInfo = UseHotelInfo();
+  const [hotelInfo, setHotelInfo] = useState<Hotel[]>([]);
+  useEffect(() => {
+    async function fetchHotelInfo() {
+      const hotels = await getAllHotels();
+      setHotelInfo(hotels);
+    }
+
+    fetchHotelInfo();
+  }, []);
 
   const [sortedHotels, setSortedHotels] = useState(hotelInfo);
 
@@ -302,9 +310,7 @@ export default function HotelList() {
             value={selectedFilter}
             onChange={handleFilterChange}
             label="排序方式"
-            inputProps={{
-              id: "filter",
-            }}
+            inputProps={{ id: "filter" }}
           >
             <MenuItem value="">
               <em>預設</em>

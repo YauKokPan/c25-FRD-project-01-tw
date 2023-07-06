@@ -8,114 +8,113 @@ datasource db {
 }
 
 model User {
-  id        Int      @id @default(autoincrement())
-  name      String   @unique
-  email     String  @unique
-  password  String
-  phone     String
-  is_admin  Boolean
-  hotel_prisma    Hotel[]
+  id             Int        @id @default(autoincrement())
+  name           String     @unique
+  email          String     @unique
+  password       String
+  phone          String
+  is_admin       Boolean
+  hotel_prisma   Hotel[]
   comment_prisma Comment[]
-   booking_key Booking[]
-   payment_key Payment[]
-    favorite_key Favorite[]
-  createdAt DateTime @default(now()) @map("created_at")
-  updatedAt DateTime @updatedAt @map("updated_at")
+  booking_key    Booking[]
+  payment_key    Payment[]
+  favorite_key   Favorite[]
+  createdAt      DateTime   @default(now()) @map("created_at")
+  updatedAt      DateTime   @updatedAt @map("updated_at")
 
   @@map("users")
 }
 
 model Hotel {
-  id          Int      @id @default(autoincrement())
-  name        String
-  address     String
+  id                 Int        @id @default(autoincrement())
+  name               String
+  address            String
   google_map_address String
-  district    String
-  phone       String
-  profile_pic String
-  description String
-  total_rooms Int
-  hourly_rate Int
-  user_prisma        User     @relation(fields: [user_id], references: [id])
-  user_id     Int
-  is_deleted Boolean
-  favorite_key  Favorite[] 
-  gallery_key Gallery[]
-  comment_key Comment[]
-  booking_key Booking[]
-  createdAt   DateTime @default(now()) @map("created_at")
-  updatedAt   DateTime @updatedAt @map("updated_at")
+  district           String
+  phone              String
+  profile_pic        String
+  description        String
+  total_rooms        Int
+  hourly_rate        Int
+  user_prisma        User       @relation(fields: [user_id], references: [id])
+  user_id            Int
+  is_deleted         Boolean
+  favorite_key       Favorite[]
+  gallery_key        Gallery[]
+  comment_key        Comment[]
+  booking_key        Booking[]
+  createdAt          DateTime   @default(now()) @map("created_at")
+  updatedAt          DateTime   @updatedAt @map("updated_at")
 
   @@map("hotels")
 }
 
-model Booking{
-id        Int      @id @default(autoincrement())
-user_booking_key User @relation(fields:[user_id], references: [id])
-user_id Int
-hotel_booking_key Hotel @relation(fields:[hotel_id],references: [id])
-hotel_id Int
-payment_key Payment?
-start_time DateTime
-end_time DateTime
-total_hours Int
-total_prices Int
-booking_phone String
-booking_email String
-remarks String
-createdAt DateTime @default(now()) @map("created_at")
-updatedAt DateTime @updatedAt @map("updated_at")
+model Booking {
+  id                Int      @id @default(autoincrement())
+  user_booking_key  User     @relation(fields: [user_id], references: [id])
+  user_id           Int
+  hotel_booking_key Hotel    @relation(fields: [hotel_id], references: [id])
+  hotel_id          Int
+  payment_key       Payment?
+  start_time        DateTime
+  end_time          DateTime
+  total_hours       Int
+  total_prices      Int
+  booking_phone     String
+  booking_email     String
+  remarks           String?
+  createdAt         DateTime @default(now()) @map("created_at")
+  updatedAt         DateTime @updatedAt @map("updated_at")
 
   @@map("bookings")
 }
 
-  model Gallery {
-    id          Int      @id @default(autoincrement()) 
-    hotel_name  String
-    hotel_img   String
-    hotel_key  Hotel @relation(fields:[hotel_id],references: [id])
-    hotel_id Int
+model Gallery {
+  id         Int    @id @default(autoincrement())
+  hotel_name String
+  hotel_img  String
+  hotel_key  Hotel  @relation(fields: [hotel_id], references: [id])
+  hotel_id   Int
 
-    @@map("gallery")
-  }
-
-
-model ContactUs{
-    id          Int      @id @default(autoincrement()) 
-    contact_name String
-    contact_email String
-    contact_phone String
-    contact_message String
-
-    @@map("contactus")
+  @@map("gallery")
 }
 
-model Comment{
-  id  Int   @id @default(autoincrement())
-  user_booking_key User @relation(fields:[user_id], references: [id])
-  user_id Int
-  user_hotel_booking_key Hotel @relation(fields:[hotel_id], references: [id])
-  hotel_id  Int
-  nick_name String
-  comment_text String
-  rating  Int
-  createdAt DateTime @default(now()) @map("created_at")
-  is_deleted Boolean
+model ContactUs {
+  id              Int    @id @default(autoincrement())
+  contact_name    String
+  contact_email   String
+  contact_phone   String
+  contact_message String
+
+  @@map("contactus")
+}
+
+model Comment {
+  id                     Int      @id @default(autoincrement())
+  user_booking_key       User     @relation(fields: [user_id], references: [id])
+  user_id                Int
+  user_hotel_booking_key Hotel    @relation(fields: [hotel_id], references: [id])
+  hotel_id               Int
+  nick_name              String
+  comment_text           String
+  rating                 Int
+  createdAt              DateTime @default(now()) @map("created_at")
+  is_deleted             Boolean
 
   @@map("comments")
 }
 
 model Payment {
-        id      Int    @id @default(autoincrement())
-        orderID String
-        status  String
-        method String
-        user_payment_key User @relation(fields:[user_id], references: [id])
-        user_id Int 
-        booking_payment_key Booking @relation(fields:[booking_id], references: [id])
-        booking_id Int @unique
+  id                  Int     @id @default(autoincrement())
+  orderID             String
+  status              String
+  method              String
+  user_payment_key    User    @relation(fields: [user_id], references: [id])
+  user_id             Int
+  booking_payment_key Booking @relation(fields: [booking_id], references: [id])
+  booking_id          Int     @unique
 
-    @@map("payments")
+  @@map("payments")
 }
 
 model Favorite {

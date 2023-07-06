@@ -1,5 +1,5 @@
-import React from "react";
-import { UseHotelInfo } from "../hotel/hotelAPI";
+import React, { useEffect, useState } from "react";
+import { Hotel, getAllHotels } from "../hotel/hotelAPI";
 import Title from "../title/Title";
 import {
   Button,
@@ -14,7 +14,15 @@ import "./HomePage.css";
 import { Link } from "react-router-dom";
 
 export default function HomePage() {
-  const hotelInfo = UseHotelInfo();
+  const [hotelInfo, setHotelInfo] = useState<Hotel[]>([]);
+  useEffect(() => {
+    async function fetchHotelInfo() {
+      const hotels = await getAllHotels();
+      setHotelInfo(hotels);
+    }
+
+    fetchHotelInfo();
+  }, []);
 
   return (
     <>

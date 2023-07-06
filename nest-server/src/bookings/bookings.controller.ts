@@ -6,8 +6,6 @@ import {
   Put,
   Param,
   Delete,
-  UsePipes,
-  ValidationPipe,
 } from '@nestjs/common';
 
 import { BookingsService } from './bookings.service';
@@ -19,7 +17,6 @@ export class BookingsController {
   constructor(private readonly bookingsService: BookingsService) {}
 
   @Post()
-  @UsePipes(new ValidationPipe())
   async createBooking(@Body() createBookingDto: CreateBookingDto) {
     const result = await this.bookingsService.createBooking(createBookingDto);
     return result;
@@ -46,7 +43,6 @@ export class BookingsController {
   }
 
   @Put(':id')
-  @UsePipes(new ValidationPipe())
   async updateBooking(
     @Param('id') id: number,
     @Body() updateBookingDto: UpdateBookingDto,

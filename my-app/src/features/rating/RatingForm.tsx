@@ -1,7 +1,8 @@
+import "./RatingForm.css";
+
 import * as React from "react";
 import Rating from "@mui/material/Rating";
 import Box from "@mui/material/Box";
-import "./RatingForm.css";
 import { Hotel } from "../hotel/hotelAPI";
 import { getUserId } from "../auth/authAPI";
 import { fetchComments, ratingAPI } from "./ratingAPI";
@@ -15,8 +16,6 @@ import Button from "@mui/joy/Button";
 import ReCAPTCHA from "react-google-recaptcha";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
-
-const recaptchaRef = React.createRef<ReCAPTCHA>();
 
 const labels: { [index: string]: string } = {
   1: "極差",
@@ -71,6 +70,7 @@ type RatingFormProps = {
   hotel: Hotel;
 };
 const RatingForm: React.FC<RatingFormProps> = (props) => {
+  const recaptchaRef = React.createRef<ReCAPTCHA>();
   const navigate = useNavigate();
   const hotel = props.hotel;
   const isAuth = props.isAuth;
@@ -78,7 +78,7 @@ const RatingForm: React.FC<RatingFormProps> = (props) => {
   const userID = Number(getUserId());
 
   const [value, setValue] = React.useState<number | null>(0);
-  const [googleValue, setGoogleValue] = React.useState<string | null>("");
+
   const [hover, setHover] = React.useState(-1);
   const [name, setName] = React.useState("");
   const [comment, setComment] = React.useState("");
@@ -102,25 +102,8 @@ const RatingForm: React.FC<RatingFormProps> = (props) => {
       createdAt: Date;
     }>
   >([]);
-  const [apiError, setApiError] = React.useState<string | null>(null);
 
-  const [error, setError] = React.useState<string | null>(null);
-
-  const [captchaValue, captchaSetValue] = React.useState<string | null>(null);
-  const [expired, setExpired] = React.useState<string | null>(null);
-  const [callback, setCallback] = React.useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = React.useState(false);
-
-  // google reCAPTCHA
-  const handleChange = (googleValue: string | null) => {
-    console.log("Captcha value:", captchaValue);
-    setGoogleValue(googleValue);
-
-    // if value is null, recaptcha expired
-    if (googleValue === null) {
-      setExpired("true");
-    }
-  };
 
   const handleRecaptchaVerification = async (
     event: React.FormEvent<HTMLFormElement>
@@ -140,11 +123,9 @@ const RatingForm: React.FC<RatingFormProps> = (props) => {
         Swal.fire("發表評論成功！");
       } else {
         Swal.fire("recaptcha驗證失敗，請重試");
-        setError("reCAPTCHA verification failed. Please try again.");
       }
     } else {
       Swal.fire("recaptcha驗證失敗，請重試");
-      setError("reCAPTCHA verification failed. Please try again.");
     }
   };
 
@@ -156,59 +137,50 @@ const RatingForm: React.FC<RatingFormProps> = (props) => {
       Swal.fire("發表評論失敗！");
     }
 
-    try {
-      // Call the ratingAPI function
-      const response = await ratingAPI(
-        userID,
-        hotel.id,
-        name,
-        comment,
-        value as number
+    // Call the ratingAPI function
+    const response = await ratingAPI(
+      userID,
+      hotel.id,
+      name,
+      comment,
+      value as number
+    );
+
+    // Process the response and set the displayComment state
+
+    if (response.ok) {
+      const responseBody = await response.json();
+
+      const newComment = {
+        nick_name: responseBody.nick_name,
+        comment_text: responseBody.comment_text,
+        rating: responseBody.rating,
+        createdAt: responseBody.created_at,
+      };
+
+      const parsedNewComment = {
+        ...newComment,
+        createdAt: parseDateString(newComment.createdAt),
+      };
+      setDisplayComments((prevDisplayComments) => [
+        ...prevDisplayComments,
+        parsedNewComment,
+      ]);
+
+      const updatedDailyCommentCount = dailyCommentCount + 1;
+      setDailyCommentCount(updatedDailyCommentCount);
+      localStorage.setItem(
+        "dailyCommentCount",
+        updatedDailyCommentCount.toString()
       );
-
-      // Process the response and set the displayComment state
-
-      if (response.ok) {
-        const responseBody = await response.json();
-
-        const newComment = {
-          nick_name: responseBody.nick_name,
-          comment_text: responseBody.comment_text,
-          rating: responseBody.rating,
-          createdAt: responseBody.created_at,
-        };
-
-        const parsedNewComment = {
-          ...newComment,
-          createdAt: parseDateString(newComment.createdAt),
-        };
-        setDisplayComments((prevDisplayComments) => [
-          ...prevDisplayComments,
-          parsedNewComment,
-        ]);
-
-        const updatedDailyCommentCount = dailyCommentCount + 1;
-        setDailyCommentCount(updatedDailyCommentCount);
-        localStorage.setItem(
-          "dailyCommentCount",
-          updatedDailyCommentCount.toString()
-        );
-      } else {
-        setApiError(
-          response.statusText ||
-            "An error occurred while submitting your rating."
-        );
-      }
-
-      // Clear the form fields
-      setName("");
-      setComment("");
-      setValue(0);
-    } catch (error) {
-      setApiError("An error occurred while submitting your rating.");
-    } finally {
-      setIsSubmitting(false);
     }
+
+    // Clear the form fields
+    setName("");
+    setComment("");
+    setValue(0);
+
+    setIsSubmitting(false);
   };
 
   React.useEffect(() => {
@@ -372,10 +344,10 @@ const RatingForm: React.FC<RatingFormProps> = (props) => {
               precision={1}
               icon={<FavoriteIcon fontSize="inherit" />}
               getLabelText={getLabelText}
-              onChange={(event, newValue) => {
+              onChange={(_event, newValue) => {
                 setValue(newValue);
               }}
-              onChangeActive={(event, newHover) => {
+              onChangeActive={(_event, newHover) => {
                 setHover(newHover);
               }}
               emptyIcon={<FavoriteBorderIcon fontSize="inherit" />}
@@ -448,7 +420,7 @@ const RatingForm: React.FC<RatingFormProps> = (props) => {
           <ReCAPTCHA
             ref={recaptchaRef}
             sitekey="6LdF9owmAAAAAIil4OgvbkKJQwW-0yY5UAr-PcVE"
-            onChange={handleChange}
+
             // asyncScriptOnLoad={asyncScriptOnLoad}
           />
           <div>

@@ -14,10 +14,9 @@ import SearchPage from "./features/searchPage/SearchPage";
 import Payment from "./features/payment/Payment";
 import Admin from "./features/admin/Admin";
 import Footer from "./features/footer/Footer";
-import FooterBar from "./features/footerBar/FooterBar";
+import { FooterBar } from "./features/footerBar/FooterBar";
 
 export default function App() {
-  const isAuth = true;
   return (
     <>
       <MyNavbar />
@@ -38,7 +37,7 @@ export default function App() {
         </Routes>
         <Footer />
       </div>
-      <FooterBar isAuth={isAuth} />
+      <FooterBar />
     </>
   );
 }
