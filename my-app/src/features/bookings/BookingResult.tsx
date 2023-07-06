@@ -107,7 +107,7 @@ const BookingResult: React.FC<{ userID: number }> = ({ userID }) => {
 
     const response = await removeBookingData(bookingId);
     const cancelledBookingData: UserData = await response.json();
-    console.log(cancelledBookingData);
+
     const bookingData = {
       hotel_name:
         cancelledBookingData.hotel_booking_key?.name ?? "Unknown hotel",
@@ -118,7 +118,7 @@ const BookingResult: React.FC<{ userID: number }> = ({ userID }) => {
       end_time: new Date(cancelledBookingData.end_time).toLocaleString(),
       total_price: cancelledBookingData.total_prices,
     };
-    console.log(bookingData);
+
     sendEmail(bookingData);
   };
 

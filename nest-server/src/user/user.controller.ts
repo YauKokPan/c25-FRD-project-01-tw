@@ -44,10 +44,7 @@ export class UserController {
     }
 
     try {
-      console.log('Received request to update user:', id);
-      console.log('UpdateUserDto:', updateUserDto);
       const updatedUser = await this.userService.update(+id, updateUserDto);
-      console.log('Updated user:', updatedUser);
       return res.status(200).json(updatedUser);
     } catch (error) {
       console.error('Error updating user:', error.message, error.stack);

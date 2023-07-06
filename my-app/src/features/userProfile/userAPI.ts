@@ -37,8 +37,7 @@ export async function updateUser(
       },
       body: JSON.stringify(updatedUser),
     });
-    console.log("Request to update user:", userId);
-    console.log("Response:", response);
+
     if (response.status === 200) {
       return true;
     } else {

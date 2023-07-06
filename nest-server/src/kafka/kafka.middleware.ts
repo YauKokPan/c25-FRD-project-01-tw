@@ -35,7 +35,7 @@ export class KafkaMiddleware implements NestMiddleware {
     try {
       await this.producer.connect();
     } catch (e) {
-      // console.log(e);
+      console.log(e);
     }
   }
   async use(req: Request, res: Response, next: NextFunction) {
@@ -58,7 +58,7 @@ export class KafkaMiddleware implements NestMiddleware {
         status: res.statusCode,
         url: req.originalUrl,
         res_size: res.getHeader('content-length') || 0, // Get the content-length header value or 0 if not present
-        access_time: new Date().toLocaleString('en-US', options)
+        access_time: new Date().toLocaleString('en-US', options),
       }),
     };
     const messages = Array(1).fill(message);
@@ -71,7 +71,7 @@ export class KafkaMiddleware implements NestMiddleware {
         })
         .then(console.log);
     } catch (e) {
-      // console.log('[error]', e);
+      console.log('[error]', e);
     }
 
     next();
@@ -100,7 +100,7 @@ export class KafkaMiddleware implements NestMiddleware {
         os: os,
         device: device,
         browser: browser,
-        login_time: new Date().toLocaleString('en-US', options)
+        login_time: new Date().toLocaleString('en-US', options),
       }),
     };
     const messages = Array(1).fill(message);
@@ -112,7 +112,7 @@ export class KafkaMiddleware implements NestMiddleware {
         })
         .then(console.log);
     } catch (e) {
-      // console.log('[error]', e);
+      console.log('[error]', e);
     }
   }
 }

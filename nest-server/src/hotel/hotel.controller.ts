@@ -47,12 +47,7 @@ export class HotelController {
     },
     @Body() createHotelDto: CreateHotelDto,
   ) {
-    console.log('Files received:', files);
     try {
-      // Validate input data
-      // ...
-      console.log('Create hotel route called');
-
       // Upload profile pic to S3
       const uploadedProfilePic = files.profile_pic?.[0]
         ? await this.uploadToS3(files.profile_pic[0])
@@ -82,8 +77,6 @@ export class HotelController {
           hotel_name: createHotelDto.name,
         })),
       };
-
-      console.log('Response:', response);
       return response;
     } catch (error) {
       // handle error
@@ -96,7 +89,6 @@ export class HotelController {
     file: Express.Multer.File,
   ): Promise<ManagedUpload.SendData> {
     // Add Promise<ManagedUpload.SendData> as the return type
-    console.log('Uploading files:', file);
 
     const key = file.originalname;
     const uploadParams = {
@@ -113,7 +105,6 @@ export class HotelController {
           if (err) {
             reject(err);
           } else {
-            console.log('File uploaded:', data);
             resolve(data);
           }
         });

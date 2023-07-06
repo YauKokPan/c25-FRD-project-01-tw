@@ -1,7 +1,5 @@
 export const createHotel = async (hotelData: FormData) => {
   try {
-    console.log("fetch hotelFormData", hotelData);
-
     const response = await fetch(
       `${process.env.REACT_APP_API_SERVER}/hotel/create`,
       {
