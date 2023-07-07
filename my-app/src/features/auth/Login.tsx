@@ -59,8 +59,6 @@ export default function Login() {
     if (e) {
       e.preventDefault();
       setIsSubmitting(true);
-    } else {
-      Swal.fire("登入失敗！");
     }
 
     if (email === "") {
