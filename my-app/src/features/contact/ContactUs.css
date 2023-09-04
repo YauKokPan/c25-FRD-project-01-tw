@@ -15,8 +15,6 @@
 }
 
 .contactus-button {
-  display: block;
-  content: "";
   background-color: #eac54f;
   font-weight: 520;
   width: 25vw;
@@ -27,4 +25,9 @@
 
 .mb-3 > label {
   font-size: 1rem;
+}
+
+.flex {
+  display: flex;
+  justify-content: center;
 }

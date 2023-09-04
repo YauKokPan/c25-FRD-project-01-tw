@@ -37,3 +37,12 @@
     transform: scale(0.5);
   }
 }
+
+.login-btn {
+  background-color: #eac54f;
+  font-weight: 520;
+}
+
+.login-btn:hover {
+  background-color: #daac16;
+}

@@ -147,18 +147,16 @@ export default function Login() {
               label="記住登入電郵"
             />
           </div>
-
           <ReCAPTCHA
             ref={recaptchaRef}
             sitekey="6LdF9owmAAAAAIil4OgvbkKJQwW-0yY5UAr-PcVE"
             className="responsive-recaptcha"
           />
-
           <div className="d-grid">
             <button
               type="submit"
               disabled={isSubmitting}
-              className="btn btn-primary"
+              className="btn login-btn"
             >
               登入
             </button>

@@ -99,7 +99,7 @@ export default function Register() {
             />
           </div>
           <div className="d-grid">
-            <button type="submit" className="btn btn-primary">
+            <button type="submit" className="btn register-btn">
               註冊
             </button>
           </div>
@@ -107,7 +107,7 @@ export default function Register() {
           <h5 className="forgot-password text-right">
             已有帳戶？
             <Button
-              variant="solid"
+              className="immediate-login"
               size="sm"
               onClick={() => navigate("/login")}
             >

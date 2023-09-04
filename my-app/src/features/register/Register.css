@@ -16,3 +16,20 @@
   background-repeat: no-repeat;
   background-size: cover;
 }
+
+Button.immediate-login {
+  background-color: #eac54f;
+  color: #000000;
+  font-weight: 620;
+}
+Button.immediate-login:hover {
+  background-color: #daac16;
+}
+
+.register-btn {
+  background-color: #eac54f;
+  font-weight: 520;
+}
+.register-btn:hover {
+  background-color: #daac16;
+}

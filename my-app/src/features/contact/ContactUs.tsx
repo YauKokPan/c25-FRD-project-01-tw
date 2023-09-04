@@ -153,12 +153,10 @@ export default function ContactUs() {
                 onChange={handleMessageChange}
               />
             </div>
-            <div className="d-grid">
-              <center>
-                <button type="submit" className="btn contactus-button">
-                  提交
-                </button>
-              </center>
+            <div className="flex">
+              <button type="submit" className="btn contactus-button">
+                提交
+              </button>
             </div>
           </form>
         </div>
