@@ -22,6 +22,9 @@ export default function Footer() {
     >
       <Container maxWidth="lg">
         <Grid container spacing={5}>
+          <Grid item xs={12}>
+            <b>注意：此網站僅作示範用途，並無實際提供預訂服務。</b>
+          </Grid>
           <Grid item xs={12} sm={4}>
             <Typography variant="h6" color="text.primary" gutterBottom>
               關於我們

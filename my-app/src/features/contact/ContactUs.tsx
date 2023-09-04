@@ -155,10 +155,7 @@ export default function ContactUs() {
             </div>
             <div className="d-grid">
               <center>
-                <button
-                  type="submit"
-                  className="btn btn-primary contactus-button"
-                >
+                <button type="submit" className="btn contactus-button">
                   提交
                 </button>
               </center>

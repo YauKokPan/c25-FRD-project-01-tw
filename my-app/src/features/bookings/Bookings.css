@@ -17,6 +17,21 @@ div {
   margin-bottom: 0;
 }
 
+.confirm-booking {
+  display: block;
+  content: "";
+  background-color: #eac54f;
+  font-weight: 520;
+  border-radius: 10px;
+  width: 68px;
+  height: 40px;
+  border: none;
+}
+
+.confirm-booking:hover {
+  background-color: #d6af2e;
+}
+
 .reset-btn {
   margin-top: 0;
   margin-bottom: 20px;

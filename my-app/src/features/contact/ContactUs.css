@@ -15,7 +15,14 @@
 }
 
 .contactus-button {
+  display: block;
+  content: "";
+  background-color: #eac54f;
+  font-weight: 520;
   width: 25vw;
+}
+.contactus-button:hover {
+  background-color: #daac16;
 }
 
 .mb-3 > label {

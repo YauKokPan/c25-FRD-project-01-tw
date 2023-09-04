@@ -384,7 +384,10 @@ const BookingSlot: React.FC<{ hotel: Hotel }> = (props) => {
             onChange={handleRemarksChange}
           />
         </div>
-        <button onClick={handleSubmit}>預約 及 付款</button>
+
+        <button className="confirm-booking" onClick={handleSubmit}>
+          預約
+        </button>
       </form>
     </div>
   );
